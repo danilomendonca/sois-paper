@@ -1,0 +1,76 @@
+%!TEX root = main.tex
+% -*- root: main.tex -*-
+\section{Evaluation and Discussion}
+\label{sec:evaluation}
+
+%target -> 1.5 pages
+
+% At first I will use greenhouse (since I have already written some text and have the results), but later I will replace it to a more coherent example related to crowdsensing
+
+\subsection{Public Transport Sharing}\label{sec:mobee}
+
+In this section, we evaluate A3Droid with an application for public transport information sharing among users. Crowdsensing is used to gather multiple geolocation data from users using a mobile device with GPS while travelling in the same bus. An A3 group is formed with one device being elected the supervisor responsible for receiving followers geolocation, taking the average and sending this data to the backend server. Geolocation data is a structure composed of latitude as longitude, as well as speed, accuracy and direction. These fields are processed by the server who publishes a complete API for querying estimations about bus lines geolocations and when a they will reach a certain stop. Grouping GPS sensors provides both temporal and spatial redundancies, since different devices should query their GPS within a limited amount of time (since buses are moving) and space (restricted to the bus interior). 
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=1\linewidth]{figures/mobee.png}
+\caption{Public transport information sharing system overview}
+\label{fig:MOBEE_OVERVIEW}
+\end{figure}
+
+A total amount of 12 Android devices have been used in this evaluation. Our purpose is to stress the implementation with a high number of messages being sent from followers devices to their supervisor in different group sizes configurations, starting with 3 members in a group up to 12 members. To represent the churn of users entering and exiting the bus, a second round of measurements was performed with two devices repeatedly added and removed during execution - therefore extrapolating the real case scenario for bus users. Measurements took 5 minutes each. Finally, an uniform distribution between 0 and 10 seconds has been used for the message interval of consecutive messages from each follower.
+
+\subsection{Results and Discussion}\label{discussion}
+
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+	
+			\begin{axis}[
+%				group style={
+%					group size=2 by 1,
+%					horizontal sep=1.5cm,
+%				}, %height=3cm,width=3cm,
+				xmin=4, ymin=0.3, xmax=12,
+				ylabel={	Average RTT (s)},
+				xlabel={Number of members in the groups},
+				xtick=data,
+%				minor ytick=data,
+				scale only axis,
+				log ticks with fixed point,
+				grid=both,
+				footnotesize,
+%				legend columns=3,
+				x post scale=1,
+				legend style={at={(0.5,-0.3)},anchor=north},
+				cycle list name ={my chart colors}
+				]
+
+%				\nextgroupplot
+				\addplot+[smooth] table[x=root, y=1] {results/MOBEE_RTTvsGS.dat};
+				\addlegendentry[align=center]{Average RTT without churn %\\
+				%No churn; 6mes/min; 1kb
+				}
+				\addplot+[smooth] table[x=root, y=2] {results/MOBEE_RTTvsGS.dat};
+				\addlegendentry[align=center]{Average RTT with 2 devices churn %\\
+				%Churn of 2 devices; 6mes/min; 1kb
+				}
+%				\addplot+[smooth] table[x=root, y=1] {results/GH_SS_RTTvsGS.dat};
+%				\addlegendentry{Average RRT of sensors to server message [6mes/min, 32b]}			
+%				\addplot+[smooth] table[x=root, y=2] {results/GH_SS_RTTvsGS.dat};
+%				\addlegendentry{Average RRT of sensors to server message [6mes/min, 1kb]}			
+%				\addplot+[smooth] table[x=root, y=1] {results/GH_SA_RTTvsGS.dat};
+%				\addlegendentry{Average RTT of a server to actuators message [2mes/min, 64b]}	
+%				\addplot+[smooth] table[x=root, y=2] {results/GH_SA_RTTvsGS.dat};
+%				\addlegendentry{Average RTT of a server to actuators message [6mes/min, 1kb]}	
+			\end{axis}
+			
+\end{tikzpicture}	
+\caption{Time for a geolocation data to be sent by supervisor and its confirmation to be received by the follower. One curve represent experiments with static groups (no churn) and another with two members entering and leaving the group throughout the experiment (churn)}
+\label{fig:MOBEE_RTT_VS_GROUP_SIZE}
+\end{figure}
+
+The results in Figure~\ref{fig:MOBEE_RTT_VS_GROUP_SIZE} show that, for the crowsensing of geolocation data of public transports, A3Droid were able to deliver messages within an acceptable time. The worse case of 10 simultaneous devices sending messages and two devices being added and removed from the group did not extrapolated 0.65 seconds for a complete round-trip. Considering that the confirmation message was only used to achieve a precise measurement - since followers and supervisor devices don't have their clocks synchronized - and is not part of the system requirement itself, a single direction message would have a slight smaller average.
+
+Regarding the scalability of the framework, the no churn curve have a substantial slope increase after 6 members. This can be seen as the point in which the supervisor starts to accumulate some messages in the queue. As we have used an uniform distribution with a maximum interval of 10 seconds, some messages are sent within a very short interval, causing accumulation, while others are sent within a longer interval, allowing the queue to decrease. The curve with devices churn starts with a different growth pattern. The constant churn stresses the supervisor causing the additional overhead of \~0.2s noticed by the difference between the initial point of the curves. As we kept fixed the number of devices entering and leaving the groups, the higher the group size, the less significant the churn for the results. After 8 devices it is possible to notice the curve growth to invert its tendency to follow a similar pattern from the no churn curve. This means that the constant churn overhead impact has became relatively smaller compared to the impact of more followers sending messages to the supervisor.

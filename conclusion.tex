@@ -1,0 +1,10 @@
+%!TEX root = main.tex
+% -*- root: main.tex -*-
+\section{Conclusion and Future Work}
+\label{sec:conclusion}
+
+% target 0.5 pages with bib
+
+A3Droid, as a framework that follows A3 architecture style, provides a valuable starting point for crowdsensing applications, which are susceptible to a high sensor churn and can benefit from the group abstraction. Its simple, yet powerful design allows the implementation of both followers and supervisors roles by just extending corresponding framework classes and implementing their abstract methods. The complex task of gathering multiple geolocation data from moving buses became a matter of implementing the platform specific GPS data retrieval as well as the message handling by the supervisor. Regarding the communication, the framework provided all the necessary means for detecting devices entering and leaving the group and also the underlying network related tasks. More sophisticated requirements could be achieved by defining other types of messages between followers and their supervisors and vice versa.
+
+From the scalability perspective, depending on the application requirements, crowdsensing may involve hundreds or even more devices. Considering the increasing density of smartphones and other devices with onboard sensors carried by humans, a scenario with that magnitude of available sensors is not unrealistic. In our evaluation with 12 devices, A3Droid responded accordingly to our expectations regarding its ability to deliver messages in a timely fashion. Nonetheless, we still need to further investigate how the framework will behave with a higher number of devices, as well as explore its mechanisms for dynamically changing the group composition (merge, split, etc) to preserve performance in different contexts of operation. Last but not least, fine tuning of the current implementation and the use of different mediums like bluetooth and wi-fi direct are also part of our future work.
