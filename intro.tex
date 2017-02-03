@@ -2,43 +2,63 @@
 % -*- root: main.tex -*-
 \section{Introduction}
 \label{sec:intro}
-% target -> 1 page (with abstract)
+% target -> x pages (with abstract)
 
-The widespread diffusion of powerful mobile devices, such as smartphones and always-on wireless connectivity solutions as 3G and LTE, have radically changed the way we live our lives. Media sharing and consumption through social Internet have never been more engaging.
+%context and motivation: in this paragraph I present the new scenario composed of heterogeneous devices
 
-In this context, innovative scenarios are emerging. For example, pervasive and context-aware applications are aware of the end-users surroundings and behave accordingly to what is happening therein. To achieve this they rely on data that are obtained from the runtime environment itself, generally collected through appropriately deployed sensor networks. 
-
-Since their inception, modern mobile devices have included a plethora of onboard sensors to enable applications such as navigation, gaming and health monitoring. This means that mobile devices can enable the construction of new kinds of sensor networks that can be deployed in unconventional ways to locations and contexts that were previously inconceivable. Moreover, the data that we collect through these networks are not limited by the onboard sensors; instead they could be data that are explicitly inputed into an app by the end-users. 
-
-This novel data collection paradigm goes under the name of crowd sensing. Through crowd sensing we can gather invaluable information in disaster-recovery scenarios, we can perform geo-localized and time-limited sentiment analyses, and so on.
-
-Crowd sensing introduces novel challenges. First of all, since the sensors are embed in mobile devices, they are always on the move and subject to high churn rates. Indeed, it is common for people to enter and leave the sensing application freely and unexpectedly. This can lead to robustness issues in which the required data cannot be collected at all times due to the absence of a certain type of sensor. Second, the precision and quality of the collected data is vital. A single source of information can sometimes be misleading; indeed, the data it provides could be imprecise, or just simply incorrect. Multiple sources, on the other hand, allow us to implement various kinds of redundancy:
-
-\begin{itemize}
-
-\item \emph{Temporal redundancy}, in which multiple sensors, in a limited amount of time, are providing similar information  (e.g., that the temperature is rising). 
-
-\item \emph{Spatial redundancy}, in which mulitple sensors, in a limited amount of physical space, are providing similar information (e.g., the the temperature is rising in a certain building). 
-
-\item \emph{Dimensional redundancy}, in which multiple sensors, of different kinds, are providing valuable and relevant information (e.g., the temperature is rising as is the level of $CO_{2}$). 
-
-\end{itemize}
-
-Finally and also important, applications based in crowdsensing will need to scale to support extensive sensor networks due to the high amounts of physical devices that may be available for the application at any given time.
-
-In this paper, we advocate that there is a concrete need for a middleware for developing crowd sensing applications, one that can help developers cope with the more complex issues of crowd sensing applications without having to re-invent the wheel every time. To this end we provide A3Droid, a re-interpretation of the A-3 architectural style that specifically focuses on the needs of crowd sensing applications. 
-
-A3Droid is based on the notion of \emph{group}. With A3Droid developers can group devices in the sensor network to reduce the dynamicity degree of the application components. Indeed, while single devices can enter and leave the application unexpectedly, entire groups of devices are less likely to do so. Groups also allow us to more easily implement temporal, spatial and dimensional sensor redundancy, as well as provide a concrete means to collect up-to-date snapshots of what devices are in the application at any given time. Finally, the groups in A3Droid can be composed and de-composed on the fly to ensure that the application scales according to the churn rate. 
-
-The rest of the paper is structured as follows. Section~\ref{sec:a3} provides a rapid crash course on the A-3 architectural style. Therein we present the main abstractions that the architectural style provides to developers. Section~\ref{sec:a3droid} discusses in-depth details on how the A-3 architectural style was implemented for Android-based mobile devices in the form of the A3Droid middleware. Section~\ref{sec:evaluation} illustrates the experiments that were performed to assess A3Droid as an effective and efficient middleware for developing crowd sensing applications. Section~\ref{sec:related} discusses related work in literature, while Section~\ref{sec:conclusion} concludes the paper and presents insights into what we intend to do in our future work in the area.
+In the last decade, the world has witnessed the popularization of pervasive and smart devices of different kinds. Some of them are equipped with powerful CPUs, memory, and storage (e.g. modern smartphones and tablets), while others are designed for very specific functions or have more limited resources (e.g., sensors and gadgets). In common, these devices are able to communicate, which allow them to interact using standard protocols. This type of technology has been available to the general public with affordable prices and adopted at very large scales. According to predictions \cite{CITATION}, many more of these devices will join the \textit{internet of things} in the years to come. Such rich scenario enables the creation of distributed systems that have strong impact in peoples' lives, including social and smart city applications. Nonetheless, their realization require tackling some relevant challenges.
 
 
+%problem introduction
+An important challenge of this scenario is \textit{volatility}. As participants come and go for reasons like mobility, components churn create abrupt context changes that must be handled swiftly to avoid disruptions of the normal application behavior. 
+%Depending on the role played by an exiting component, it must be resumed by other(s). 
+In addition to churn, the \textit{heterogeneity} of the devices that can engage and be part of distributed and pervasive applications must also be considered. This variability has many sources. First, devices have different hardware components and configurations. Second, they are subject to distinct and dynamic policies for the use of their resources. Third, the use of resources by concurrent applications in the same device varies in time. Last but not least, changes in the physical world % or in the hosting platform 
+can also affect the behavior of sensors and other components. As a consequence, the capabilities of different devices to perform system tasks vary from one to another and through time.
+
+%For example, onboard sensors can be (de)activated by users or be affected by fluctuations in the physical world. 
 
 
+%gap in the current solutions
+Data-centric models, like the \textit{tuple spaces} in Linda~\cite{LINDA}, are the state-of-art of distributed components coordination. These models allow for both space and time decoupling. % since created data can outlive exiting nodes and be accessed by new nodes. 
+Nonetheless, these models have a high abstraction level and do not address certain problems, like how the different components of a distributed system should be organized and operate when subject to high levels of volatility and heterogeneity. As such, the potential of data-centric models can be extended with further abstractions for the development of applications based on the plethora of pervasive devices available in everyday life situations. In specific, design and programming abstractions should guide the organization of distributed components according to application-specific criteria like the role they play in the system (modularization) and to optimize the flux of information among components and modules. Moreover, the system should be empowered with the methods and mechanisms for: 1) autonomously coping with a high level of volatility and heterogeneity; 2) efficiently employ the resources of pervasive devices, be they scarce or abundant.
+
+%TODO complete the scale(lability) aspect and consequences
+%as well as the resource allocation of pervasive devices.
+
+%More than just reacting, a preventive approach should assign replacements to standby and quickly assume orphan tasks, thus improving availability. 
+
+%solution introduction
+%Some of the relevant problems that must be handled autonomously during execution are: how to organize the components interaction; how to perform the system composition; and how to distribute the responsibilities among them. The resulting solution must be scalable to address scenarios with a high number of devices; it must also be able to adapt to context changes and maintain normal system behavior.
+%
+%
+%the problem in this paragraph refers to the ability of interacting locally
+%Nowadays, the majority of mobile~\footnote{from this point forward the terms mobile, distributed, and pervasive are used interchangeably.} applications follow a client-server architecture in which backend servers in the cloud perform significant part of the computation. However, there is an increasing interest in enabling peer-to-peer interactions among devices through local and mobile ad hoc networks. 
+%This approach has been referred by some as fog-computing~\cite{FOG}. 
+%In some cases, low-latency is the main requirement that justifies a local interaction. In others, connectivity to the cloud is poor or cannot be assumed. Accordingly, in these cases devices are expected to interact locally to achieve some of the distributed application goals without the centralized coordination of backend servers. Regardless of the reason for creating distributed systems at the network edge, an adequate model should ease the complexness of its development and to enable a flexible, robust, and scalable solution. 
+%In this paper we propose a model for the self-organization of distributed systems. The
+In this paper, we propose a model that allows the creation of distributed systems based on the key concepts of groups and roles. These abstractions should guide the organization of the system into a set of partitions (groups) and to enable the distribution of the application logic within partitions (roles). In contrast with single and volatile components, groups provide a more stable entity that can be equipped with a tuple space for the coordination of its members, as well as a series of mechanisms for achieving solutions with high level of availability and robustness. These and other attributes can be achieved through the autonomous and distributed management of groups components and also through mechanisms of self-organization between different groups.
 
 
+%The proposed self-organization method is implemented by a supporting middleware, which also provides essential features such as discovery, communication, distributed state management, and group operations. %We make use of a tuple space model tailored for mobile environment to support decoupled interaction between components while preserving data availability even in scenarios of high volatility.
 
 
+%\begin{figure}[t!]
+%	\centering
+%	\includegraphics[width=\linewidth]{figures/fog_computing}
+%	\caption{Fog computing as a complementary solution to cloud computing}
+%	\label{fig:fog_computing}
+%\end{figure}
+
+%paper structure
+
+This paper is structured as follows...
+
+%At the application level, organization abstractions allows similar or different components running at different devices to form groups in which they can interact and coordinate their actions to achieve application goals. Second, at the organization structure level, the distributed application should autonomously adapt to events such as components failures, churn, environment changes, etc.
 
 
+%suits applications for which global knowledge about the system or centralized adaptation is infeasible or prohibitive. 
 
+
+%The premise followed by this work is that system partitions reduce the coordination space and improve the coordination scalability between distributed components. In different words, whenever a distributed system can be reduced into a set of partitions, doing so will reduce the coordination complexity. However, as changes are expected to happen, the partitioning must evolve to changes in order to keep the system operational and avoid violations of requirements. We argue that the formation and adaptation of the organization structure can benefit from a well defined model.
+
+%we tackle the problem of designing distributed systems at the edge of the network infrastructure, i.e., composed of pervasive devices at local or ad hoc networks with a high degree of volatility. In specific, we propose a model that enables the partition of the system into a set of self-organizing, autonomous parts. The proposed model is based on the key concepts of \textbf{g}roups, \textbf{r}oles, and \textbf{d}evices (GRD). Groups are system partitions composed of roles. Roles implement the functionalities required to achieve system goals. Each role can be played by one or more devices in one or more groups. Groups can have different degrees of centralization, ranging from a client-server to a peer-to-peer architectural style, according to the application design. Additionally, to evolve the system in the occurrence of changes in its components and environment, we propose a method based on self-organizing principles, in which adaptation happens through local group interactions without any external control.

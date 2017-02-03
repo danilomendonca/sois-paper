@@ -1,4 +1,3 @@
-
 %% bare_conf.tex
 %% V1.4b
 %% 2015/08/26
@@ -51,7 +50,8 @@
 
 
 
-\documentclass[conference]{IEEEtran}
+%\documentclass[10pt, conference, compsocconf]{IEEEtran}
+\documentclass[twocolumn,twoside]{IEEEtran}
 % Some Computer Society conferences also require the compsoc mode option,
 % but others use the standard conference format.
 %
@@ -84,8 +84,8 @@
 % have to be run twice to clear warning/error messages.
 
 
-
-
+\usepackage{subcaption}
+\captionsetup[subfigure]{width=.9\textwidth}
 
 
 % *** CITATION PACKAGES ***
@@ -120,7 +120,8 @@
   % and their extensions so you won't have to specify these with
   % every instance of \includegraphics
   % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
-  \input{plots.tex}
+  %\input{plots.tex}
+  %\usepackage{flushend}
 \else
   % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
   % will default to the driver specified in the system graphics.cfg if no
@@ -190,8 +191,9 @@
 % Also of interest may be the (relatively newer and more customizable)
 % algorithmicx.sty package by Szasz Janos:
 % http://www.ctan.org/pkg/algorithmicx
-
-
+%\usepackage{flushend}
+%\usepackage{listings}
+%\usepackage{filecontents}
 
 
 % *** ALIGNMENT PACKAGES ***
@@ -308,7 +310,7 @@
 
 
 % correct bad hyphenation here
-\hyphenation{op-tical net-works semi-conduc-tor}
+%\hyphenation{op-tical net-works semi-conduc-tor}
 
 
 \begin{document}
@@ -319,17 +321,17 @@
 % not capitalized unless they are the first or last word of the title.
 % Linebreaks \\ can be used within to get better formatting as desired.
 % Do not put math or special symbols in the title.
-\title{Supporting Crowd Sensing with A3Droid}
+\title{A Self-organizing Model for Highly Volatile and Heterogeneous Distributed Systems}
 
 
 % author names and affiliations
 % use a multiple column layout for up to three different
 % affiliations
-\author{\IEEEauthorblockN{L. Baresi, S. Guinea, and D. Mendon\c{c}a}
+\author{\IEEEauthorblockN{L. Baresi and D. F. Mendon\c{c}a}
 \IEEEauthorblockA{Politecnico di Milano\\
 Dipartimento di Elettronica, Informazione e Bioingegneria\\
 Piazza L. da Vinci, 32 -- 20133 Milano, Italy\\
-\{luciano.baresi | sam.guinea | danilo.mendonca\}@polimi.it}
+\{luciano.baresi|danilo.filgueira\}@polimi.it}
 }
 
 % conference papers do not typically use \thanks and this command
@@ -373,12 +375,13 @@ Piazza L. da Vinci, 32 -- 20133 Milano, Italy\\
 \end{abstract}
 
 % no keywords
-\input{intro.tex}
-\input{a3.tex}
-\input{a3droid.tex}
-\input{evaluation.tex}
-\input{related.tex}
-\input{conclusion.tex}
+\input{intro}
+\input{background}
+\input{related_work}
+\input{model.tex}
+%\input{evaluation.tex}
+%\input{related.tex}
+%\input{conclusion.tex}
 
 
 % For peer review papers, you can put extra information on the cover
@@ -397,7 +400,8 @@ Piazza L. da Vinci, 32 -- 20133 Milano, Italy\\
 %\begin{thebibliography}{1}
 
 %\end{thebibliography}
-
+\bibliographystyle{IEEEtran}
+%\bibliography{biblio}
 
 
 

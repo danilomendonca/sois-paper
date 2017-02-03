@@ -4,3 +4,25 @@
 \label{sec:related}
 
 %target -> 0.5 pages
+
+A few related works also provide support for the development of crowdsensing applications. Mendes et al.~\cite{Mendes2015} proposed Maestro, a cooperative sensing framework based on a middleware that provides transparent access to data from heterogeneous devices though virtual sensors. The framework includes features related to data storage, cloud-based data analysis, and networking. Maestro focuses on sensors over large areas using a central server or a routing protocol, with data saved to local databases, to be sent when connectivity is available. A3Droid, on the other hand, focuses on providing a distributed fog-like architecture that exploits local network communication within and between groups. External communication is still allowed and can be achieved through application-specific means; it simply is not supported directly by the framework. Hu et al.~\cite{Hu:2014} proposed a social networking architecture for an ecosystem that enables social context awareness in mobile crowdsensing. Their human-centric approach aggregates context-related sensing data to solve specific problems and to achieve context awareness in mobile applications. In contrast to A3Droid, sensor data is only part of a broader information range that includes users input from social networks. It also depends on central servers and does not support local communication. 
+
+Katsomallos et al. proposed EasyHarvest~\cite{Katsomallos:2014}, a framework for large-scale mobile crowdsensing applications aiming to simplify its deployment and to enable controlled use of device sensors. Its architecture is composed of two components: a server side component, where crowdsensing applications are deployed by providers, and a client side component, to which sensing tasks are assigned. Also designed as a generic platform for mobile crowdsensing, MOSDEN~\cite{Jayaraman:2013} aims to support sensor data collection, processing, storage and sharing, which are performed separately from application logic. Similarly, other works provide a generic platform in which sensing tasks are assigned to participating users, and their devices serve other users and their applications~\cite{Hu:2014, Bajaj:2015}. On the one hand, these are valuable proposals that separate data collection from its use to increase the odds of finding available sensors matching specific requirements. On the other, they rely on a more complex architecture and infrastructure that often requires a cloud component. Instead, A3Droid provides a programming framework that supports a wide variety of architectures; it can be used to develop both purely distributed and fog-like systems, where distributed sensing and data manipulation is paired with centralized data analysis and distribution.
+
+%follows a simple, yet powerful architecture for the development of mobile crowdsensing applications.
+
+%1 
+
+%2 More human-centric approach that aggregates context-related sensing data to solve specific problems and to achieve context awareness of mobile applications with respect to social aspects. Sensors are only part of a broader information range that includes users input from social networks. 
+
+%3 
+
+%In contrast with those works, A3Droid focuses on both spacial and temporal (read the paper after Sam modifications, then write the differences)
+
+% is based in A-3 architectural style that enables the oportunistic gathering of data from a group of sensors in a local area - instead of larger or disconnected areas. Accordingly, it is designed for online crowdsensing within a local area network without internet dependency. This characteristic enables temporal and spatial redundancies as local area .... It's main novelty consists of groups abstraction, in which groups and roles, not specific devices, are addressed in order to mitigate the effects of the dynamicity and churn.
+
+%Moreover, it offers a framework to ease the burden of developers when applying its architectural style, which includes lower level networking involved in supervisor-follower communication.
+
+%main difference: how A3 abstracts sensors. instead of 'virtual nodes', agnostic group members.
+%fog is a big difference: instead of sensors connected in a wide area by usual internet, groups of sensors connected by a local area network
+%also, how sensing is performed in time

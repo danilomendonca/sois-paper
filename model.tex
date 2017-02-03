@@ -1,0 +1,152 @@
+\section{The Group-Role Model}
+\label{sec:model}
+
+\subsection{Properties of Groups}
+
+%\begin{figure}[t!]
+%	\centering
+%	\begin{subfigure}[t]{0.5\linewidth}
+%		\centering
+%		\includegraphics[height=1.2in]{figures/roles_replication.png}
+%		\caption{An homogeneous group composed of replicas of the same role.}
+%		\label{fig:roles_replication}
+%	\end{subfigure}%
+%	\begin{subfigure}[t]{0.5\linewidth}
+%		\centering
+%		\includegraphics[height=1.2in]{figures/roles_distribution.png}
+%		\caption{An heterogeneous group composed of different roles.}
+%		\label{fig:roles_distribution}
+%	\end{subfigure}
+%	\caption{Two application groups: one that replicates the same role and another with a mixed configuration}
+%\end{figure}
+
+%\begin{figure}[t!]
+%	\centering
+%	\includegraphics[width=0.5\textwidth]{figures/roles_distribution}
+%	\caption{The leftmost device is playing three different roles. The devices in the middle are playing two roles each, while the last rightmost device is playing only one role.}
+%	\label{fig:roles_distribution}
+%\end{figure}
+
+%Q: What are the properties of a group?
+
+%Stability <- transparency, availability
+In highly volatile and dynamic distributed systems, components often become unavailable. The first and foremost benefit of grouping components is to provide a more stable interface for system modules subject to volatility. Group stability is a consequence of a few properties. First, groups can be formed out of homogeneous components (replication). These replicas increase the availability by reducing the time taken to replace a component that have failed or left the system. Second, groups provide network transparency through unique well-known-names.
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=0.45\textwidth]{figures/homogeneous_group}
+	\caption{An homogeneous group with two active components (blue diamonds) responsible for fetching geolocation. Each component is allocated in a different mobile device. Standby components (gray diamonds) can swiftly assume the task. All components have access to a tuple space, which is managed by a single component.}
+	\label{fig:homogeneous_group}
+\end{figure}
+
+Homogeneous groups can not only increase the availability, but also aggregate data from different sensors (aggregation). They can also achieve fairness of resource usage by rotating which devices have active components in the group. Finally, depending on the case, other attributes like performance - if a task can be parallelized - and reliability - if components are subject to failures - can also be impacted by component replication. Figure~\ref{fig:homogeneous_group} illustrates an example of a group formed by GPS components running in different proximal mobile devices. As long as the application requirement for accuracy allows, not all devices must have their GPS component active at the same time.
+
+%TODO This is rather a motivation/problem to be presented at the introduction
+%Sensing activities are becoming an essential requirement for many applications. The information collected by sensors can be the target of the system - like in applications for transport and smart cities monitoring - or used to contextualize the application about its surrounding environment. Nonetheless, they tend to be battery consuming activities that must be employed wisely. 
+
+
+%Modularity and compositionality
+As for the system design, groups can be used to partition the system into modules. Each of these modules can be further divided into sub-modules, forming what we call a \textit{group-of-groups}, or hierarchical composition. At the bottom of the hierarchy, concrete components representing system behavior are played by application nodes. We name this components as \textit{roles}. The level of abstraction, granularity, and the criteria for group membership is let to the application designers to decide. Thus, groups and roles provide flexible building blocks that can be used to organize the application logic.
+
+%Group of groups are useful to digest the information from inner groups and to provide a shared tuple space for intergroup communication and coordination.
+
+%Information containers
+In addition to stability and the modularization of the application logic, groups can be containers of system information. First and foremost, they must keep an updated register of its members, also called a group view. Further, group views can be extended with contextual information of its members, such as the availability of their resources. Context information can be useful not only for the application itself, but also for measures of self-adaptation to cope with context changes. 
+
+In accordance with data-centered solutions that allow time and space decoupling, we use a \textit{tuple space}~\cite{LINDA, LIME, TOTA} for keeping the information of a group. Different strategies can be used to improve the availability of tuples within a group, e.g., by replicating the data among different devices. In our proposal, tuples are kept by \textit{tuple manager} roles. This and other management roles are discussed in Section~\ref{sec:group_mangement}.
+
+%Last but not least, groups are equipped with membership control. The later can restrict the access to the group information by checking for the specified requirements for joining the group.
+
+%replication manager
+%membership control
+%
+
+\subsection{Group Communication and Coordination}\label{sec:group_cc}
+
+%Q: How to integrate group communication mechanisms with tuples?
+% A first option is to assume group communication as a separate mechanism that complements tuple space. As such, nodes could either write to a tuple space or use BMUA.
+% A second option is a partial merge of the methods. Meaning, broadcast and anycast are achieved by writting into a tuple space. Multicast and unicast, due to their semantic, are kept the same. I must investiga
+ 
+%Q: How to enable integroup communication?
+
+% Assuming all nodes from the distributed system to be connected, intergroup comm. can happen with any model that keeps track of the members of a group, like event/data-driven or plain group communication provided by middlewares. The advantage of using abstractions such as group-of-groups would be to orient the network infrastructure in terms of resource usage: should a session exist among which devices? 
+
+%TODO
+%In contrast with plain group communication mechanisms, we propose the use of a data-centric model within the group. 
+
+%Groups and other models
+%Differently from a pure tuple space solution in which any node can subscribe, read, and modify the tuples, we focus in how tuples can be explored within the scope of a group or composition of groups. In fact, both event and data-centric models work with implicit groups: those formed by nodes listening for system events and data modifications. Here, conversely, groups are explicit entities whose particular features and properties - stability, modularity, access control, communication, self-management - are enriched with those of tuple spaces. 
+
+%Group communication
+In our model, the classical \textit{intragroup} group communication methods are replaced in favor of tuple space operations. Accordingly, a \textit{broadcast} is achieved with a modification in the group tuple space. More granular communication (\textit{multicast}) can be analogously achieved by letting members of a group to listen to modifications of specific tuples. The \textit{anycast} mechanism is achieved with the read-and-remove tuple operation. Finally, we consider \textit{unicast} to be a direct way of communication that should keep its original behavior, i.e., to require the presence of the recipient in the group at a given moment. %TODO smart anycast
+
+%Through groups, our proposal follows the principle of avoiding unnecessary disturbances in the system, i.e., to isolate the action to where it makes sense.
+
+
+%Intergroup communication
+\textit{Intergroup} communication could be implemented by just letting members to intercept a given network broadcast carrying the name of the destination group. However, as more nodes join the system, it becomes prohibitive to use broadcasts. Alternatively, groups could share their view among each other to enable network multicasts addressed to group members, but it would also be costly to keep track of all groups and their members (global knowledge), as in volatile environments this would require constant updates of the shared group views. 
+
+To provide a scalable solution for intergroup interaction, we extended the notion of a group-of-groups with that of gateway roles. These roles should be responsible for proxying the interaction among groups within a group-of-groups composition. This type of composition creates an outer group with similar properties of trivial groups, including a tuple space, which is managed by the outer group and shared by inner group members. The main difference is that outer group views are populated only by the gateways of its inner groups and not by all inner group components. %TODO use some mathematical analysis to show the gain in scalability using gateways
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=0.48\textwidth]{figures/group_of_groups}
+	\caption{A group-of-groups composed of three other groups. Inner groups are populated with different roles. Active roles are colored, while standby roles are grayed out. Numbers identify the devices (D1-4) which are hosting each role. Gateways and tuple manager roles are indicated with symbols on top of application roles.}
+	\label{fig:group_of_groups}
+\end{figure}
+
+Figure~\ref{fig:group_of_groups} presents a group-of-groups composition. Each inner group is represented in the outer group by its gateway. In addition to the tuple space in each group, a shared tuple space is kept by the outer group. When components need to add, modify, or read shared tuples, the operation commands are proxyed by their gateways and forwarded to the outer group component managing the shared group space. This tuple manager runs at the same device of one of the gateways - in this example, in the D2 device.
+
+%Group communication session
+To avoid the time overhead for connection set up, groups can establish network sessions among its members. As such, tuple operations within a group should take place in a more efficient way than in plain data-centric solutions that provide no orientation for the underlying network layer, i.e., solutions in which tuple access and modifications require fresh connections or, conversely, that eagerly keep open connections among all nodes. Figure~\ref{fig:group_composition_sessions} shows both inner groups and outer group sessions in a group-of-groups composition. We have represented the hosting devices instead of roles to enforce the \textit{shared device} criteria for choosing gateways: D3 has been elected of the blue group and D6 for all the other groups.
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=0.4\textwidth]{figures/group_composition_sessions}
+	\caption{Sessions of different inner groups within a composition (left) and the resulting outer group session between elected gateways in D3 and D6 (right). Communication between gateways in D3 and D6 happens through the network, while the gateways in D6 can communicate internally.}
+	\label{fig:group_composition_sessions}
+\end{figure}
+
+%TODO see how to cope this idea with shared tuple space
+%In addition to intragroup and horizontal intergroup communication, a group-of-groups also provide vertical communication. This style enables any inner group member to provoke the outer group with tuple modifications, which are echoed to all inner groups members (group-of-groups broadcast). The advantage here is to constrain such perturbations of the system to the boundaries of the outer group.
+
+
+\subsection{Self-Management}\label{sec:group_mangement}
+
+%In this work, we are interested in the scenarios in which roles within a group are played by different physical devices. 
+
+
+\subsubsection{Activation Management}
+
+Activation management consists of controlling the components within a group that are active and those that are in standby mode. It addresses situations in which there are more components that are able to perform a given system role than it is required by the application. Plus, such components may fail or become unavailable. In addition to that, a high availability is required, i.e., the time taken for the transition must be low and replacements must be ready to assume the orphan role and its tasks.
+
+Accordingly, the question of \textit{to group and standby} (proactive fault-tolerance) or \textit{to group and replace} (reactive fault-tolerance) depends on how long the task provided by the component can remain interrupted (availability requirement). Although passive components are not actually performing any tasks, they are supposed to maintain the conditions to become active when needed, which translates into having the required resources available (readiness). Thus, standby components also have a cost. 
+
+The mechanism that manages component activation within a group must sort standby components by the following criteria:
+
+\begin{itemize}
+
+\item their readiness to become active;
+
+\item their service time in the group (fairness);
+
+\item their membership expectancy;
+
+\end{itemize}
+
+Such \textit{activation order} must be updated with some periodicity to reflect context changes. 
+
+\subsubsection{Tuple Management}
+
+%Tuple management
+Tuple spaces solutions aiming static or less dynamic environment must be adapted to work in the highly volatile scenario target by this proposal. First, tuples must have a certain degree of replication among group members. We tackle this with the same mechanism for managing the active components within a group. The particularity here is that standby tuple mangers should keep consistent copies of the tuple space.
+
+Like in homogeneous groups, the selection of active tuple managers must respect the contexts of devices, including their current usage of resources and their expectancy to remain in the system. Also, despite tuple managers and gateways to be different roles, sharing the same host eliminates the communication overhead. Accordingly, we propose a combined election of both roles.
+
+%Composition
+Regarding membership, groups can receive qualitative and quantitative specifications for the components they accept. In our work, a component type is defined as a role. In contrast with previous works~\cite{A3}, we do not restrict a group to homogeneous roles. Accordingly, groups can accept a single or multiple roles and impose or not limitations to their cardinality.
+
+%Self-grouping
+Groups can also be specified with quality-of-service (QoS) attributes. These should become criteria for the self-organization of a group with respect to its composition. For example, the performance, the availability, the reliability, and other attributes can be estimated based on the components in a group. As such, a group can act to avoid violations of these attributes by changing its composition, including the simple activation and deactivation of standby components and negotiating with other groups for reallocating its members.
+
+

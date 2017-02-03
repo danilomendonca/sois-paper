@@ -1,0 +1,19 @@
+\section{Related Work}
+\label{sec:related_work}
+
+Linda... LIME... TOTA...
+
+The A-3 model also proposes the use of groups as more stable entities for the development of distributed systems that can operate in dynamic and volatile environments. While this work share many of the motivations and have similarities with respect to A-3, our model does not rely on the rigid \textit{supervisor-follower} group structured proposed by A-3, nor group compositions rely on shared members. In contrast with A-3 middleware features for topology control operations and its more abstract architectural style for self-adaptation, we give special focus to concrete mechanisms and that should guarantee the basic properties of groups, such as a high availability, efficient use of resources, and other attributes defined by the application through light-weight extension points; finally, we investigate the integration of groups with tuple spaces for both inter-group and intra-group coordination, while A-3 rely on classical group communication methods.
+
+%A3-TAG, a programming model that facilitates the design of self-adaptive distributed systems based on group abstractions~[CT]. A3-TAG is an extension of the A-3 model, which is used as the organization model. A-3 key elements are groups and two types of roles, namely supervisor and follower. Each group has a supervisor and a variable number of followers. The main differences between this work and A3-TAG are dual: first, our organization model imposes no restriction about the number of roles a group can have, nor it specifies any hierarchy between roles. Second, our adaptation model is not based on coordination groups, but rather on the direct interaction between groups based on self-organization principles. We argue that the complexity of forming and managing coordination groups may result in excessive overhead. Instead, we propose a \textit{structureless} method to self-adapt the organization structure.
+
+The group-role abstraction has also been used in other domains. Ferber et al.~[CT] proposed an organization centered model for multi-agents systems that contrasts with agent centered models, in which agents can communicate and interact freely. Among the problems of agent centered models, the authors cited security, modularity and the lack of support to other frameworks besides the multi-agent platform itself. In our work, we agree with those arguments as part of the justification for an organizational approach for distributed systems. The main difference are the domains: instead of agents, we consider pervasive devices as the hosts of components that play roles in groups of distributed systems. In addition, we focus on the self-management of the group-based organization in the advent of context changes.
+
+
+%Kota et al.~[CT] have proposed a method for adapting the relationship between agents in a multi-agent system. In their work, agents reason about adaptation using only historical knowledge about past interactions and the cost of adaptation (meta-reasoning). Despite the similarities regarding the use of self-organization principles, our work differs in the organization model (groups, roles, and devices instead of agents and relationships) and also in the elements of the organization structure that are subject to adaptation (roles played by different devices in different groups instead of agents relationships). 
+
+
+
+Other works based on partitions target specific domains such as mobile ad hoc networks (MANET). As an example, ...
+
+

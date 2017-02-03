@@ -3,15 +3,13 @@
 \section{A-3 in a Nutshell}
 \label{sec:a3}
 
-A-3 is an innovative architectural style, and accompanying middleware, that facilitates the design and implementation of self-organizing distributed systems that are able to guarantee certain functional and non-functional qualities, even in the wake of high levels of component churn.  
+A-3 is an innovative architectural style that facilitates the design and implementation of self-organizing distributed systems. These are systems that can modify their architectural topology to cope with robustness and scalability issues. Herein we will adopt the traditional terminology used to describe architectural styles. Therefore, we will refer to the main composable unit of an A-3 application as a generic \emph{component}. In Section~\ref{sec:a3droid} we will discuss how a single component is implemented and deployed onto an Android mobile device.
 
-In the A-3 style components are dynamically gathered into \emph{groups} based on application-specific criteria (e.g., a shared objective or the fact that the components therein have similar characteristics). The assumption is that, by creating groups, the overall application becomes less subject to high component churn rates. Indeed, while components make come and go, groups are more likely to remain stable. 
+A-3 components are dynamically gathered into \emph{groups} based on application-specific criteria (e.g., a shared objective, or the fact that the components have similar characteristics). The assumption is that, by creating groups, the overall application becomes less subject to high component churn rates. Indeed, while components may come and go, groups are more likely to remain stable. A group only ceases to exist if all its components leave the application. 
 
-Each group in A-3 is composed of a single \emph{supervisor} component, and multiple \emph{follower} components. Supervisors are responsible for guiding the behaviour of its followers, as they attempt to reach their goals. 
+Each group is composed of a single \emph{supervisor} component and multiple \emph{follower} components. Supervisors guide the behavior of the group's followers, and represent an ideal location in which to embed data aggregation, correlation, and manipulation. Communication inside a group is achieved through  messaging; however, only three kinds of message exchange patterns are allowed. \emph{Supervisor-to-follower unicast} allows a supervisor to send a message to a single follower; \emph{Supervisor-to-follower multicast} allows a supervisor to send a message to a subset (or all) of its followers; \emph{Follower-to-supervisor unicast} allows a follower to send a message to its group supervisor. Follower-to-follower communication is not allowed; if needed, it must be performed using a separate channel. 
 
-Communication inside a group is achieved using asynchronous messagging; however, only three kinds of message exchange patterns are allowed. \emph{Supervisor-to-follower unicast} allows a supervisor to send a message to a single follower; \emph{supervisor-to-follower} multicast allows a supervisor to send a message to a subset (or all) of its followers; \emph{follower-to-supervisor unicast} allows a follower to send a message to its group supervisor. Follower-to-follower communication is not allowed, and if needed must be perfromed using a different channel. 
-
-Groups are not confined to isolated existence; on the contrary they can collaborate through what is called \emph{group composition}. Group composition is enabled by allowing components to belong to more than one group at a time. Figure~\ref{fig:configurations} illustrates the three basic ways in which two groups can collaborate through composition. Each group is identified by a horizontal bar. On the top side of the bar we have the group's supervisor (in light gray); while on the bottom half of the bar we have the group's followers (in white).
+Groups are not confined to an isolated existence; on the contrary, in A-3 they can collaborate through what is called \emph{group composition}. Group composition is enabled by allowing components to belong to more than one group at a time. Figure~\ref{fig:configurations} illustrates the three basic ways in which two groups can collaborate. Light grey circles represent group supervisors, while white circles represent group followers. Circles that are half grey and half white represent components that are a supervisor in one group, and a follower in another. The bars represent the group connectors that enable group communication; they are always placed between the groups' supervisors and their followers. 
 
 \begin{figure}[ht]
 \centering
@@ -20,25 +18,27 @@ Groups are not confined to isolated existence; on the contrary they can collabor
 \label{fig:configurations}
 \end{figure}
 
-\noindent In case (a) we have a component that is a follower in two different groups. This means it is contributing its local knowledge to both groups. In case (b) we have a component that is a supervisor in one group, and a follower in another. In this case the component is contributing the knowledge it gathers as the supervisor of the first group within the second group, in which it is a follower. Case (c) is an extension of case (b); in this case a bidirectional communication is established between the two groups. 
+\noindent In case (a) a component is a follower in two different groups. This means it can share its local knowledge within both groups. In case (b) we have a component that is a supervisor in one group and a follower in another. This allows the component to share the knowledge it gathers as the supervisor of the first group, within the second one. This form of composition creates group \emph{hierarchies}. Case (c) is an extension of case (b); in this case a bidirectional knowledge exchange is established between the two groups. This form of composition enables \emph{fully distributed topologies}.
 
-\subsection{Self-Organizing Capabilities}
-\label{sub:self-organizing}
+%\subsection{Self-Organizing Capabilities}
+%\label{sub:self-organizing}
 
-In A-3 a group cannot exit in the absence of a supervisor. Fortunately, A-3 offers three built-in features that allow a group to autonomously re-organize itself should the supervisor leave for any reason.
+Since a group cannot exist in the absence of a supervisor, A-3 offers three built-in features that allow a group to autonomously re-organize itself should the supervisor depart for any reason.
 
-First of all, A-3 offers \emph{Group State Management} (GSM). This feature allows supervisors to store data within the group itself. The data is replicated and synchronized across the group's follower components, so that it can easily be recovered when needed. 
+\emph{Group State Management} (GSM) allows supervisors to store data within the group itself. The data is replicated and synchronized across the group's follower components, so that it can easily be recovered when needed. 
 
-Second, A-3 offers \emph{Runtime Membership Updates} (RMU). This feature uses group messaging to provide supervisors with up-to-date snapshots of ``who'' is in the group, since components are free to enter and/or leave the group at will. It also plays a key role in signalling to the followers that their supervisor has left the group. 
+\emph{Runtime Membership Updates} (RMU) uses group messaging to provide supervisors with up-to-date snapshots of ``who'' is in the group, since components are free to enter and/or leave the group at will. It also plays a key role in signaling to the followers that their supervisor has left the group. 
 
-Third, A-3 offers \emph{Supervisor Failure Recovery} (SFR). This feature allows developers to define the distributed leader-election algorithm that they want the A-3 middleware to launch when a new group supervisor needs to be found. 
+\emph{Supervisor Failure Recovery} (SFR) allows developers to define the distributed leader-election algorithm they want the middleware to launch when a new group supervisor needs to be found. 
 
-\subsection{Group Topology Management}
-\label{sub:topologyManagement}
+%subsection{Group Topology Management}
+%\label{sub:topologyManagement}
 
-A-3 also provides supervisor components with a series of \emph{Topology Control Operations} (TCOs) that they can use to change the application's topology, i.e., how the groups are composed. These can be used to cope with a sudden increase (or decrease) in the number of components within a single group. A-3 provides four TCOs: \emph{split} and \emph{merge}, and \emph{stack} and \emph{unstack}. 
+A-3 also provides supervisor components with a series of \emph{Topology Control Operations} (TCOs); these can be used to change how the groups are composed, to cope with a sudden increase (or decrease) in the number of components within a single group. A-3 provides four TCOs: \emph{split}, \emph{merge}, \emph{stack}, and \emph{unstack}. 
 
-Split takes a subset of the superisor's follower components and places them in a newly created ``secondary'' group. This requires the availability of a component that can act as the new group's supervisor. One can specify the number of components that need to move, and in this case the components are chosen randomly; or one can specify a \emph{membership function}. In this case the membership function is called on all the components, and those that return the boolean value \emph{true} are moved to the new group. Merge is the inverse of split; it takes the components of a \emph{source} group and moves them to a \emph{destination} group. As a result, the source group ceases to exist.
+Split takes a subset of the supervisor's follower components and places them in a newly created ``secondary'' group. This requires the availability of a component, within the original group, that can act as the new group's supervisor. The developer can specify the number of components that need to move, and in this case the components are chosen randomly; or specify a \emph{membership function}. In this case the membership function is called on all the components, and those that return the boolean value \emph{true} are moved to the new group. The two groups that result from the application of the TCO are disjointed; the developer can decide to leave them that way, or to apply more TCOs and use the two groups to generate a new architectural topology.
+
+Merge is the inverse of split; it takes the components of a \emph{source} group and moves them to a \emph{destination} group. As a result, the source group ceases to exist.
 
 Stack is used to stack one group on top of another, by making the second group's supervisor become a follower in the first group. Unstack is the inverse of this operation. 
 

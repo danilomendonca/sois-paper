@@ -5,23 +5,21 @@
 
 %target -> 1.5 pages
 
-% At first I will use greenhouse (since I have already written some text and have the results), but later I will replace it to a more coherent example related to crowdsensing
+Herein we evaluate A3Droid's ability to provide robust and scalable crowdsensing. The evaluations were performed as a series of lab experiments that were run on a range of real Android smartphones. These experiments mimic the collection of up-to-date information about public transport by using crowdsensing on moving buses. The app that we built supports both temporal and spatial redundancy when collecting data, can cope with sudden supervisor departures thanks to its use of A3Droid's SFR feature, and can scale as the number of devices on the bus increases. 
 
-\subsection{Public Transport Sharing}\label{sec:mobee}
+In our experiments we have one A-3 group per bus, and each group's supervisor is dynamically selected amongst the people using the app on the bus. Each data reading contains the bus' \texttt{position} (i.e., its \texttt{latitude} and \texttt{longitude}), its \texttt{speed}, its \texttt{direction}, and its \texttt{accuracy} value. Accuracy is defined by Android as the radius of $68$\% confidence. This means that if we draw a circle of radius \texttt{accuracy}, centered at the location's \texttt{latitude} and \texttt{longitude}, there is a $68$\% probability that the true location is inside the circle. The data that are collected are sent by the supervisor to a remote server, which processes these fields and provides up-to-date information about the city's traffic conditions through an appropriate querying REST API. 
 
-In this section, we evaluate A3Droid with an application for public transport information sharing among users. Crowdsensing is used to gather multiple geolocation data from users using a mobile device with GPS while travelling in the same bus. An A3 group is formed with one device being elected the supervisor responsible for receiving followers geolocation, taking the average and sending this data to the backend server. Geolocation data is a structure composed of latitude as longitude, as well as speed, accuracy and direction. These fields are processed by the server who publishes a complete API for querying estimations about bus lines geolocations and when a they will reach a certain stop. Grouping GPS sensors provides both temporal and spatial redundancies, since different devices should query their GPS within a limited amount of time (since buses are moving) and space (restricted to the bus interior). 
+%along three main directions. The first is its capability to enable robust crowd-sensing; in particular, it needs to make it easy for developers to cope with a group's supervisor leaving the app. The second is its capability to scale as the number of devices increases; in particular, it needs to be able to support efficient messaging amongst the devices. The third is its capability to enable the collection of high-quality data; in particular, it needs to make it easy for developers to support temporal, spatial, and dimensional redundancy. 
 
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=1\linewidth]{figures/mobee.png}
-\caption{Public transport information sharing system overview}
-\label{fig:MOBEE_OVERVIEW}
-\end{figure}
+Listing~\ref{lst:LOC_AVG} shows how temporal and spatial redundancy were setup in the supervisor. Method \texttt{run} starts by instantiating a synchronized list for storing the geo-located data that it will receive from its followers. It then proceeds to create a timer that will periodically (i.e., every $30$ seconds) i) calculate the average of the stored geo-located data, ii) send the average to the application's remote server, and iii) cleanse the list. Method \texttt{messageFromFollower} listens for updates from the supervisor's followers. If it receives geo-located data that has an accuracy that is less than a given threshold, the data is added to the list; if not it is discarded.
 
-A total amount of 12 Android devices have been used in this evaluation. Our purpose is to stress the implementation with a high number of messages being sent from followers devices to their supervisor in different group sizes configurations, starting with 3 members in a group up to 12 members. To represent the churn of users entering and exiting the bus, a second round of measurements was performed with two devices repeatedly added and removed during execution - therefore extrapolating the real case scenario for bus users. Measurements took 5 minutes each. Finally, an uniform distribution between 0 and 10 seconds has been used for the message interval of consecutive messages from each follower.
+\lstinputlisting[float=h, caption={Averaging the geo-located data collected by the supervisor.}, label=lst:LOC_AVG]{locationAverage.java}
 
-\subsection{Results and Discussion}\label{discussion}
+Listing~\ref{lst:FITNESS}, on the other hand, shows how we exploited A3Droid's SFR feature to trigger a new supervisor election every time the supervisor's absence was detected. We created a fitness function that took into account the number of bus stops that separate the passenger from his/her final destination. To minimize the number of supervisor elections, we always selected the device of the person with the longest trip ahead of them. 
 
+\lstinputlisting[float=h, caption={The fitness function used to elect the bus' group supervisor.}, label=lst:FITNESS]{fitnessFunction.java}
+
+In our experiments we stressed the middleware with a high number of messages, increasing the size of the group from $3$ devices up to $12$ (i.e., a realistic amount of devices for our scenario). To simulate users getting on and off the bus, a second round of measurements was performed, in which we repeatedly added and removed two devices at a time. The measurements took $5$ minutes each. A uniform distribution between $0$ and $10$ seconds was used to distance consecutive messages being sent by the same follower. In the real-world this interval would vary according to the speed of the bus, as well as other factors.
 
 \begin{figure}[ht]
 \centering
@@ -67,10 +65,32 @@ A total amount of 12 Android devices have been used in this evaluation. Our purp
 			\end{axis}
 			
 \end{tikzpicture}	
-\caption{Time for a geolocation data to be sent by supervisor and its confirmation to be received by the follower. One curve represent experiments with static groups (no churn) and another with two members entering and leaving the group throughout the experiment (churn)}
+\caption{Messaging performance in A3Droid, with and without churn.}
 \label{fig:MOBEE_RTT_VS_GROUP_SIZE}
 \end{figure}
 
-The results in Figure~\ref{fig:MOBEE_RTT_VS_GROUP_SIZE} show that, for the crowsensing of geolocation data of public transports, A3Droid were able to deliver messages within an acceptable time. The worse case of 10 simultaneous devices sending messages and two devices being added and removed from the group did not extrapolated 0.65 seconds for a complete round-trip. Considering that the confirmation message was only used to achieve a precise measurement - since followers and supervisor devices don't have their clocks synchronized - and is not part of the system requirement itself, a single direction message would have a slight smaller average.
+The results in Figure~\ref{fig:MOBEE_RTT_VS_GROUP_SIZE} show that A3Droid was able to deliver messages within an acceptable time. The complete round-trip time (RTT) did not go beyond $0.65$ seconds. Confirmation messages were used to achieve more precise measurements --since followers and supervisors do not have synchronized clocks. Single messages would have had a slightly smaller average.
 
-Regarding the scalability of the framework, the no churn curve have a substantial slope increase after 6 members. This can be seen as the point in which the supervisor starts to accumulate some messages in the queue. As we have used an uniform distribution with a maximum interval of 10 seconds, some messages are sent within a very short interval, causing accumulation, while others are sent within a longer interval, allowing the queue to decrease. The curve with devices churn starts with a different growth pattern. The constant churn stresses the supervisor causing the additional overhead of \~0.2s noticed by the difference between the initial point of the curves. As we kept fixed the number of devices entering and leaving the groups, the higher the group size, the less significant the churn for the results. After 8 devices it is possible to notice the curve growth to invert its tendency to follow a similar pattern from the no churn curve. This means that the constant churn overhead impact has became relatively smaller compared to the impact of more followers sending messages to the supervisor.
+Regarding the framework's ability to scale, the ``no churn'' curve sees a substantial slope increase after $6$ members. This is the point in which the supervisor starts accumulating messages in its queue. This was due to the fact that we used a uniform distribution with a maximum interval of $10$ seconds, leading some messages to be sent within a very short amount time. The ``with churn'' curve starts with a different growth pattern. The constant churn stresses the supervisor, causing an additional overhead of around $0.2$s --seen between the initial points of the two curves. As we can see, the higher the group size the less significant the churn becomes. After $8$ devices the curve inverts its second order growth, and starts following a pattern that is similar to the one seen in the ``no churn'' curve.
+
+
+
+
+
+%\begin{figure}[!ht]
+%\centering
+%\includegraphics[width=1\linewidth]{figures/mobee.png}
+%\caption{Public transport information sharing system overview}
+%\label{fig:MOBEE_OVERVIEW}
+%\end{figure}
+
+
+
+
+
+
+
+ 
+
+
+
