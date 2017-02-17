@@ -198,7 +198,8 @@
 
 % *** ALIGNMENT PACKAGES ***
 %
-%\usepackage{array}
+\usepackage{array}
+\usepackage{tabularx} % Danilo added to adjust the width of the tables
 % Frank Mittelbach's and David Carlisle's array.sty patches and improves
 % the standard LaTeX2e array and tabular environments to provide better
 % appearance and additional user controls. As the default LaTeX2e table
@@ -292,7 +293,7 @@
 
 % *** PDF, URL AND HYPERLINK PACKAGES ***
 %
-%\usepackage{url}
+\usepackage{url}
 % url.sty was written by Donald Arseneau. It provides better support for
 % handling and breaking URLs. url.sty is already installed on most LaTeX
 % systems. The latest version and documentation can be obtained at:
@@ -321,7 +322,7 @@
 % not capitalized unless they are the first or last word of the title.
 % Linebreaks \\ can be used within to get better formatting as desired.
 % Do not put math or special symbols in the title.
-\title{A Self-organizing Model for Highly Volatile and Heterogeneous Distributed Systems}
+\title{A Framework for Highly Volatile and Heterogeneous Distributed Systems}
 
 
 % author names and affiliations
@@ -379,9 +380,8 @@ Piazza L. da Vinci, 32 -- 20133 Milano, Italy\\
 \input{background}
 \input{related_work}
 \input{model.tex}
-%\input{evaluation.tex}
-%\input{related.tex}
-%\input{conclusion.tex}
+\input{evaluation.tex}
+\input{conclusion.tex}
 
 
 % For peer review papers, you can put extra information on the cover
@@ -398,10 +398,11 @@ Piazza L. da Vinci, 32 -- 20133 Milano, Italy\\
 
 %TODO uncomment after at least one item is present
 %\begin{thebibliography}{1}
-
+%
 %\end{thebibliography}
+
 \bibliographystyle{IEEEtran}
-%\bibliography{biblio}
+\bibliography{biblio}
 
 
 
