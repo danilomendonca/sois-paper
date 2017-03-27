@@ -38,11 +38,11 @@ For instance, in the mobile crowdsensing example, an edge space is formed by the
 %: the middleware layer exposes features that are consumed by the application layer, including access to the tuple space, mechanisms for managing groups and roles and their adaptation.
 %We abstract potential network disconnections of nodes as part of components churn. 
 
-\subsubsection{Groups} to support the organization of the edge space, we bring forward the concept of groups, which is usually hidden or implicit in other models~\cite{}. As such, groups are not just ensembles of computational entities, but have a clear criteria for its membership and an explicit meaning for the system at specific moments or throughout its life-cycle. Moreover, in our work groups abstractions are further enriched with concrete mechanisms for managing the distribution of system roles and keeping the group knowledge consistent.
+\subsubsection{Groups} to support the organization of the edge space, we bring forward the concept of groups, which is usually hidden or implicit in other models~\cite{}. As such, groups are not just ensembles of computational entities, but have a clear criteria for its membership and an explicit meaning for the system. Moreover, groups are enriched with multiple mechanisms for managing the distribution of system roles and keeping the group knowledge consistent.
 
-Considering an edge space formed by a set of $N$ devices, group membership criteria enables the partitioning of this space into subspaces of devices satisfying these criteria. Each subspace $i$ is formed by a set of $M_i$ devices, where $|M_i| \le N$. If such criteria is empty, the group space shall correspond to the edge space, meaning $M_i = N$. Membership criteria may consist of physical attributes such as a given resource level (e.g., battery, memory, etc), the classification of the device (e.g. type, model, etc), and other physical metrics (e.g., location, temperature, etc); it may also consist of logical criteria meaningful to the application (e.g., members of a chat); finally, it may consist of functional and non-function criteria (e.g., devices with a given fixed or dynamic capability/performance). 
+Given an edge space formed by a set of $N$ devices, a group membership criteria enables the partitioning of this space into a subspace of $M$ devices, where $M \leq N$. If such criteria is empty, the group space shall \textit{expand} to the edge space, meaning $M = N$. Otherwise, $M$ depends on how many devices in $N$ satisfy the group membership criteria. This criteria may consist of physical attributes such as a given resource level (e.g., battery, memory, etc), the nature of the device (e.g. type, model, etc), and other physical metrics (e.g., location, temperature, etc); it may also consist of logical criteria meaningful to the application (e.g., members of a chat). Finally, it may consist of functional and non-function criteria (e.g., devices with a given capability). 
 
-Despite the freedom for membership criteria specification, we advocate that groups should provide a higher level and more coarse partitioning of the edge space. More granular characterization and partitioning can still be achieved; however, as the dynamicity of devices is hight, some criteria may imply in a hight overhead caused by frequent satisfaction verification and consequent group churn whenever this criteria is violated. For instance, the membership criteria of the \textit{geolocation group} in the crowdsensing application example could be specified by the following predicate:
+We make no restrictions to the group criteria; however, we advocate that groups should provide a more coarse and stable partitioning of the edge space instead of granular or more dynamic criteria. For instance, the membership criteria of the \textit{geolocation group} in the crowdsensing application example can be specified by the following predicate:
 \medskip
 
 \begin{center}
@@ -52,32 +52,32 @@ Despite the freedom for membership criteria specification, we advocate that grou
 \medskip
 \normalsize
 
-While the first term refers to a fixed condition, the others are dynamic and require a periodic verification of their satisfaction. To avoid the communication and processing bottleneck of a centralized membership control, we propose an inversion of control by letting devices in the edge space to be aware of the existing groups and their membership criteria. If the criteria is met, the device shall join the group. 
+While the first term refers to a fixed condition, the others are dynamic and require a periodic verification of their satisfaction. To avoid the communication and processing bottleneck of a centralized membership control, we propose the inversion of such control by letting devices in the edge space to be aware of the existing groups and their membership criteria. If the criteria is met, the device shall join the group. 
 
-\subsubsection{Roles} consist of units of logic with a clear responsibility in the system. For instance, a role may refer to some application task(s), or it may be responsible for some managing activity, including the management of the interaction space and its adaptation. Furthermore, roles are expected to communicate with each other in order to coordinate their activities and to share information. A group is where those requirements can be met. For this, groups work as a framework in which roles are deployed and can make use of different communication and coordination methods.
+%To illustrate this concept, the \textit{geolocation group} in the crowdsensing application shall be complemented with an \textit{acceleration group}. The first group uses a client-server where GPS data is fetched by M-1 group members and sent to one aggregator elected dynamically. The \textit{acceleration group} uses a similar approach to sense the bus acceleration; in this case, only incidents (hard braking) detected by the corresponding aggregator should be reported to backend servers.  
 
-Whereas certain roles are part of the core system functionality that cannot be decoupled from the nodes -- for instance, those that handle interactions with users -- other roles can be assigned to a subset of the devices within a group. Accordingly, the cardinality of a role with respect to the number of system nodes can vary. We define a group-role cardinality as the quantitative relation between the number ($k$) of devices in a group playing a given role and the cardinality ($m$) of that group.
-%While the first case is trivial, the second implies a decision for which devices should
-%and there are cases in which the requirements for the cardinality of a given role does not match the number of nodes.
-% -- either because too few or too many nodes are able to assume a that role. 
-Table~\ref{tab:role_node_cardinality} summarizes the two general cases.
+%Moreover, groups can define different architectural styles for communication (supervisor-followers/client-server, peer-to-peer) and coordination (message queue, publish/subscribe, data-centered) among its members. 
 
-\begin{table}[ht]
+\subsubsection{Roles} consist of units of logic with a clear purpose in the system. A role may refer to some application functionality, or it may be responsible for some managing behavior, including the management of the interaction space and its adaptation. Furthermore, roles are expected to interact with each other in order to coordinate their activities and to share information. Certain roles are part of the application logic and cannot be decoupled from the nodes -- for instance, those that handle interactions with users. In contrast, other roles can be assigned to a subset of the system nodes. Accordingly, the relation between the cardinality of a role and the group cardinality may vary.
+%While the concept of a group here is simple, its importance will become clear when the edge space must be further partitioned in the other examples. 
+Considering a group of $m$ devices, Table~\ref{tab:role_node_cardinality} summarizes the possible cases for the number $k$ of instances of a given role.
+
+\begin{table}[t]
 	\centering
 	\begin{tabularx}{\linewidth}{@{}|c| *1{>{\centering\arraybackslash}X|}@{}}
 		\hline 
 		\textbf{Role-Node Relation} & \textbf{Description} \\
 		\hline
-		$1-1$ & All nodes must play a given role \\ 
+		$k = m$ & All nodes must play a given role \\ 
 		\hline 
-		$k-m$ & Among $m$ nodes, $k$ nodes must play a given role ($k < m)$ \\ 
+		$k \le m$ & Among $m$ nodes, $k$ nodes must play a given role \\ 
 		\hline
 	\end{tabularx}
-	\caption{The group-role cardinality relation.}
+	\caption{The cardinality relation between system roles and nodes.}
 	\label{tab:role_node_cardinality}
 \end{table}
 
-The first case is trivial and requires no further reasoning -- as long as a device satisfies the group criteria, it should play that role. Conversely, the second case poses the challenge of selecting the best candidates to play one or more system roles according to one or multiple criteria. Notwithstanding the improved performance of the discentralized method for group membership control, it provides no further differentiation between devices within the group. Considering the heterogeneity and the need for an optimal and fair distribution of system roles, group members shall also be classifiable w.r.t. to their \textit{fitness} to play such roles. Accordingly, we introduce the concept of a \textit{role fitness criteria} for enabling a dynamic role allocation within a group. For instance, the fitness criteria for the \textit{GPS fetcher role} can be defined as:
+While the first case ($k = m$) is trivial and requires no further reasoning -- as long as a device fits the group, it should play that role -- the second case ($k \le m$) poses the challenge of selecting the best candidates to play the $k$ instances of the role. In contrast with group membership criteria, a \textit{role fitness criteria} should provide a more granular classification of devices w.r.t. different roles. For instance, the fitness criteria for the \textit{GPS fetcher role} could be specified as:
 \medskip
 
 \begin{center}
@@ -87,15 +87,8 @@ The first case is trivial and requires no further reasoning -- as long as a devi
 \medskip
 \normalsize
 
-%As the fitness criteria may refer to facts that change at runtime -- such as the battery level -- they may
+This simple fitness criteria can be modeled as a function that takes the battery level as an input and provides the fitness level as output. The main difference is that, whereas the group membership is binary, the role fitness criteria should allow comparisons between group members. Also in this case, an inversion of control should avoid centralization bottlenecks by letting devices to calculate their own fitness value. A classification list is then used by an allocation manager to decide for which devices should play which roles in that group. Figure~\ref{fig:group_accession} compares both cases.
 
-This simple fitness criteria can be modeled as a function that takes the battery level as an input and provides the fitness level as output. The main difference is that, whereas the group membership is binary, the role fitness criteria should allow comparisons between group members. Also in this case, centralization bottlenecks are mitigated by letting devices to calculate their own fitness value. The resulting classification list is then used by a single instance allocation manager to decide for which devices should play which roles in that group. At this point, it becomes clear that not only application roles can benefit from the abstraction and mechanisms provided by the framework, but also management logic can be encapsulated as roles to be assigned to one or more node within the group. Figure~\ref{fig:group_accession} presents a general picture of the group membership and classification mechanisms.
-
-%To illustrate this concept, the \textit{geolocation group} in the crowdsensing application shall be complemented with an \textit{acceleration group}. The first group uses a client-server where GPS data is fetched by M-1 group members and sent to one aggregator elected dynamically. The \textit{acceleration group} uses a similar approach to sense the bus acceleration; in this case, only incidents (hard braking) detected by the corresponding aggregator should be reported to backend servers.  
-
-%Moreover, groups can define different architectural styles for communication (supervisor-followers/client-server, peer-to-peer) and coordination (message queue, publish/subscribe, data-centered) among its members. 
-
-In addition to the classification of group members, the $k < m$ case in Table~\ref{tab:role_node_cardinality} also implies a definition of the role cardinality $k$. This parameter is directly or indirectly related to relevant attributes.
 
 \begin{itemize}
 	
@@ -107,9 +100,9 @@ In addition to the classification of group members, the $k < m$ case in Table~\r
 	
 \end{itemize}
 
-%The first case (1-1) refers to the trivial and more evident relationship. For instance, all peers of a mobile game application should perform the roles responsible for collecting user commands and updating the user interface with according to the current game state. In contrast, if the same group of nodes depends on information provided by sensors -- e.g. temperature or geolocation -- not all of them may have to access their sensors simultaneously. 
-%%Or, if the same group needs to report its position to a remote endpoint, not all of them must send the average geolocation data. 
-%Behaviors that produce results that can be shared by a given number of nodes and performed by a subset of these same nodes are represented by the second cases in Table~\ref{tab:role_node_cardinality}. The value o $p$ shall be either specified by the application or computed at runtime according to the attributes affected.
+The first case (1-1) refers to the trivial and more evident relationship. For instance, all peers of a mobile game application should perform the roles responsible for collecting user commands and updating the user interface with according to the current game state. In contrast, if the same group of nodes depends on information provided by sensors -- e.g. temperature or geolocation -- not all of them may have to access their sensors simultaneously. 
+%Or, if the same group needs to report its position to a remote endpoint, not all of them must send the average geolocation data. 
+Behaviors that produce results that can be shared by a given number of nodes and performed by a subset of these same nodes are represented by the second cases in Table~\ref{tab:role_node_cardinality}. The value o $p$ shall be either specified by the application or computed at runtime according to the attributes affected.
 
 %These cases are addressed in the following sections of the paper where groups and self-management mechanisms are discussed.
 
