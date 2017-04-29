@@ -62,22 +62,22 @@ Whereas certain roles are part of the core system functionality that cannot be d
 % -- either because too few or too many nodes are able to assume a that role. 
 Table~\ref{tab:role_node_cardinality} summarizes the two general cases.
 
-\begin{table}[ht]
+\begin{table}[t]
 	\centering
 	\begin{tabularx}{\linewidth}{@{}|c| *1{>{\centering\arraybackslash}X|}@{}}
 		\hline 
 		\textbf{Role-Node Relation} & \textbf{Description} \\
 		\hline
-		$1-1$ & All nodes must play a given role \\ 
+		$k = m$ & All nodes must play a given role \\
 		\hline 
-		$k-m$ & Among $m$ nodes, $k$ nodes must play a given role ($k < m)$ \\ 
+		$k \le m$ & Among $m$ nodes, $k$ nodes must play a given role \\ 
 		\hline
 	\end{tabularx}
-	\caption{The group-role cardinality relation.}
+	\caption{The cardinality relation between system roles and nodes.}
 	\label{tab:role_node_cardinality}
 \end{table}
 
-The first case is trivial and requires no further reasoning -- as long as a device satisfies the group criteria, it should play that role. Conversely, the second case poses the challenge of selecting the best candidates to play one or more system roles according to one or multiple criteria. Notwithstanding the improved performance of the discentralized method for group membership control, it provides no further differentiation between devices within the group. Considering the heterogeneity and the need for an optimal and fair distribution of system roles, group members shall also be classifiable w.r.t. to their \textit{fitness} to play such roles. Accordingly, we introduce the concept of a \textit{role fitness criteria} for enabling a dynamic role allocation within a group. For instance, the fitness criteria for the \textit{GPS fetcher role} can be defined as:
+The first case is trivial and requires no further reasoning -- as long as a device satisfies the group criteria, it should play that role. Conversely, the second case poses the challenge of selecting the best candidates to play one or more system roles according to one or multiple criteria. Notwithstanding the improved performance of the discentralized method for group membership control, it provides no further distinction between devices within the group. Considering the heterogeneity and the need for an optimal and fair distribution of system roles, group members shall also be classifiable w.r.t. to their \textit{fitness} to play such roles. Accordingly, we introduce the concept of a \textit{role fitness criteria} to be used by the dynamic role allocation within a group. For instance, the fitness criteria for the \textit{GPS fetcher role} can be defined as:
 \medskip
 
 \begin{center}
@@ -89,13 +89,34 @@ The first case is trivial and requires no further reasoning -- as long as a devi
 
 %As the fitness criteria may refer to facts that change at runtime -- such as the battery level -- they may
 
-This simple fitness criteria can be modeled as a function that takes the battery level as an input and provides the fitness level as output. The main difference is that, whereas the group membership is binary, the role fitness criteria should allow comparisons between group members. Also in this case, centralization bottlenecks are mitigated by letting devices to calculate their own fitness value. The resulting classification list is then used by a single instance allocation manager to decide for which devices should play which roles in that group. At this point, it becomes clear that not only application roles can benefit from the abstraction and mechanisms provided by the framework, but also management logic can be encapsulated as roles to be assigned to one or more node within the group. Figure~\ref{fig:group_accession} presents a general picture of the group membership and classification mechanisms.
+This simple fitness criteria can be modeled as a function that takes the battery level as an input and provides the fitness level as output. The main difference is that, whereas the group membership is binary, the role fitness criteria should allow comparisons between group members. Also in this case, centralization bottlenecks are mitigated by letting devices to calculate their own fitness value. The resulting classification list is then used by an allocation manager to decide for which devices should play which roles in that group. Figure~\ref{fig:group_accession} presents a general picture of the group membership and classification mechanisms.
+
+
+In addition to the classification of group members, the $k < m$ case in Table~\ref{tab:role_node_cardinality} also implies a definition of the role cardinality $k$. In fact, this parameter should be dynamically tunned by the system to guarantee, for different contexts, the minimum levels of attributes like availability, reliability, performance, and others. For example, the more replicas of a given functionality or data, it is less likely that it will become unavailable after a device leaves or fails. This is the case of data which must be kept by the group, such as the group view and the tuple spaces in data-centered coordination. Its replication degree among group members shall depend on the volatility of the devices within the group -- churn rate, mobility patterns, etc -- as well as the required level of availability. 
+
+The replication degree $k$ for a given attribute can be modeled as a function $f_{Attr}(C)$, where $C$ is the current context and $_{Attr}$ is the attribute to be optimized. Table~\ref{fig:motivation} show some examples from the mobile crowdsensing application.
+
+\begin{table}[t]
+	\centering
+	\begin{tabularx}{\linewidth}{@{}|c| *1{>{\centering\arraybackslash}X|}@{}}
+		\hline 
+		\textbf{Attribute} & \textbf{$f_{Attr}(C)$} \\
+		\hline
+		Reliability & $1 − (1 − R)^{k+1}$, with $F$ the probability of failure\\
+		\hline 
+		Availability & $MTTR$, with A the probability of a\\ 
+		\hline
+	\end{tabularx}
+	\caption{The cardinality relation between system roles and nodes.}
+	\label{tab:role_node_cardinality}
+\end{table}
+
+
+%At this point, it becomes clear that not only application roles can benefit from the abstraction and mechanisms provided by the framework, but also management logic can be encapsulated as roles to be assigned to one or more nodes within the group. 
 
 %To illustrate this concept, the \textit{geolocation group} in the crowdsensing application shall be complemented with an \textit{acceleration group}. The first group uses a client-server where GPS data is fetched by M-1 group members and sent to one aggregator elected dynamically. The \textit{acceleration group} uses a similar approach to sense the bus acceleration; in this case, only incidents (hard braking) detected by the corresponding aggregator should be reported to backend servers.  
 
 %Moreover, groups can define different architectural styles for communication (supervisor-followers/client-server, peer-to-peer) and coordination (message queue, publish/subscribe, data-centered) among its members. 
-
-In addition to the classification of group members, the $k < m$ case in Table~\ref{tab:role_node_cardinality} also implies a definition of the role cardinality $k$. This parameter is directly or indirectly related to relevant attributes.
 
 \begin{itemize}
 	
@@ -113,24 +134,24 @@ In addition to the classification of group members, the $k < m$ case in Table~\r
 
 %These cases are addressed in the following sections of the paper where groups and self-management mechanisms are discussed.
 
-Conversely to the role-node relation, restrictions may also apply to the number of instances of a given role that a node can play. %While certain roles require an exclusive dedication from the device, others may have more than a single instance running in the same node. 
-Table~\ref{tab:node_role_cardinality} describe the possible	 cases. The first (1-1) refers to roles that require an exclusive dedication from the device. The later case (1-k) refers to the general case in which the number of instances is either constrained by the application or left unbounded. The cardinality of roles is further discussed in later sections.
-
-
-\begin{table}[t]
-	\centering
-	\begin{tabularx}{\linewidth}{@{}|c| *1{>{\centering\arraybackslash}X|}@{}}
-		\hline 
-		\textbf{Node-Role Relation} & \textbf{Description} \\
-		\hline
-		$1-1$ & A node can only play a given role once \\ 
-		\hline 
-		$1-k$ & A node can play $k$ instances of a given role \\ 
-		\hline
-	\end{tabularx}
-	\caption{The cardinality relation between system nodes and roles.}
-	\label{tab:node_role_cardinality}
-\end{table}
+%Conversely to the role-node relation, restrictions may also apply to the number of instances of a given role that a node can play. %While certain roles require an exclusive dedication from the device, others may have more than a single instance running in the same node. 
+%Table~\ref{tab:node_role_cardinality} describe the possible	 cases. The first (1-1) refers to roles that require an exclusive dedication from the device. The later case (1-k) refers to the general case in which the number of instances is either constrained by the application or left unbounded. The cardinality of roles is further discussed in later sections.
+%
+%
+%\begin{table}[t]
+%	\centering
+%	\begin{tabularx}{\linewidth}{@{}|c| *1{>{\centering\arraybackslash}X|}@{}}
+%		\hline 
+%		\textbf{Node-Role Relation} & \textbf{Description} \\
+%		\hline
+%		$1-1$ & A node can only play a given role once \\ 
+%		\hline 
+%		$1-k$ & A node can play $k$ instances of a given role \\ 
+%		\hline
+%	\end{tabularx}
+%	\caption{The cardinality relation between system nodes and roles.}
+%	\label{tab:node_role_cardinality}
+%\end{table}
 
 
 %In addition, some cyber-physical devices have exclusive and fixed capabilities which allow them to perform specific roles -- usually provided by exclusive hardware components; other devices can perform different tasks and assume multiple roles. 
