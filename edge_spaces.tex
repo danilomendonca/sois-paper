@@ -33,19 +33,17 @@ FIGURE: GROUPS
  
 The decision of which node(s) should be assigned to which roles(s) may depend on many factors. Trivially, any node capable of performing a role is a potential candidate. Notwithstanding this, there are attributes affected by this choice, such as the quality of the data fetched by different devices in a given context or the availability of resources like battery and allocation fairness. A balanced role allocation must respect the trade off between what is best for the application goals and the devices owners. The later is specially important in volunteer based applications such as mobile crowdsensing, as efficient and fair use of devices resources works as an incentive for participation. 
 
-We use Gerkey and Matarić’s taxonomy~\cite{} to present a categorization of the role allocation problem along three axes. In the first axis, nodes are categorized into two types: single-role versus multi-role nodes\footnote{Originally, the taxonomy refers to \textit{robots} and \textit{tasks}, while in this paper we refer to the (application) \textit{nodes} and the \textit{roles} they can perform.}. As application nodes are generally capable of performing more than one role at a time -- for instance, to fetch from multiple sensors -- nodes are considered as multi-role. In the second axis, roles are categorized into two types: single-node vs multi-node roles. While certain types of role are performed by a single node -- for instance, the aggregator of sensor data -- there are cases in which a role must be performed by multiple nodes. Thus, node cardinality depends on the role. Finally, in the third axis, the allocation is also categorized into two types: instantaneous assignment or time-extended assignment. Due to the volatility of mobile devices (churn and capability changes), the scheduling of future allocations tends to fail. Accordingly, we consider an instantaneous assignment of roles based on the current context of the involved devices.
+We use Gerkey and Matarić’s taxonomy~\cite{} to present a categorization of the role allocation problem along three axes. In the first axis, nodes are categorized into two types: single-role versus multi-role nodes\footnote{Originally, the taxonomy refers to \textit{robots} and \textit{tasks}, while in this paper we refer to the (application) \textit{nodes} and the \textit{roles} they can perform.}. As application nodes are generally capable of performing more than one role at a time -- for instance, to fetch from multiple sensors -- nodes are considered as multi-role. In the second axis, roles are categorized into two types: single-node vs multi-node roles. While certain types of role are performed by a single node -- for instance, the sensor data aggregator -- there are cases in which a role must be performed by multiple nodes. Thus, node cardinality depends on the role type. Finally, in the third axis, the allocation is also categorized into two types: instantaneous assignment or time-extended assignment. Due to the volatility of mobile devices (churn and capability changes), the scheduling of future allocations tends to fail. Accordingly, we consider an instantaneous assignment of roles based on the current state and context of the involved devices.
 
 FIGURE: META MODEL FOR NODE-ROLE
 
-In the literature, many works have proposed methods for the distributed allocation of tasks. As the we consider a scenario in which application nodes hosted by volatile and resource constrained devices must self-organize their activities, the allocation method shall satisfy the following requirements:
+In the literature, many works have proposed methods for the distributed allocation of tasks for different domains~\cite{}. As the we consider a scenario in which application nodes hosted by volatile and resource constrained devices must self-organize their activities, the allocation method shall satisfy the following requirements:
 
 \begin{itemize}
 	
 	\item Distributed: allocation decision should not be centralized by one device in order to avoid bottlenecks;
 	
-	\item Communication overhead: only essential data should be exchanged in order to avoid communication costs; 
-	
-	\item Privacy: sensitive information shall not be disclosed;
+	\item Communication overhead: only essential data should be exchanged in order to minimize communication overhead; 
 	
 	\item Coherence: the allocation method performance/cost should be tuned according to the role constraints and criticality.
 	  
