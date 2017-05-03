@@ -1,28 +1,63 @@
 \section{Self-organizing Edge Spaces}\label{sec:edge_spaces}
 
-%The main concepts and features of our framework are presented with case examples that have one or more of the following requirements:
+%I'm mixing the explanation of what is a 
+\subsection{Discovery}
 
-The applications targeted by the proposed framework are those which present one or more of the following requirements:
+The realization of an interaction space poses many technical challenges. First, the application nodes sharing the same network must be able to perceive each other (discovery). Popular platforms such as Android and iOS provide native mechanisms that allow nodes to advertise and discover their services and resources~\cite{ANDROID_NSD, IOS_Bonjour}. Additionally, third party frameworks also provide discovery, messaging and other features based on different paradigms and communication protocols~\cite{Alljoyn, IoTivity}. 
+
+FIGURE: MOBILE DEVICES NOT/RUNNING A GIVEN APPLICATION INTERCONNECTED THROUGH WI-FI
+
+%TALK ABOUT THE DCVRY METHODS AND THEIR SUITABILITY TO THE SCENARIO AND REQUIREMENTS PRESENTED BY THIS WORK.
+
+Whereas previous coordinating models for mobile computing assumed the worse case for connectivity (nodes eventually meet and exchange data)~\cite{LIME, TUCSON, OTHERS}, nowadays wireless technologies makes it possible for multiple application nodes to be interconnected at the same time. Given the resource limitations of mobile devices, discovery mechanisms shall be efficient and avoid creating too much computational overhead or flood the network with discovery messages. As the peer scale grows, such requirements becomes critic for the feasibility of an edge space for interactive applications. 
+
+%TODO provide details about IoTivity
+
+\subsection{Asymmetry}
+
+In addition to the problems of discovery and communication, the dynamic allocation of tasks to different application nodes is a central feature that further distinguishes this work from previous frameworks~\cite{}. Similarly to well studied allocation of tasks to agents/robots with dynamic and distinct capabilities~\cite{}, mobile devices are heterogeneous and subject to hight volatility, therefore their fitness in performing different tasks varies from one device to the other and throughout time. Asymmetric roles is more evident when mobile application instances become more than just clients of remote servers. For example, in opportunistic mobile crowdsensing, data must be fetched from devices sensors without user participation and application nodes may autonomously collaborate by aggregating fetched data from multiple devices into a single device, which in turn sends the aggregated data to the server~\cite{}. Thus, one-out-of-many nodes must assume the role of an aggregator. Moreover, if the number of application nodes at a given moment is high, not every node should perform the same sensing tasks. Instead, a subset of application nodes can be assigned to a given sensing task, reducing the overall battery and mobile data consumption. 
+
+FIGURE: CIRCLE WITH HALF SYMMETRIC HALF ASYMMETRIC BEHAVIOR
+
+\subsection{Organization Model}
+
+Despite the many possible types of asymmetric tasks, in this paper we focus on those whose importance for the application and cost for the devices are significant, i.e., the computation and communication overhead for its allocating is justified. Accordingly, we adopt the organization concept of a \textit{role} to refer to application behaviors (generally asymmetric) that fulfills one or more application requirements. This concept has been used by organization centered multi-agent systems~\cite{}, for which organizations are frameworks where agents with different capabilities may interact. Such abstraction brings forward the social aspect of applications whose components should behave and interact based on the role they are assigned to in the organization they belong to, going beyond the static client-server roles of today's mainstream model for mobile applications. Figures~\ref{fig:client-server} and~\ref{fig:crowdsensing} illustrate the difference between these models.
+
+FIGURE: a) CLIENTS + SERVER; b) INTERACTING ROLES + SERVER
+
+In addition to the role abstraction, the organization formed by application nodes may also be partitioned into groups. The advantage of partitioning the interaction space into groups is to have a well defined scope in which roles can interact. Whereas this can be achieved using communication and coordination methods that limit the audience of messages -- for instance, publish/subscribe mechanisms in which events are only captured by registered listeners -- making partitions explicit through groups complement the organizational view of the system provided by the role abstraction. Together, groups and roles form the building blocks of the organization structure of the application. The volatility imposed by the mobility and resource constraints of hosts requires the \textit{self-management} of this organization structure.
+
+FIGURE: GROUPS
+
+\subsection{Distributed Role Allocation}
+ 
+The decision of which node(s) should be assigned to which roles(s) may depend on many factors. Trivially, any node capable of performing a role is a potential candidate. Notwithstanding this, there are attributes affected by this choice, such as the quality of the data fetched by different devices in a given context or the availability of resources like battery and allocation fairness. A balanced role allocation must respect the trade off between what is best for the application goals and the devices owners. The later is specially important in volunteer based applications such as mobile crowdsensing, as efficient and fair use of devices resources works as an incentive for participation. 
+
+We use Gerkey and Matarić’s taxonomy~\cite{} to present a categorization of the role allocation problem along three axes. In the first axis, nodes are categorized into two types: single-role versus multi-role nodes\footnote{Originally, the taxonomy refers to \textit{robots} and \textit{tasks}, while in this paper we refer to the (application) \textit{nodes} and the \textit{roles} they can perform.}. As application nodes are generally capable of performing more than one role at a time -- for instance, to fetch from multiple sensors -- nodes are considered as multi-role. In the second axis, roles are categorized into two types: single-node vs multi-node roles. While certain types of role are performed by a single node -- for instance, the aggregator of sensor data -- there are cases in which a role must be performed by multiple nodes. Thus, node cardinality depends on the role. Finally, in the third axis, the allocation is also categorized into two types: instantaneous assignment or time-extended assignment. Due to the volatility of mobile devices (churn and capability changes), the scheduling of future allocations tends to fail. Accordingly, we consider an instantaneous assignment of roles based on the current context of the involved devices.
+
+FIGURE: META MODEL FOR NODE-ROLE
+
+In the literature, many works have proposed methods for the distributed allocation of tasks. As the we consider a scenario in which application nodes hosted by volatile and resource constrained devices must self-organize their activities, the allocation method shall satisfy the following requirements:
 
 \begin{itemize}
+	
+	\item Distributed: allocation decision should not be centralized by one device in order to avoid bottlenecks;
+	
+	\item Communication overhead: only essential data should be exchanged in order to avoid communication costs; 
+	
+	\item Privacy: sensitive information shall not be disclosed;
+	
+	\item Coherence: the allocation method performance/cost should be tuned according to the role constraints and criticality.
+	  
+\end{itemize} 
 
-\item Ad hoc: local interactions are expected to happen opportunistically without the support of dedicated servers.
+Marked based methods have been extensively studied.
 
-\item Low-latency: data is expected to be exchanged between different nodes within a short time interval. Accordingly, whenever feasible, communication and processing should be local, i.e., without intermediation of remote entities.
+%For example, one-out-of-many device may be a better candidate to host the coordinator of the activities performed by a group of application nodes or to use specific sensors to extract information from the physical environment. Whenever asymmetry characterizes a behavior, i.e., not every node must perform it, and the performance, the cost, or other attributes of such behavior are to be considered, the decision of which node to perform it should take the context of the hosting devices into account. In this work, we considered asymmetric tasks whose importance for the system justifies the overhead for their allocation. %We compare our approach with straightforward solutions to demonstrate the feasibility and benefits of a context-dependent allocation. 
 
-\item Cost: the use of mobile data plans should be minimized.
-%
-%\item Robustness: responsibilities assigned to local devices that leave the system or fail must be resumed by other available devices without disruption of normal behavior.
-%
-%\item Efficiency: responsibilities assigned to local devices must take into account their functional and non-functional capabilities according to system specification.
-%
-%\item Fairness: responsibilities assigned to local devices must take into account their participation history to avoid unfair use of devices resources.
+%In specific, we focus on the \textit{efficiency, robustness, and fairness} resulting from an appropriate distribution of system responsibilities to local devices taking into account the dynamicity of their resources and capabilities, as well as their history of participation (fairness). To achieve a scalable solution for these problems, we propose a two-level mechanism for the partitioning of the edge space into subset of devices (groups) and the classification of these subsets by their fitness to play different system roles (assignment). 
 
-%the problems caused by the intermittent connectivity to remote servers should be mitigated either by opportunistically assigning responsibilities to local devices. 
 
-\end{itemize}
-
-The formation  of the \textit{ad hoc edge spaces} enabling the satisfaction of these requirements poses many technical challenges. In addition to the problems of discovery, transparency and interoperability, the dynamic allocation of responsibilities (roles) to volatile devices is a central feature that further distinguishes this work from previous frameworks~\cite{}. In specific, we focus on the \textit{efficiency, robustness, and fairness} resulting from an appropriate distribution of system responsibilities to local devices taking into account the dynamicity of their resources and capabilities, as well as their history of participation (fairness). To achieve a scalable solution for these problems, we propose a two-level mechanism for the partitioning of the edge space into subset of devices (groups) and the classification of these subsets by their fitness to play different system roles. Next, we show how distinct applications could benefit from Ad Hoc Edge Spaces.
 
 %the partitioning of the edge space according to different criteria and
 
@@ -56,38 +91,3 @@ The formation  of the \textit{ad hoc edge spaces} enabling the satisfaction of t
 %
 %\end{itemize}
 
-\subsection{Temperature Consensus}
-
-In many places, it is often the case that co-workers have disagreements on the temperature to be set in the physical environment they share. The ideal temperature for the environment varies from person to person, leading to conflicts among colleagues. To mitigate this problem, the air-conditioning temperature control should be set to a value that corresponds to the average of the current preferences in the office. Willing to solve this problem, a software engineer proposed the creation of an application for smartphones with a simple interface to allow users to set their preferred temperature value. However, its request for a backend application was denied and the temperature consensus problem would have to be solved locally.
-
-In such example, each company office represents the physical space delimitation where mobile devices can interact to achieve a common goal (temperature consensus). Also, devices are assumed to be interconnected through a corporative Wi-Fi. Finally, the air-conditioning controller exposes an interface through which commands can be sent with a temperature parameter. While all devices must host the basic user interface, only a single device in the room should aggregate co-workers' input, average them and communicate with the air-conditioner controller. Thus, devices must not only be able to communicate, but also elect the one responsible to play the aggregator role.
-
-A possible solution is described as follows: the first person to enter the office triggers the creation of a \textit{temperature control group}, which is a basic organization structure to which system roles are binded to. This device assumes the \textit{aggregator role}, which is responsible for keeping the group state (members and their preferred temperature). Next devices to enter the room shall join the existing group. After taking the average of the preferred temperatures each time a device enters or leaves the room, the aggregator value is sent to the air-conditioner controller, which in turn adjusts the temperature in the office. 
-
-This example illustrates how a realistic solution can be achieved through ad hoc and local interactions. The \textit{ad hoc} aspect becomes clear once there is no infrastructure for hosting or supporting the application besides the mobile devices themselves and the air-conditioner controller. If all workers leave the office with their devices, the edge space disappears. Also, the mapping between an office and the temperature control group provides a crispy correlation among physical and virtual spaces. Finally, the aggregator role represents a local instance of a server with which other users devices interact as clients. 
-
-%In the example, the data managing role keeps transient data about the preferred temperature level. To avoid fetching this data from all members and improve its availability, the data must be replicated by other devices. The replication degree may be fixed or proportional to the group size or volatility, i.e., the rate in which devices leave the group. For instance, a replication degree of 25\% would mean that an office with 8 devices shall have two replicas of the data managing role. When the active role quits the system, one of the two replicas should be activated. The role election and the realization of different role replication schemes at runtime is a central contribution of this work. As the criteria used for electing a role and its replica may require information from participants, it is important to consider the communication overhead in the trade off between availability and performance of the distributed election algorithm. The proposed election and replication mechanisms are fully described in Section~\ref{sec:model}.
-
-%We show how a simple application based on our framework could mitigate such problem.
-
-\subsection{Mobile Multiplayer Game}
-
-The next ultimate gaming experience may follow the fusion between physical and virtual worlds, where the dimensions and assets of our physical reality are augmented with non tangible and fantasy elements from the virtual reality. This combination would allow young users (but not only) to go beyond the limitations of their houses and rooms and enjoy the outside and the physical company of other people while still been able to use the power of their digital equipments to extend their selves and their interactions with rich virtual elements provided by the game industry. To achieve this, interactions must have a low latency and last as long as possible, meaning an efficient use of devices battery. 
-
-The potential improvements to wireless communications proposed by 5G include a device-2-device communication that would allow devices within a given zone to communicate with high throughputs. In a real-time mobile multiplayer game (MMG), such feature would allow the formation of ad hoc edge spaces in which devices would not only be able to update the game state with low latency, but also to use a client-server architecture in which one device is dynamically elected to play the server role, avoiding the well-known problems of a P2P architecture. 
-
-While this solution would still rely on backend servers for processing and persisting game data, a pure cloud-based solution would imply a significant amount of data to be transfered back and forward, increasing latency and the use of mobile data plans. In addition to the election and replication of roles, the physical-virtual space mapping tends to be more coarse and fuzzy than previous example. For instance, a game may choose city parks as arena for users interaction. Accordingly, a \textit{game session group} could have the geolocation coordinates of a park region as its membership criteria. Once devices are within the same session group and a server role is elected, the game session may start.
-
-
-%To achieve a fair use of resources, the server role should be rotated among existing group members even before the active role have quit the system. 
-
-%To prevent battery drain, a GPS role can be assigned to fewer members and broadcasted using low energy bluetooth. 
-
-
-\subsection{Mobile Crowdsensing}
-
-This last example brings more complexity to the ad hoc edge space formation and maintenance. To illustrate it, let's consider a city in which public transport agency provides no real time information of the whereabouts of buses. A collaborative crowdsensing application has bee designed to collect this information from the GPS in passengers devices. Users participation is conditioned to a low battery consumption and mobile data plan usage. Next, we describe how the proposed Ad Hoc Edge Spaces features can help to improve these metrics when compared to a self-contained, cloud-based solution.
-
-The physical-virtual space mapping in this example is clear: each bus is a physical space where an ad hoc edge space may exist. In a cloud-based solution, each mobile device would host a self-contained application that would collect the GPS data and send it to the server. Instead, the first device to enter the bus creates a \textit{bus monitoring group}, in which two roles can be performed: \textit{GPS fetcher} and \textit{GPS aggregator}. While the former requires just one instance, the GPS fetcher role is replicated to increase geolocation data accuracy, as it varies in time and from one device to another. Each fetcher sends the data to the aggregator to be validated and sent to the backend servers to be further processed and shared with users waiting for that bus.
-
-The advantages of this solution are: total GPS use is reduced, as not all devices must play the GPS fetcher role; quality of the data sent to backend servers is improved, while the quantity is reduce, thus reducing the use of the mobile data plan and the load of the backend servers. Considering the plethora of sensors in the smartphones, the efficiency of mobile crowdsensing campaigns could be significantly improved by reproducing this model with other types of data.
