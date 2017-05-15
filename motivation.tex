@@ -1,53 +1,62 @@
-\section{Motivating Scenarios}
+\section{Motivating Scenario}
 
-The kind of application targeted by the proposed framework are those which present one or more of the following characteristics:
+%Next, we present two applications examples for which one or more of these requirements apply.
 
-\begin{enumerate}[label=\arabic*.]
-	
-	\item \textbf{Delay-sensitive:} data should be exchanged between different application nodes with minimum delay;
-	
-	\item \textbf{Data-intensive:} application nodes are expected to produce and consume large volumes of data;
-	
-	\item \textbf{Large scale:} the popularization of mobile platforms and applications makes scalability an important attribute;
-	
-	\item \textbf{Volatility:} the environment in which application nodes operate is subject to frequent changes that affect their capabilities.
+Mobile crowdsensing consists of a paradigm in which the sensors of user-companioned devices are employed in the measurement of urban and social phenomena~\cite{}. +++
 
-\end{enumerate}
+Many crowdsensing campaigns target a well defined geographic region and period of time. 
+%Accordingly, the mobile devices running the application may either be within the same Wi-Fi zone or able to interact using a device-to-device (D2D) communication technology. 
+Today, popular mobile crowdsensing applications range from private and public urban transportation monitoring (e.g., Waze\footnote{waze website} and Moovit\footnote{moovit website}) to atmospheric pressure and air polution (e.g., AirPatrol\footnote{airpatrol website} and PressureNet\footnote{pressurenet website}). In the first two cases, geolocation is the main type of data, which is fetched from GPS sensors. In AirPatrol and other air polution monitoring applications, an additional sensor that monitors the quality of the air and communicates with smartphones through bluetooth must be carried by users. 
 
-%	\item Ad hoc: the interaction between application nodes are expected to happen opportunistically without the intermediation or support of dedicated servers.
-	
-%	\item Transient: application data is created, shared, and modified locally; remote persistence, when needed, should happen asynchronously.
-
-	%poses the challenge of dealing with scalability issues; thus, the algorithms and methods that support the ad hoc interaction among application nodes must scale to a large number of interacting devices.
-
-%
-%\item Robustness: responsibilities assigned to local devices that leave the system or fail must be resumed by other available devices without disruption of normal behavior.
-%
-%\item Efficiency: responsibilities assigned to local devices must take into account their functional and non-functional capabilities according to system specification.
-%
-%\item Fairness: responsibilities assigned to local devices must take into account their participation history to avoid unfair use of devices resources.
-
-%the problems caused by the intermittent connectivity to remote servers should be mitigated either by opportunistically assigning responsibilities to local devices. 
-
-Next, we present two applications examples for which one or more of these requirements apply.
- 
-\subsection{Mobile Crowdsensing Platform}
-
-Mobile crowdsensing consists of ........... Many crowdsensing campaigns target a well defined geographic region and period of time. Accordingly, the mobile devices running the application may either be within the same Wi-Fi zone or able to interact using a device-to-device (D2D) communication technology such as Wi-Fi direct or the forthcoming 5G D2D. Today, popular mobile crowdsensing applications range from private and public urban transportation monitoring (e.g., Waze\footnote{waze website} and Moovit\footnote{moovit website}) to atmospheric pressure and air polution (e.g., AirPatrol\footnote{airpatrol website} and PressureNet\footnote{pressurenet website}). In the first two cases, geolocation is the main type of data, which is fetched from GPS sensors. In AirPatrol and other air polution monitoring applications, an additional sensor that communicates with smartphones through bluetooth must be carried by users. 
-
-In general, crowdsensing involves the activation of battery consuming sensors which would otherwise be idle or used sporadically. Also, the majority of nowadays applications are designed following a client-server architecture in which nodes collect data from their sensors independently from one another. This approach has the following drawbacks:
+In general, crowdsensing involves the activation of battery-draining sensors which would otherwise be idle or used sporadically. Also, the majority of nowadays applications are designed following a client-server architecture in which application nodes collect data from their sensors independently from one another. This approach has the following drawbacks:
 
 \begin{itemize}
-
-\item A backend server coordinates the activation of the sensing tasks, which increases the server and the network loads; or
-
-\item Each application node perform the same tasks -- there is no coordination nor collaboration between nodes; 
-
+	
+	\item A backend server coordinates the activation of the sensing tasks, which increases the server and the network loads; or
+	
+	\item Each application node perform the same tasks -- there is no coordination nor collaboration between nodes; 
+	
 \end{itemize}
 
 Without coordination, application nodes cannot adapt to situations in which multiple devices can provide the same information, thus they tend to consume unnecessary resources as sensing tasks could be allocated to a subset of the available devices. With local coordination, nodes can perceive each other and agree on which nodes should perform which tasks, as well as to collectively adapt to changes in physical and social contexts (e.g., churn of devices, variations in the quality of sensors measurements, battery level, etc). 
 
 Without collaboration, each node sends its data to the backend server responsible for filtering and aggregating samples, which also increases the server and the network loads. Additionally, all nodes are assumed to have Internet access to communicate with the server and no collaborative routing of data is used. With local collaboration, application nodes can aggregate data collected from different sensors in order to select those with best accuracy. Accordingly, less data has to be transmitted to and processed by the backend server.
+
+\section{Background}
+
+The kind of application targeted by the proposed framework are those with the following characteristics:
+
+\begin{itemize}
+	
+	\item \textbf{Mobility:} application nodes are hosted by mobile devices that can enter/leave a given zone/network dynamically; 
+	
+	\item \textbf{Volatility:} the environment in which application nodes operate is subject to frequent changes that may affect their capabilities to perform application tasks;
+	
+	\item \textbf{Large scale:} a large number of application nodes is expected to co-exist in a given zone/network;
+	
+	\item \textbf{Data locality:} application nodes are 
+	both producers and consumers of data that must be shared locally;
+	
+	%\item \textbf{Complexity:} application nodes are expected to perform data/computational-intensive tasks 
+	
+	%\item \textbf{Delay-sensitive:} data should be exchanged between different application nodes with minimum delay.
+	
+	%	\item Ad hoc: the interaction between application nodes are expected to happen opportunistically without the intermediation or support of dedicated servers.
+	
+	%	\item Transient: application data is created, shared, and modified locally; remote persistence, when needed, should happen asynchronously.
+	
+	%poses the challenge of dealing with scalability issues; thus, the algorithms and methods that support the ad hoc interaction among application nodes must scale to a large number of interacting devices.
+	
+	%\item Robustness: responsibilities assigned to local devices that leave the system or fail must be resumed by other available devices without disruption of normal behavior.
+	%
+	%\item Efficiency: responsibilities assigned to local devices must take into account their functional and non-functional capabilities according to system specification.
+	%
+	%\item Fairness: responsibilities assigned to local devices must take into account their participation history to avoid unfair use of devices resources.
+	
+	%the problems caused by the intermittent connectivity to remote servers should be mitigated either by opportunistically assigning responsibilities to local devices. 
+	
+\end{itemize}
+
 
 %This last example brings more complexity to the ad hoc edge space formation and maintenance. To illustrate it, let's consider a city in which public transport agency provides no real time information of the whereabouts of buses. A collaborative crowdsensing application has bee designed to collect this information from the GPS in passengers devices. Users participation is conditioned to a low battery consumption and mobile data plan usage. Next, we describe how the proposed Ad Hoc Edge Spaces features can help to improve these metrics when compared to a self-contained, cloud-based solution.
 %
@@ -55,19 +64,54 @@ Without collaboration, each node sends its data to the backend server responsibl
 %
 %The advantages of this solution are: total GPS use is reduced, as not all devices must play the GPS fetcher role; quality of the data sent to backend servers is improved, while the quantity is reduce, thus reducing the use of the mobile data plan and the load of the backend servers. Considering the plethora of sensors in the smartphones, the efficiency of mobile crowdsensing campaigns could be significantly improved by reproducing this model with other types of data.
 
-\subsection{Mobile Multiplayer Game}
+Each of these characteristics imposes challenges to the engineering of mobile applications for which interactions among nodes is a requirement. Next, we discuss the most important requirements related to the realization of such applications, the current solutions and the gaps to achieve these requirements.
 
-The next ultimate gaming experience may follow the fusion of the physical and virtual worlds, where the dimensions and assets of our physical reality are augmented with elements from the virtual reality. This combination would allow users to go beyond the limitations of their homes and enjoy the outside and the physical company of other people while still been able to employ the power of their digital equipments to extend their perception of the world with rich elements and narratives provided by the game industry. To achieve this, interactions must have a low latency and last as long as possible, meaning an efficient use of devices battery.
+\subsection{Discovery and Contextualization}
 
-The potential improvements to wireless communications proposed by 5G include a device-2-device communication that would allow devices within a given zone to communicate with high throughputs. In a real-time mobile multiplayer game (MMG), such feature would allow the formation of interaction spaces in which devices would be able to synchronize and update the game state with low latency. However, in a pure P2P game architecture, some players may use modified applications to have advantage over other players (cheating). This is one the main reasons for the use of authoritative servers~\cite{}, which are generally deployed in the cloud -- adding network latency that may not fit with real-time constraints. To address this issue, we propose a P2P architecture with peer review of the game state update. In this model, each update to the game state performed by a node is checked by a peer node dynamically chosen. Thus, if a node updates the game to an invalid state, there is a great chance such violation would be detected. Figures~\ref{fig:} and~\ref{fig:} illustrate a classic client-server architecture and the aforementioned P2P architecture.
+%FIGURE: MOBILE DEVICES NOT/RUNNING A GIVEN APPLICATION INTERCONNECTED THROUGH WI-FI
 
-FIGURE: a) classic client-server architecture; b) our proposed P2P architecture
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=0.45\textwidth]{figures/discovery}
+	\caption{Application nodes in the same network must become aware of each other's presence}
+	\label{fig:discovery}
+\end{figure}
 
-The P2P with peer review architecture implies the dynamic selection of a \textit{reviewer} for each of the available node. For obvious reasons, a single node should not accumulate this role, i.e., reviewers should be evenly distributed among nodes. A simple scheme would be to randomly allocate this role to one of the nodes which have not yet been chosen. While the details of this approach are out of the scope of this paper, it illustrates how a data-intensive and delay-sensitive application could explore the potential of a self-organizing edge space. In the next section, we describe the abstractions and the self-organization mechanisms for the engineering and execution of interactive mobile applications.
+%TODO provide details about IoTivity
 
-%While this solution would still rely on backend servers for processing and persisting game data, a pure cloud-based solution would imply a significant amount of data to be transfered back and forward, increasing latency and the use of mobile data plans. In addition to the election and replication of roles, the physical-virtual space mapping tends to be more coarse and fuzzy than previous example. For instance, a game may choose city parks as arena for users interaction. Accordingly, a \textit{game session group} could have the geolocation coordinates of a park region as its membership criteria. Once devices are within the same session group and a server role is elected, the game session may start.
+%The realization of an interaction space poses many technical challenges. First, 
+The application nodes sharing the same network must become aware of each other, mainly for two reasons: 1) application users must be aware of who they can interact with (e.g., in a chatting or a multiplayer game application); or 2) the social context  
+
+In a black-box model, 
+
+%Content and control can be broadcasted;  
+
+Popular platforms such as Android and iOS provide native mechanisms that allow nodes to advertise and discover their services and resources~\cite{ANDROID_NSD, IOS_Bonjour}. Additionally, third party frameworks also provide discovery and other features based on different paradigms and protocols~\cite{Alljoyn, IoTivity}. 
+
+In mobile crowdsensing, the discovery of peer nodes is particularly important as each node is a potential contributor to the existing campaigns. 
+
+%TALK ABOUT THE DCVRY METHODS AND THEIR SUITABILITY TO THE SCENARIO AND REQUIREMENTS PRESENTED BY THIS WORK.
+
+Whereas previous coordinating models for mobile computing assumed the worse case for connectivity (nodes eventually meet and exchange data)~\cite{LIME, TUCSON, OTHERS}, nowadays wireless technologies makes it possible for multiple application nodes to be interconnected at the same time. Given the resource limitations of mobile devices, discovery mechanisms must avoid creating too much computational overhead or flood the network with discovery messages. As the peer scale grows, such requirements becomes critic for the feasibility of an edge space for interactive applications. 
+
+\subsection{Interoperation}
 
 
-%To achieve a fair use of resources, the server role should be rotated among existing group members even before the active role have quit the system. 
 
-%To prevent battery drain, a GPS role can be assigned to fewer members and broadcasted using low energy bluetooth.
+\subsection{Asymmetry}
+
+In addition to discovery and contextualization, the dynamic allocation of tasks to different application nodes is a central feature that further distinguishes this work from previous frameworks~\cite{}. Similarly to well studied allocation of tasks to agents/robots with dynamic and distinct capabilities~\cite{}, mobile devices are heterogeneous and subject to hight volatility, therefore their fitness in performing different tasks varies from one device to the other and throughout time. 
+
+Asymmetry is more evident when mobile application instances are designed to be more than just clients of remote servers. For example, in opportunistic mobile crowdsensing, data must be fetched from devices sensors without user participation. Application nodes may autonomously collaborate by aggregating fetched data from multiple devices into a single device~\cite{Rajagopalan:2006}, which in turn sends a preprocessed version to the server~\cite{}. Thus, one-out-of-many nodes must assume the role of an aggregator (and perform aggregation). Moreover, if the number of application nodes at a given moment is high, not every node should perform the same sensing tasks. Instead, a subset of application nodes can be assigned to specific sensing task(s), reducing the overall battery and mobile data consumption. Figure~\ref{fig:asymmetry} presents some examples of symmetric and asymmetric behavior within groups.
+
+%FIGURE: CIRCLE WITH HALF SYMMETRIC HALF ASYMMETRIC BEHAVIOR
+
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=0.48\textwidth]{figures/asymmetry}
+	\caption{Left: application nodes perform the same behavior (e.g., content sharing); middle: application nodes perform distinct behaviors without hierarchy (e.g., different sensing tasks); right: one node performs an hierarchical behavior (e.g., coordinator, data aggregator)}
+	\label{fig:asymmetry}
+\end{figure}
+
+\subsection{Adaptation}
+
