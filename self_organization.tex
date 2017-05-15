@@ -7,7 +7,7 @@
 
 The structure of the application organization
 %, formed by the two abstractions presented -- namely, roles and groups -- 
-must be malleable (plastic) to accommodate changes in its ecosystem composition and environment. In contrast with the much less dynamic cases of organizations in human societies (e.g. industry organizations), the volatility of pervasive and mobile devices, caused by their mobility or fluctuations of their resources, may imply the formation or dissolution of relations among nodes and require the reassessment of the roles they play in the organization. 
+must be malleable (plastic) to accommodate changes in its ecosystem composition and environment. In contrast with the much less dynamic cases of organizations in human societies (e.g. industry and military organizations), the volatility of pervasive and mobile devices, caused by their mobility or fluctuations of their resources, may imply the formation or dissolution of relations among nodes and require the reassessment of the roles they play in the organization. 
 
 While self-organization have been extensively used in the context of multi-agents and other fields, they have mostly addressed the achievement of system goals by means of actions and interactions to be performed by individuals based on local knowledge and without external control~\cite{}. In contrast, in this work we propose autonomous mechanisms to adapt the organization the application ecosystem, i.e., to let application nodes to agree on their role in the system according to what is required from the system and the context these nodes perceive themselves in. In specific, we propose a mechanism for each of the following dynamics:
 
@@ -30,95 +30,18 @@ While self-organization have been extensively used in the context of multi-agent
 
 \begin{itemize}
 	
-	\item \textbf{Group membership:} a node may join or leave a group according to its satisfaction to the group membership criteria; to address this, a \textit{self-grouping} mechanism is proposed;
+	\item \textbf{Group membership:} a node may join or leave a group according to its satisfaction to the group membership criteria; to address this, a \textit{grouping} mechanism is proposed;
 	
-	\item \textbf{Role election:} the nodes within a group must agree on which roles they shall perform; to address this, a distributed \textit{role election} mechanism is proposed;
+	\item \textbf{Role election:} the nodes within a group must agree on which roles they shall perform; to address this, a  \textit{role election} mechanism is proposed;
 	
-	\item \textbf{Role cardinality:} the relation between the number of instances of a role and attributes of system may vary with the context; to address this, a \textit{role cardinality feedback-loop}  mechanism is proposed;
+	\item \textbf{Role cardinality:} the relation between the number of instances of a role and attributes of system may vary with the context; to address this, a \textit{role cardinality}  mechanism is proposed;
 	
-	\item \textbf{Group cardinality:} finally, in some situations the membership criteria may have to be relaxed to allow more nodes to join a group and achieve its goals; to address this, \textit{membership assignment feedback-loop} mechanism is proposed.
+	\item \textbf{Group cardinality:} finally, in some situations the membership criteria may have to be relaxed to allow more nodes to join a group and achieve its goals; to address this, \textit{group cardinality} mechanism is proposed.
 	
 \end{itemize}
 
- 
+
 \subsection{Self-grouping} 
- 
-The modeling of an application group starts with the specification of its membership criteria. Any type of criteria that can be modeled as a proposition and verified by the application nodes is a potential criteria, including:
-
-\begin{itemize}
-
-\item Static criteria
-
-\begin{itemize}
-
-\item \textbf{Hardware capabilities:} refers to the presence of a given hardware component/module. E.g.: camera, GPS, thermometer, accelerometer, gyroscope, etc.
-
-\end{itemize}
-
-\item Dynamic criteria
-
-\begin{itemize}
-
-\item \textbf{Physical world:} refers to the accepted state(s) of the physical world in which the mobile device operates. E.g.: its current battery level, available memory, geolocation coordinates, acceleration, speed, temperature, etc.
-
-\item \textbf{Application domain:} refers to the application states a node must be to belong to a group. E.g.: currently a member of another group (or non-member), joining a chat or game session, etc.
-
-\end{itemize}
-
-\end{itemize}
-
-
-For example, a mobile crowdsensing campaign is designed to monitor the real-time geolocation of public buses in a city and to register unusual acceleration and deceleration events that may affect the user experience in this service. To avoid disturbing the users with the need of starting the application whenever they are within a bus, an opportunistic approach~\cite{} requires the automatic detection of such context. In this example, we assume city buses to provide wi-fi. Accordingly, a \textit{bus group} is specified with the following criteria:
-
-\begin{itemize}
-
-\item Bus Group Membership Criteria
-
-\begin{itemize}
-
-	\item Wi-Fi BSSID matches a well-known pattern; AND
-	
-	\item Wi-Fi signal is not weak; AND
-	
-	\item Device's location has changed in the last 5 minutes
-	
-\end{itemize}
-
-\end{itemize}
-
-With this criteria, a background service checks for a given pattern in the BSSID of the Wi-Fi detected by the device, as the transport provider is likely to use a BSSID that identifies the company service. If that pattern is found and if the corresponding signal is not weak (meaning the user is likely to be inside the bus), the last criteria filters out any device in the proximity of parked buses. Once these criteria are met, the application node may join or create a bus group.
-
-Each measurement target by the campaign -- geolocation and acceleration -- is provided by independent sensors -- namely GPS and accelerometer. Thus, two additional groups are specified with the following criteria:
-
-\begin{itemize}
-	
-	\item Geolocation Group Membership Criteria
-	
-	\begin{itemize}
-		
-		\item Member of the Bus Group; AND
-		
-		\item Has GPS; AND
-		
-		\item Battery level above 40\%
-		
-	\end{itemize}
-	
-	\item Acceleration Group Membership Criteria
-	
-	\begin{itemize}
-		
-		\item Member of the Bus Group; AND
-		
-		\item Has accelerometer; AND
-		
-		\item Battery level above 25\%
-				
-	\end{itemize}
-	
-\end{itemize}
-
-Both criteria are similar, except for the type of sensor the device must have and its minimum battery level. As the GPS is known for been a battery consuming sensor, a higher battery threshold has been specified, meaning only devices with 40\% of battery or more are eligible to join that group (in contrast to the minimum level of 25\% for the acceleration group). Finally, the first criteria refers to the membership to the bus group, which indicates that a node is within a bus to be monitored.
 
 %mobile crowdsensing campaigns may target specific city areas; thus, only the nodes which are currently within these areas are eligible for participating of the respective campaigns. Campaign groups can be modeled with a physical criteria specifying the geolocation coordinates of the area (Figure~\ref{fig:spatial_criteria}). Also, specific sensing activities may also correspond to groups using the hardware membership criteria (Figure~\ref{fig:virtual_criteria}).
 
