@@ -1,0 +1,275 @@
+\section{Self-organization}\label{sec:self_organization}
+
+
+%While self-organization principles have been extensively used in the context of multi-agents and robots, as well as in other fields, they have mostly addressed the achievement of a specific set of application goals (e.g., in the design of rescue robots that, based on their local knowledge, actions, and interactions, will lead to the emergent behavior of finding and rescuing the victims). In contrast, in this work self-organization means the literal self-adaptation of the system organization. 
+
+%Additionally, bio-inspired and other self-organization methods have a strong relation with the restrictions imposed by the physical world. For instance, the actions of a robot are based on its own knowledge and the knowledge it receives from its neighbors. In many cases, this is due to the limitation in the communication methods. The concept of a neighbor is, in this case, determined by spatial proximity. However, if the communication method is powerful enough to let all robots to exchange information, the concept of a neighbor cannot be determined by the spatial vicinity.
+
+The structure of the application organization
+%, formed by the two abstractions presented -- namely, roles and groups -- 
+must be malleable (plastic) to accommodate changes in its ecosystem composition and environment. In contrast with the much less dynamic cases of organizations in human societies (e.g. industry organizations), the volatility of pervasive and mobile devices, caused by their mobility or fluctuations of their resources, may imply the formation or dissolution of relations among nodes and require the reassessment of the roles they play in the organization. 
+
+While self-organization have been extensively used in the context of multi-agents and other fields, they have mostly addressed the achievement of system goals by means of actions and interactions to be performed by individuals based on local knowledge and without external control~\cite{}. In contrast, in this work we propose autonomous mechanisms to adapt the organization the application ecosystem, i.e., to let application nodes to agree on their role in the system according to what is required from the system and the context these nodes perceive themselves in. In specific, we propose a mechanism for each of the following dynamics:
+
+
+%The long term evolution of the system has also been studied 
+
+%As an example, rescue robots are designed to decide where to go next based on their own sensors or the knowledge received from other robots they meet~\cite{}. will lead to the emergent behavior of finding and rescuing the victims). In contrast, in this work self-organization means the literal self-adaptation of the system organization. 
+
+%The term \textit{self-organization} have been mostly used to refer to emergent behaviors of the system based on local knowledge and actions~\cite{SELF_ORGANIZATION^4}. In this work, it denotes the distributed and autonomous adaptation of the system organization in the advent of context changes, i.e., it literally means \textit{self-organization} of the ecosystem formed by the application nodes. Nonetheless, the self-organization mechanisms proposed here share many of the characteristics of ....:
+
+%\begin{itemize}
+%	
+%	\item \textbf{No external control:} no external component participates in the decision making to adapt the organization;
+%	
+%	\item \textbf{Distributed decision making:} ... 
+%	
+%\end{itemize}
+
+%In this sense, each application node takes part in the process of perceiving its individual context (availability of resources, capabilities), as well as its social context (with who the node can interact). In this paper, we focus on two different self-organization mechanisms:
+
+\begin{itemize}
+	
+	\item \textbf{Group membership:} a node may join or leave a group according to its satisfaction to the group membership criteria; to address this, a \textit{self-grouping} mechanism is proposed;
+	
+	\item \textbf{Role election:} the nodes within a group must agree on which roles they shall perform; to address this, a distributed \textit{role election} mechanism is proposed;
+	
+	\item \textbf{Role cardinality:} the relation between the number of instances of a role and attributes of system may vary with the context; to address this, a \textit{role cardinality feedback-loop}  mechanism is proposed;
+	
+	\item \textbf{Group cardinality:} finally, in some situations the membership criteria may have to be relaxed to allow more nodes to join a group and achieve its goals; to address this, \textit{membership assignment feedback-loop} mechanism is proposed.
+	
+\end{itemize}
+
+ 
+\subsection{Self-grouping} 
+ 
+The modeling of an application group starts with the specification of its membership criteria. Any type of criteria that can be modeled as a proposition and verified by the application nodes is a potential criteria, including:
+
+\begin{itemize}
+
+\item Static criteria
+
+\begin{itemize}
+
+\item \textbf{Hardware capabilities:} refers to the presence of a given hardware component/module. E.g.: camera, GPS, thermometer, accelerometer, gyroscope, etc.
+
+\end{itemize}
+
+\item Dynamic criteria
+
+\begin{itemize}
+
+\item \textbf{Physical world:} refers to the accepted state(s) of the physical world in which the mobile device operates. E.g.: its current battery level, available memory, geolocation coordinates, acceleration, speed, temperature, etc.
+
+\item \textbf{Application domain:} refers to the application states a node must be to belong to a group. E.g.: currently a member of another group (or non-member), joining a chat or game session, etc.
+
+\end{itemize}
+
+\end{itemize}
+
+
+For example, a mobile crowdsensing campaign is designed to monitor the real-time geolocation of public buses in a city and to register unusual acceleration and deceleration events that may affect the user experience in this service. To avoid disturbing the users with the need of starting the application whenever they are within a bus, an opportunistic approach~\cite{} requires the automatic detection of such context. In this example, we assume city buses to provide wi-fi. Accordingly, a \textit{bus group} is specified with the following criteria:
+
+\begin{itemize}
+
+\item Bus Group Membership Criteria
+
+\begin{itemize}
+
+	\item Wi-Fi BSSID matches a well-known pattern; AND
+	
+	\item Wi-Fi signal is not weak; AND
+	
+	\item Device's location has changed in the last 5 minutes
+	
+\end{itemize}
+
+\end{itemize}
+
+With this criteria, a background service checks for a given pattern in the BSSID of the Wi-Fi detected by the device, as the transport provider is likely to use a BSSID that identifies the company service. If that pattern is found and if the corresponding signal is not weak (meaning the user is likely to be inside the bus), the last criteria filters out any device in the proximity of parked buses. Once these criteria are met, the application node may join or create a bus group.
+
+Each measurement target by the campaign -- geolocation and acceleration -- is provided by independent sensors -- namely GPS and accelerometer. Thus, two additional groups are specified with the following criteria:
+
+\begin{itemize}
+	
+	\item Geolocation Group Membership Criteria
+	
+	\begin{itemize}
+		
+		\item Member of the Bus Group; AND
+		
+		\item Has GPS; AND
+		
+		\item Battery level above 40\%
+		
+	\end{itemize}
+	
+	\item Acceleration Group Membership Criteria
+	
+	\begin{itemize}
+		
+		\item Member of the Bus Group; AND
+		
+		\item Has accelerometer; AND
+		
+		\item Battery level above 25\%
+				
+	\end{itemize}
+	
+\end{itemize}
+
+Both criteria are similar, except for the type of sensor the device must have and its minimum battery level. As the GPS is known for been a battery consuming sensor, a higher battery threshold has been specified, meaning only devices with 40\% of battery or more are eligible to join that group (in contrast to the minimum level of 25\% for the acceleration group). Finally, the first criteria refers to the membership to the bus group, which indicates that a node is within a bus to be monitored.
+
+%mobile crowdsensing campaigns may target specific city areas; thus, only the nodes which are currently within these areas are eligible for participating of the respective campaigns. Campaign groups can be modeled with a physical criteria specifying the geolocation coordinates of the area (Figure~\ref{fig:spatial_criteria}). Also, specific sensing activities may also correspond to groups using the hardware membership criteria (Figure~\ref{fig:virtual_criteria}).
+
+
+%TODO: replace the figures bellow with a MC example
+
+As the idea of a group in this work is not related to security, the \textit{self-grouping} mechanism is not controlled by special-purpose components external to the system; instead, each node is responsible for checking its own satisfaction to the existing membership criteria in the application organization. Whenever the satisfaction of a group membership criteria changes, this event must be  advertised to other nodes, who update their group membership registry. 
+%TODO despict how the problem of time coupling by using gossip or other algorithms for advertisement/discovery
+The self-grouping procedure is further depicted by the diagram in Figure~\ref{fig:self_grouping}.
+ 
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=0.45\textwidth]{figures/join_or_create}
+	\caption{Activities of the self-grouping procedure performed by each application node}
+	\label{fig:self_grouping}
+\end{figure} 
+ 
+%TODO: update the diagram
+
+Nodes entering the application have no registry of the existing group membership. Nonetheless, they acquire this information from the groups they eventually join for the first time. 
+%TODO: describe which nodes is responsible for sending this information
+
+\textbf{Complexity Analysis} The communication overhead of this mechanism can be divided in two parts: a) the message sent each time a node joins/leaves a group (registry update); b) the message with the copy of the membership registry to the nodes joining an application group for the first time (registry copy). 
+
+In the worse case scenario, registry update (a) takes $m-1$ unicast messages ($O(m)$), with $m$ the group size. However, if a broadcast communication is used, a single broadcast message can advertise the registry update. This is the case, e.g., of an UDP broadcast over the 802.11 network protocol (Wi-Fi). The registry copy (b), in its turn, requires a single unicast message ($O(1)$) to be transmitted each time a node joins a group for the first time. In contrast with the previous type of message, the registry copy includes information about all $m$ nodes in the group. Thus, the larger the group, the larger the payload to be transmitted. 
+
+ 
+\subsection{Distributed Role Allocation} 
+ 
+The decision of which node(s) should be assigned to which roles(s) may depend on many aspects. Trivially, any node capable of performing a role is a potential candidate. Notwithstanding this, attributes such as the quality of the data tend to variate from one node to another and throughout time. Also, devices have different levels of battery available. Thus, a balanced role allocation must respect the trade off between what is best for the application goals and for the individual devices. 
+
+%In specific, we adopt the definition of context as...+++..., including their physical and the social contexts; in specific, context is reified as:
+%
+%\begin{itemize} 
+%	
+%	\item which application nodes are currently present (provided by existing discovery mechanisms);
+%	
+%	\item the capability and fitness of these nodes to perform functionalities required by the application (addressed by this framework).
+%	
+%\end{itemize}
+
+%Despite the many possible types of asymmetric tasks, in this paper we focus on those whose importance for the application and cost for the devices are significant, i.e., the computation and communication overhead for its allocating is justified. 
+
+\textbf{Allocation Classification} We use Gerkey and Matarić’s taxonomy~\cite{} to present a categorization of the role allocation problem along three axes. In the first axis, nodes are categorized into two types: single-role versus multi-role nodes\footnote{Originally, the taxonomy refers to \textit{robots} and \textit{tasks}, while in this paper we refer to the (application) \textit{nodes} and the \textit{roles} they can perform.}. As application nodes are generally capable of performing more than one role at a time -- for instance, to fetch from multiple sensors -- nodes are considered as multi-role. In the second axis, roles are categorized into two types: single-node vs multi-node roles. While certain types of role are performed by a single node -- for instance, the sensor data aggregator -- there are cases in which a role must be performed by multiple nodes. Thus, node cardinality depends on the role type. Finally, in the third axis, the allocation is also categorized into two types: instantaneous assignment or time-extended assignment. Due to the volatility of mobile devices (churn and capability changes), the scheduling of future allocations tends to fail. Accordingly, we consider an instantaneous assignment of roles based on the context of the involved devices.
+
+%The later is specially important in volunteer based applications such as mobile crowdsensing, as efficient and fair use of devices resources works as an incentive for participation. 
+
+%FIGURE: META MODEL FOR NODE-ROLE
+
+\textbf{Requirements} As the we consider a scenario in which application nodes hosted by volatile and resource constrained devices must self-organize their activities, the allocation method shall satisfy the following requirements:
+
+\begin{enumerate}[label=R\arabic*.]
+	
+	\item Distributed: allocation decision should not be centralized by one device in order to avoid bottlenecks;
+	
+	\item Communication overhead: only essential data should be exchanged in order to minimize communication overhead; 
+	
+	\item Coherence: the allocation method performance/cost should be tuned according to the role constraints and criticality.
+	  
+\end{enumerate} 
+
+%TODO: Move this to the related works section
+In the literature, many works have tackled the problem of distributed allocation of tasks~\cite{DTA}. Table~\ref{fig:asymmetry} classifies these methods according to their type and their satisfaction of the requirements R[1-3].
+
+\begin{table}[ht!]
+	\centering
+	\begin{tabularx}{\linewidth}{@{}| *1{>{\centering\arraybackslash}X}|c|c|c|@{}}
+		\hline 
+		 & \textbf{R1} & \textbf{R2} & \textbf{R3} \\
+		\hline
+		M1 & Y & N & Y\\
+		\hline 
+		M2 & Y & N & Y\\ 
+		\hline
+		M3 & Y & N & Y\\
+		\hline
+	\end{tabularx}
+	\caption{Distributed allocation methods}
+	\label{tab:role_node_cardinality}
+\end{table}
+
+Auction-based allocation methods have been extensively studied in the multi-agents field. In comparison with the dynamic scenarios tackled by these approaches, the problem of allocating roles to a large scale of mobile devices subject to high volatility tends to be much more intensive in terms of how often the allocation scheme must be reevaluated. Accordingly, a frequent message exchange between bidding and auctioneers nodes is expected. To mitigate this problem, nodes should evaluate their fitness (self-evaluation) and only advertise it to other group members if a delta in the value occurs.
+
+\textbf{Fitness} Whereas the optimization of quality attributes may deem unfeasible due to its complexity, the allocation of roles can still be guided by the fitness (or utility) of nodes in performing distinct roles. For each role, fitness is modeled as real-value function of relevant features affecting one or more attributes of the application. For example, the fitness function of an \textit{aggregator} role in a OMCS application be modeled as: 
+
+
+$$
+f_{aggregator} = battery\_level * membership\_factor
+$$
+
+\noindent
+in which $battery\_level$ and $membership\_age$ are both real positive numbers ranging from 0 to 1. The former parameter can be accessed from the platform hosting the node, while the last parameter refers to the time a node belongs to a group. The following function illustrates how this parameter could be evaluated:
+
+$$
+membership\_factor = MIN((60 - age)/60, 1)
+$$
+
+\noindent
+in which $age$ is given in seconds and refer to the uninterrupted time a given node is in the group. Thus, if the node has been more than a minute in the group, it has a $membership\_factor$ of one; otherwise, $0 \le membership\_factor \le 1$.
+
+If a role position is been elected for the first time, every node should advertise its fitness value and agree on the node to assume that position. Otherwise, the replacement of the current position should consider the trade off between the gain of having a new node elected and the cost of replacing the current node. 
+
+%Figure~\ref{fig:asymmetry} presents the activity diagram for the procedure performed by each node.
+
+
+%For example, one-out-of-many device may be a better candidate to host the coordinator of the activities performed by a group of application nodes or to use specific sensors to extract information from the physical environment. Whenever asymmetry characterizes a behavior, i.e., not every node must perform it, and the performance, the cost, or other attributes of such behavior are to be considered, the decision of which node to perform it should take the context of the hosting devices into account. In this work, we considered asymmetric tasks whose importance for the system justifies the overhead for their allocation. %We compare our approach with straightforward solutions to demonstrate the feasibility and benefits of a context-dependent allocation. 
+
+%In specific, we focus on the \textit{efficiency, robustness, and fairness} resulting from an appropriate distribution of system responsibilities to local devices taking into account the dynamicity of their resources and capabilities, as well as their history of participation (fairness). To achieve a scalable solution for these problems, we propose a two-level mechanism for the partitioning of the edge space into subset of devices (groups) and the classification of these subsets by their fitness to play different system roles (assignment). 
+
+
+
+%the partitioning of the edge space according to different criteria and
+
+ %In special, we are concerned with system functionalities that can assigned to one or more devices within the edge space. 
+%The main novelties here are:
+%
+%\begin{itemize}
+%
+%\item Pervasive and mobile devices are seen as volatile and heterogeneous computational platforms with resource limitations.
+%
+%\item Distinct responsibilities may be assigned to a subset of the mobile devices running the same application.
+%
+%\end{itemize}
+
+
+%First, we show how our framework can enable ad hoc interactions without external storage and control provided by cloud infrastructure. Second, we present a mobile multi-player game scenario in which low latency communication is the main requirement. Finally, we describe a mobile crowdsensing application, which combines different requirements, including efficient use of battery and mobile data plan. 
+
+
+
+%which here are hampered by volatility, 
+%
+%\begin{itemize}
+%
+%\item Discovery: devices must be able to recognize each other in the space
+%
+%\item Transparency: devices must be able to communicate without previous knowledge of their network address
+%
+%\item Dynamic allocation: devices must be able to agree on the role they will play in the system 
+%
+%\item Partitioning: devices must be able to further partition the interaction space 
+%
+%\end{itemize}
+
+\section{Self-adaptation}\label{sec:self_adaptation}
+
+\subsection{Role Cardinality} 
+
+The relation between the number of instances of a given role and different non-functional attributes of a system may be straightforward (e.g., the number of similar sensors in a cluster and the accuracy of the information this cluster provides) or less evident (e.g., the number of replicas of a component and the availability or reliability of the functionality it provides). In addition, considering the scenario of mobile applications, the mapping between role cardinality and these attributes tend to change according to the context they operate, i.e., it may depend on which devices are assigned to the role (e.g., more/less powerful computational resources, more/less accurate sensors) and the state of each device (e.g., more/less battery, more/less signal strength). Hence, in order to avoid violations of these attributes, the cardinality of a role must reflect the circumstances. %To this end, we propose a last, but not least important mechanism for adapting the application organization. 
+
+\subsection{Group Cardinality} 
+
+Since the encounter of mobile application nodes is opportunistic and not deterministic, group membership criteria specifies no size threshold or limit: as long as a node satisfies the group's membership criteria, it becomes/remains a member. This choice avoids the need for a group membership control by a trustful component and simplifies the grouping process. Accordingly, the size of a group, kept stable the membership criteria satisfaction by each of its members, can only be changed by making this criteria more relaxed or strict. 
+
+Whereas the self-organization mechanisms presented address the \textit{solution space}, i.e., which nodes provide which application functionality, here the \textit{requirement space} is the target of the adaptation, i.e., the application requirements evolve to accommodate situations in which no solution can satisfy those requirements.
