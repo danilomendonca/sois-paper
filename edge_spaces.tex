@@ -1,16 +1,92 @@
 \section{Self-organizing Interaction Spaces}\label{sec:edge_spaces}
 
-%\subsection{Functional Plasticity and Asymmetry}
+\begin{figure*}[t!]
+	\centering
+	\includegraphics[width=0.95\linewidth]{figures/rationale}
+	\caption{Role-orientation rationale}
+	\label{fig:rationale}
+\end{figure*}
+
+\subsection{Separation of Responsibilities}
+
+%A tree with the types of role: symmetric and asymmetric branches with the corresponding types of roles in increasing levels of concreteness 
+
+%1: functional plasticity of nowaday's devices
+With the technology advancements, a class of pervasive and mobile devices acquired the ability to perform general purpose computing, as well as to communicate by different means and perceive the physical world through multiple sensors. These enhancements entails a \textit{functional plasticity}, i.e., the ability of these devices to provide variations of their functionalities not only in different applications, but in different contexts of the same application. 
+
+%2: from functional plasticity to a separation of roles
+In contrast with the rigid symmetry that characterizes the behavior performed by clients nodes in a client-server architecture, commonly used in today's applications, or compared to the narrow set of functionalities provided by specialized and extremely resource-constrained devices, the functional plasticity of smartphones and other devices can be explored by letting application nodes hosted by these devices to assume distinct responsibilities, i.e., \textit{roles}.
+
+%3: what (functional) roles are
+In an organization structure, a functional role defines a context in which an individual assume the responsibility over some functionality. 
+%4: why they are important for pervasive applications
+Considering the collective of application nodes as an organization, different reasons may motivate \textit{separation-of-responsibilities} among them. 
+
+%4.1a: the case of MCS; application nodes are employers of an organization, which must efficiently employ their resources
+For instance, with the purpose of increasing the \textit{efficiency} in which the organization deliver its results, namely:
+	
+\begin{itemize}
+	\item Specific roles can be played by a subset of the available nodes (e.g., only a subset of nodes in a given region must collect data about the noise pollution);
+	
+	\item Roles must be played by capable nodes (e.g., only the nodes with a minimum battery level and/or computational resources)
+\end{itemize}
+
+%4.1b: why did I mention organization efficiency as a motivation
+%Today, MCS is the main class of application in which mobile devices are employed not to satisfy its owners needs, but the needs of external actors (e.g., a public institution responsible for monitoring the noise pollution in certain urban areas). Despite their uniqueness, the broad range of MCS applications justifies the inclusion of efficiency as a motivation. 
+
+%4.2: the case of collaboration among nodes
+In addition, separation-or-responsibilities becomes evident whenever nodes of an application need to achieve their individual or common goals in a collaboratively way. That is:
+
+\begin{itemize}
+	
+	\item When some nodes have a resource or capability and others don't (e.g., sensors, Internet connection, processing capabilities, free memory, free storage, battery level, etc);
+	
+	\item When a functionality that benefits multiple peers can be provided by one or a subset of them
+
+\end{itemize}
+
+
+%5: When relations among nodes can be established
+Whenever two nodes of an application become visible to each other and are able to communicate, there is a potential for a collaborative relation between them to be established. 
+%In this relation, each part plays a similar (symmetric) or different (asymmetric) roles. 
+This same premise holds true for multiple interconnected devices. 
+%6: The nature of the relation between nodes in different situations
+While the nature of the relation between nodes hosted by devices of different classes is mostly predefined (e.g., between a smartphone and a gadged, a tablet and a smart-tv), the nature of the relation between devices of the same class may depend on the context each device operates (e.g., a smartphone that acts as the gateway for other smatphones without Internet access). 
+%7: How the social context defines the nature of the relation between nodes when they are not predefined
+Accordingly, the social context, as defined by which and how many other nodes a node can interact with at a given time, further delimits which potential relations can be established between this node and its peers. 
+
+%Whereas a P2P file sharing can be considered as a collaboration between nodes with symmetric responsibilities (all nodes are clients and servers), in other cases a single node can address the needs of its peers, i.e., to assume an asymmetric responsibility. 
+
+%whereas for some applications be predefined (e.g., a P2P messaging application) or 
+
+
 \subsection{Role-orientation}
 
-\begin{figure}[t!]
-	\centering
-	\includegraphics[width=0.48\textwidth]{figures/asymmetry}
-	\caption{Left: application nodes perform the same behavior (e.g., content sharing); middle: application nodes perform asymmetric roles without hierarchy among them (e.g., different sensing tasks); right: one node performs an hierarchical control (e.g., coordinator) or communication (e.g., data aggregator).}
-	\label{fig:asymmetry}
-\end{figure}
+%behaviors and responsibilities that an individual or a group of individuals can assume. 
 
-The evolution of pervasive and mobile devices entails a \textit{functional plasticity}, i.e., the ability of this devices to provide variations of its functionalities according to the context they are in. In contrast with the rigid symmetry that characterizes the behavior performed by application nodes in a client-server architecture, or the narrow set of functionalities provided by specialized devices, the functional plasticity of mobile devices can be explored by letting application nodes to dynamically assume asymmetric functional responsibilities (functional roles). Whereas the type of role depends on the domain of the application, in this paper we propose general abstractions and mechanisms to address the range of pervasive applications whose functionalities may be asymmetrically distribute among its nodes. 
+%8: The today's client-server model and the need for role-orientation
+In today's client-server model, the functionalities to be performed by the application nodes are seen as as monolithic. For the applications whose nodes are expected to collaborate and play others than just the role of a client, the functionalities that are particular to distinct application roles form a concern of their own, i.e., they must be designed and programmed accordingly. 
+
+%9: What do we propose in terms of role-orientation
+In this work, we inherit the concept of a role, more commonly used in human organizations, as part of a framework for the engineering of pervasive applications. By making the concept of a role a first-class abstraction, we provide the means to, since the early stages of its development, reason on the organizational aspects of the application, namely:
+
+\begin{itemize}
+	
+	\item The roles in the application-to-be;
+	
+	\item The functionalities to be provided by each role, as well as the capabilities required by these functionalities (e.g., computational resources, specific hardware components, etc); 
+	
+	\item The relation between roles in terms of hierarchy and how they interact (e.g., which communication or coordination model);
+	
+	\item The cardinality relation between roles (e.g., in the symmetric cases, all nodes play the same roles; in the asymmetric cases, k-out-of-n nodes should play a given role);	
+	
+\end{itemize}
+
+%Figure~\ref{fig:asymmetry} presents some examples of asymmetric roles played by different application nodes. 
+
+%In this sense, the \textit{organization} formed by the collective of application nodes 
+
+%application designers and programmers must be able to identify, model and program the functionality to be provided by different application roles.
 
 %dynamic assignment of roles among peers according to their context.
 
@@ -22,33 +98,21 @@ The evolution of pervasive and mobile devices entails a \textit{functional plast
 %and contextualization, the dynamic allocation of tasks to different application nodes is a central feature that further distinguishes this work from previous frameworks~\cite{}. 
 
 
-Within an organization, a \textit{functional role} defines a context in which application nodes assume the responsibility over some functionality. 
-%behaviors and responsibilities that an individual or a group of individuals can assume. 
-We inherit this concept, broadly used in human organizations, to address the 
-issue of asymmetric responsibilities that can be assumed by nodes of a mobile application. Figure~\ref{fig:asymmetry} presents some examples of asymmetric roles played by different application nodes. 
-
-The relation between roles is defined based on what they are expected to provide one another. For instance, a node may be responsible for giving control directives to other nodes (e.g., a supervisor or an orchestrator) or to process a batch of data from other nodes (e.g., a sensor data aggregator). 
 %their need to send/receive from each other application data or control directives (or both). 
 %For instance, a coordinator is responsible for controlling the activities of its coordinates and an aggregator is responsible for aggregating data from multiple sources. The relation between roles may be further characterized by the multiplicity in each side of the relation. 
 
-Without a role-orientation, the functionalities to be performed by the application nodes are seen as monolithic except for their dependency with the backend application; as nodes are expected to play others than just the client role, they must be designed and programmed accordingly. By making the concept of a role a first-class abstraction, we provide the means to, since the early stages of its development, reason on the organizational aspects of the application, namely:
+
 
 %For this, there must be a clear separation of concerns and modularization of the application logic from different roles. 
 
 
-\begin{itemize}
-	
-	\item what are the roles of the application-to-be;
-	
-	\item the capabilities required to perform a given role (e.g., minimum computational resources, specific hardware components, etc); 
-	
-	\item the relation between a role and the number of nodes that execute them (e.g., in the extreme asymmetric case, 1-out-of-n application nodes should play a given role; in the symmetric case, a given role must be played by all nodes; in between, k-out-of-n should play a given role);   
-	
-	\item finally, the relation between different roles (why and how they interact).
-	
-\end{itemize}
+%Whereas the type of role depends on the domain of the application, in this paper we propose general abstractions and mechanisms to address the range of pervasive applications whose functionalities may be asymmetrically distribute among its nodes. 
 
-As an example, in opportunistic mobile crowdsensing~\cite{OMCS}, data must be fetched from the devices sensors without user participation. Application nodes may collaborate by aggregating fetched data from multiple devices into a single device~\cite{Rajagopalan:2006}, which in turn sends a preprocessed data to the server (e.g., the one with higher battery level). Thus, one-out-of-many nodes must assume the role of an aggregator, meaning that the functional role of this node changes to fit a given context. Also in OMCS, if the number of nodes at a given moment is high, not every node must perform the same sensing tasks. Instead, a subset of application nodes can be assigned to a subset of sensors, reducing the overall battery consumption and networking. Once again, the functional role of these nodes varied to reflect the context they were exposed. 
+
+
+%The relation between roles is defined based on what they are expected to provide one another. For instance, a node may be responsible for giving control directives to other nodes or to process a batch of data from other nodes. For instance,
+%TODO refine this paragraph and add examples from the other motivating scenarios 
+%in opportunistic MCS, application nodes may collaborate by aggregating fetched data from multiple devices into a single device~\cite{Rajagopalan:2006}, which in turn sends a preprocessed data to the server (e.g., the one with higher battery level). Thus, one-out-of-many nodes must assume the role of an aggregator, meaning that the functional role of this node changes to fit a given context. Also, if the number of nodes at a given moment is high, not every node must perform the same sensing tasks. Instead, a subset of application nodes can be assigned to a subset of sensors, reducing the overall battery consumption and networking. Once again, the functional role of these nodes varied to reflect the context they were exposed. 
 
 %Together, the specification of what a role does (behavior specification) and how it interacts with other roles (social specification) defines the organization structure of the application. 
 
@@ -64,18 +128,62 @@ As an example, in opportunistic mobile crowdsensing~\cite{OMCS}, data must be fe
 %How grouping works?
 
 %Further refines the context of an application node: the role is not automatically set, but must be agreed 
-%String vs relaxed group membership
+%Strict vs relaxed group membership
 %Figure of a circle representing the set of members and an inner circle representing the active members
+%Relation of a group and the physical space
 
-%I've described groups as a 
+%Group membership criteria filters out heterogeneity
 
-The application organization -- so far represented by the roles that can be played by application nodes satisfying a given criteria -- may be further defined by its divisions, here named as \textit{groups}. To the organization, a group may have a \textit{functional} meaning (e.g., a group of nodes fetching data from one type of sensor), a \textit{non-functional} meaning (e.g., the nodes within the same geographical area), or a mix of both (e.g., the nodes extracting within the same geographical area). 
+%The paradigm shift from a bipolar into a multi-polar organization discussed by this paper is strongly motivated by the co-existence of a plethora of pervasive devices from different kinds in the physical space inhabited by people. As human society evolves and blends itself with a fabric of interconnected cyber-physical devices, a question emerges: how should this ecosystem be organized? Whereas the client-server has been proven a simple and scalable answer, the potential of peer-to-peer interactions must not be ignored.
 
-In all these cases, a group defines a context in which its members must (I) or may (II) perform specific functionalities, i.e., to play certain roles. Due to the potentially hight density of application nodes within a given zone/network, there may be a surplus of nodes able to perform one or more application roles. Hence, instead of adopting a strict causality (I) between group membership and a role to be played, we adopt a relaxed causality (II) in which membership defines only the context in which its members \textit{may} play certain roles (precondition). This decision has the advantage to reduce the role assignment scope, as eligible nodes are picked from the group and not from the whole set of application nodes. 
+%Three dimensions characterizes the ecosystem of applications hosted by pervasive and mobile devices: \textit{space}, \textit{time}, and \textit{heterogeneity}. 
 
-For example, 10 out of 15 devices are capable to measure the noise level, but only two are needed. In one hand, if the membership to a noise-pollution group would imply sensing the noise (I), only two nodes would be allowed in the group. Also, the distributed election of these two members would include all 15 devices, even those not able to perform such behavior. In the other hand, if membership implies capability (II), all 10 capable nodes would join the group and the distributed election of the two nodes would happen among the 10 member.
+
+%Figure~\ref{fig:rationale} illustrates the rationale behind the assignment of roles to an application node.
+
+%The combination of the social context with the individual context of each node 
+
+%10: 
+The application organization -- so far represented by the roles that can be played by its nodes -- may be further characterized by its partitions, here named as \textit{groups}. 
+At its highest level, a group may correspond to the set of application nodes within the same network partition. Nonetheless, these nodes, or a subset of them, may exhibit common properties or states of interest to the application. For instance, a group may have a \textit{functional} meaning (e.g., a group of nodes able to fetch data from a specific type of sensor), a \textit{non-functional} meaning (e.g., all nodes within a specific geographical area), or a mix of both (e.g., all nodes able to fetch data from a specific type of sensor within a specific geographical area). Thus, multiple types of criteria may define the membership of a group.
+
+To its members, a group defines a \textit{social context} in which they (a) may or (b) must play certain roles. Whenever the relation between nodes in a group is asymmetric, and there is no predefined criteria, nodes must agree on the specific roles they will play (a). Conversely, if the relation between nodes in a group is symmetric, there is no decision to be made: all nodes must play the same role (b). However, as (a) can be seen as a more general case of (b), we adopt a relaxed membership causality, i.e., group membership only defines the context in which its members \textit{may} play one or more roles, unless its specification makes such restriction. Accordingly, each of these cases can be specified as:
+
+\begin{itemize}
+	
+	\item \textbf{Symmetric:} A m-m specification (m instances of a role in a group of m nodes) defines a symmetric role, i.e., a role played by all group members (strict membership causality);
+	
+	\item \textbf{Asymmetric:} A k-m specification defines an asymmetric role, i.e., a role played by a subset $K$ of the set $M$ of nodes in the group, with $|K| = k$, $|M| = m$, and $k < m$;
+	
+	
+\end{itemize}
+
+%TODO: look out for the difference between asymmetric group-role relation and asymmetric role-role relation
+
+The later case encompasses any kind of asymmetric relation between roles, including the common cases in which one node in the group interacts with all other members through an hierarchical relation (e.g., a supervisor and its followers~\cite{}). Furthermore, once this specification exists, group members must agree on the actual allocation of roles. Such \textit{distributed role allocation} mechanism is presented in Section~\ref{sec:self_organization}. Figure~\ref{fig:asymmetry} illustrates examples of both symmetrical and asymmetrical relations within a group. 
+
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=0.48\textwidth]{figures/asymmetry}
+	\caption{Left: application nodes perform the same behavior (e.g., content sharing); middle: application nodes perform asymmetric roles without hierarchy among them (e.g., different sensing tasks); right: one node performs an hierarchical control (e.g., coordinator) or communication (e.g., data aggregator).}
+	\label{fig:asymmetry}
+\end{figure}
+
+
+%Due to the potentially high density of application nodes within a given zone/network, there may be a surplus of nodes able to perform one or more roles. Hence, instead of adopting a strict causality (I) between group membership and the role(s) to be played, we adopt a relaxed causality (II) in which group membership defines only the context in which its members \textit{may} play certain roles (precondition). This decision has the advantage to reduce the role assignment scope, as eligible nodes are picked from the group and not from the whole set of application nodes. 
+
+%for applications such as MCS, in which application nodes provides functionalities whose purpose is to address the needs of an external actor and not the users themselves, 
+
+
+
+
+%For example, 10 out of 15 devices are capable to measure the noise level, but only two are needed. In one hand, if the membership to a noise-pollution group would imply sensing the noise (I), only two nodes would be allowed in the group. Also, the distributed election of these two members would include all 15 devices, even those not able to perform such behavior. In the other hand, if membership implies capability (II), all 10 capable nodes would join the group and the distributed election of the two nodes would happen among the 10 member.
 
 %Hence, at a first level, groups provide a subspace in which its members may (II) play specific roles. 
+
+%TODO: go into details about what happens once a group is formed and roles are allocated, i.e., how roles interact with each other
+
+
 
 Within a group, member nodes are aware of each other. Not only they can agree on which roles should be performed by which nodes, the elected roles can engage in interactions following an architectural style specified for them. Thus, a group abstraction provides a container to which roles can be added or removed dynamically. Considering the functional plasticity and role asymmetric previously discussed, more than one type of role may co-exist in a group. Also, the distribution of roles to the group members should follow a \textit{fitness criteria}. This criteria must provide a metric indicating which nodes are best suit to play the group roles.
 
@@ -102,8 +210,6 @@ The modeling of an application group starts with the specification of its member
 	\end{itemize}
 	
 \end{itemize}
-
-Within a group, application nodes become mutually aware of their presence, which is part of their social context. This also implies the mutual awareness of the satisfaction of the membership criteria required by the group. This knowledge is particularly important if decisions must be taken based on the number and quality of the group members. 
 
 For example, a mobile crowdsensing campaign is designed to monitor the real-time geolocation of public buses in a city and to register unusual acceleration and deceleration events that may affect the user experience in this service. To avoid disturbing the users with the need of starting the application whenever they are within a bus, an opportunistic approach~\cite{} requires the automatic detection of such context. In this example, we assume city buses to provide wi-fi. Accordingly, a \textit{bus group} is specified with the following criteria:
 
@@ -203,21 +309,3 @@ Both criteria are similar, except for the type of sensor the device must have an
 %DISCUSSION: one could argue that the dynamicity of the scenario does not fit well with the idea of a group, as the update of the group view may become constant. In this scenario, nodes could just advertise their fitness to perform different roles/tasks for a given application. Accordingly, they would still be able to build a table and decide for the allocation. The need for a group seems superfluous, unless there are many-many application nodes/roles and all of these nodes must broadcast their fitness for all eligible roles. In this case, group membership could be seen as the state in which nodes must do something while non-members must not. For instance, only group members must advertise their fitness, and the lowest threshold (lowest FV) is made public so the non-members would know when to become a member. 
 %Ex: a sonore pollution group is defined with cardinality=8. There are, simultaneasly, 20 devices in the target campaign area. When the campaign is about to start, each device broadcasts its FV for that role, which allows them to build a shared FV table. The first 8 devices in the resulting FV table are considered as active. Whenever the 8th position FV threshold is met by a non-active node or by a superior position, the corresponding node advertises its FV: the node currently in the 8th position will go, respectivelly, to the 7th position or it will become a non-active member. In both cases, all nodes become have their FV table updated. Conversely, if the FV of the 8th position node changes, it must advertise this change and let other nodes to become aware of the new threshold.
 %So, the group abstraction is mostly useful for modeling purposes, but also for programming and for guiding the implementation of the middleware. 
-
-\subsection{Examples}
-
-To further illustrate the aforementioned concepts and abstractions, we present two examples of mobile applications that could exploit local interactions between its nodes.
-
-In the chat application example mentioned before, a conversation group provides a straightforward criteria for grouping the distributed nodes able to communicate. The same holds for the real-time mobile multiplayer game example: the roles of a local relay/server and the role of receivers/clients would be dynamically assigned to the members of the conversation/game groups. Finally, in the mobile crowdsensing example, campaigns targeting multiple types of sensors data may further define specialized groups -- e.g., one for collecting data about the noise pollution, another for measuring air pollution --  and different instances of these groups may co-exist in different city areas according to the campaign specification. 
-
-\subsubsection{Messaging Application} Once of the most popular types of mobile applications, messaging apps are used for both social and professional communication and exchange of multi-media like photos, audios, and videos. The majority of these apps use a message server deployed in the cloud to relay messages among users. This model, however, requires each application node to have Internet connection. Additionally, when a message is addressed to a group of users whose devices may happen to be in the same physical area and sharing the same network, messages are still delivered separately. Hence, there is no distinction in the functionality of each client application node.  
-
-To achieve the simpler use case of \textit{off-line}~\footnote{among nodes with local network connection} messaging, peers would need to discover each other and communicate locally. In another case, to improve the communication efficiency between server and members of a conversation group, a single group member could be elected to perform the role of a local relay. The responsibility of this role would be to relay messages received from the remote server to all group members locally connected to the node playing a gateway. Thus, instead of sending $n$ messages through the Internet, the server would send just one. Nonetheless, the decision of which node should play the relay role could greatly affect this result, as if it becomes unavailable before concluding the retransmission, other nodes would still have to receive the message from the server after detecting the relay failure.
-
-\subsubsection{Real-time Mobile Multiplayer Game} One of the problems in real-time multiplayer games hosted by mobile devices is to achieve low-latency synchronization of the game among players, as the quality of the connection from the mobile devices to backend servers tend to be affected by fluctuations of the radio/wi-fi signal. In addition, mobile data plans tend to be limited and expensive in comparison with fixed Internet service. 
-
-To enable a use case in which players must get together in a city area to interact among themselves and with virtual entities augmenting their reality (e.g., monsters that must be collaboratively battled), one-out-of-n nodes in the area sharing a common network may become a buffer server. The responsibility of this role would be to interface the updates in the game world triggered by backend servers (e.g., to add a monster in Central Park) and the updates in the game world following user actions (e.g., inflicting damage to the monster or receiving damage to their virtual characters). While the first type of update tolerates more delay, the later requires a hight throughput and low-latency to avoid disruptions in the game experience. Nonetheless, the decision of which node should play the server role could also affect the game experience, as some devices could have less computational resources available to perform the necessary game calculations. Figure~\ref{} illustrates this scenario.
-
-%\subsubsection{Opportunistic Mobile Crowdsensing}
-
-%As described in Section~\ref{sec:motivating}, OMCS is a particular type of mobile application that presents autonomy of behavior in the collection of data from the devices' sensors. The asymmetric role of a \textit{data aggregator} would....

@@ -48,30 +48,40 @@ While self-organization have been extensively used in the context of multi-agent
 
 %TODO: replace the figures bellow with a MC example
 
-As the idea of a group in this work is not related to security, the \textit{self-grouping} mechanism is not controlled by special-purpose components external to the system; instead, each node is responsible for checking its own satisfaction to the existing membership criteria in the application organization. Whenever the satisfaction of a group membership criteria changes, this event must be  advertised to other nodes, who update their group membership registry. 
+\subsubsection{\textbf{Definition}} As the idea of a group in this work is not related to security, the \textit{self-grouping} mechanism is not controlled by special-purpose components external to the system; instead, each node is responsible for checking its own satisfaction to the existing membership criteria in the application organization. Whenever the satisfaction of a group membership criteria changes, this event must be  advertised to other nodes, who update their group membership registry. 
+
+\subsubsection{\textbf{Grouping Method}} Nodes entering the application have no registry of the existing group membership. They must acquire this information from the members of the groups they eventually join for the first time. In specific, we defined the oldest member of a group to be responsible for sending the registry replica to the newcomer. The complete self-grouping procedure is further depicted by the diagram in Figure~\ref{fig:self_grouping}.
 %TODO despict how the problem of time coupling by using gossip or other algorithms for advertisement/discovery
-The self-grouping procedure is further depicted by the diagram in Figure~\ref{fig:self_grouping}.
  
+%TODO: update the diagram
 \begin{figure}[t!]
 	\centering
 	\includegraphics[width=0.45\textwidth]{figures/join_or_create}
 	\caption{Activities of the self-grouping procedure performed by each application node}
 	\label{fig:self_grouping}
-\end{figure} 
- 
-%TODO: update the diagram
+\end{figure}
 
-Nodes entering the application have no registry of the existing group membership. Nonetheless, they acquire this information from the groups they eventually join for the first time. 
 %TODO: describe which nodes is responsible for sending this information
 
-\textbf{Complexity Analysis} The communication overhead of this mechanism can be divided in two parts: a) the message sent each time a node joins/leaves a group (registry update); b) the message with the copy of the membership registry to the nodes joining an application group for the first time (registry copy). 
+\subsubsection{\textbf{Complexity Analysis}} We analyze the complexity of the grouping method by means of the communication overhead, i.e., the number of messages exchanged between nodes and their payload size. The analysis is divided in two parts: a) the overhead when a node joins/leaves a group (registry update); b) the additional overhead when a node joins a group (registry copy).
 
-In the worse case scenario, registry update (a) takes $m-1$ unicast messages ($O(m)$), with $m$ the group size. However, if a broadcast communication is used, a single broadcast message can advertise the registry update. This is the case, e.g., of an UDP broadcast over the 802.11 network protocol (Wi-Fi). The registry copy (b), in its turn, requires a single unicast message ($O(1)$) to be transmitted each time a node joins a group for the first time. In contrast with the previous type of message, the registry copy includes information about all $m$ nodes in the group. Thus, the larger the group, the larger the payload to be transmitted. 
+In the worse case scenario, registry update (a) takes $n-1$ unicast messages, ($O(n)$), with $n$ the group size, and a single registry line as payload. However, if a broadcast communication is used, a single broadcast message can advertise the registry update ($O(1)$).
+%This is the case, e.g., of an UDP broadcast over the 802.11 network protocol (Wi-Fi). 
+The registry copy (b), in its turn, requires a single unicast message to be transmitted each time a node joins a group. In contrast with the previous type of message, the registry copy includes information about all $n-1$ nodes in the group. Thus, the total overhead is given by $O(p)$.
 
+%TODO: decide if the group registry must be sent to newcomers only for the first time they join the group (which implies to continue updating them while they are outside the group). R: always send the the group registry to newcomers
  
 \subsection{Distributed Role Allocation} 
  
-The decision of which node(s) should be assigned to which roles(s) may depend on many aspects. Trivially, any node capable of performing a role is a potential candidate. Notwithstanding this, attributes such as the quality of the data tend to variate from one node to another and throughout time. Also, devices have different levels of battery available. Thus, a balanced role allocation must respect the trade off between what is best for the application goals and for the individual devices. 
+%TODO: update the diagram
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=0.45\textwidth]{figures/role-assignment}
+	\caption{Activities of the self-grouping procedure performed by each application node}
+	\label{fig:self_grouping}
+\end{figure}
+ 
+\subsubsection{\textbf{Definition}} The decision of which node(s) should be assigned to which roles(s) may depend on many aspects. Trivially, any node capable of performing a role is a potential candidate. Notwithstanding this, attributes such as the quality of the data tend to variate from one node to another and throughout time. Also, devices have different levels of battery available. Thus, a balanced role allocation must respect the trade off between what is best for the application goals and for the individual devices. 
 
 %In specific, we adopt the definition of context as...+++..., including their physical and the social contexts; in specific, context is reified as:
 %
@@ -85,67 +95,128 @@ The decision of which node(s) should be assigned to which roles(s) may depend on
 
 %Despite the many possible types of asymmetric tasks, in this paper we focus on those whose importance for the application and cost for the devices are significant, i.e., the computation and communication overhead for its allocating is justified. 
 
-\textbf{Allocation Classification} We use Gerkey and Matarić’s taxonomy~\cite{} to present a categorization of the role allocation problem along three axes. In the first axis, nodes are categorized into two types: single-role versus multi-role nodes\footnote{Originally, the taxonomy refers to \textit{robots} and \textit{tasks}, while in this paper we refer to the (application) \textit{nodes} and the \textit{roles} they can perform.}. As application nodes are generally capable of performing more than one role at a time -- for instance, to fetch from multiple sensors -- nodes are considered as multi-role. In the second axis, roles are categorized into two types: single-node vs multi-node roles. While certain types of role are performed by a single node -- for instance, the sensor data aggregator -- there are cases in which a role must be performed by multiple nodes. Thus, node cardinality depends on the role type. Finally, in the third axis, the allocation is also categorized into two types: instantaneous assignment or time-extended assignment. Due to the volatility of mobile devices (churn and capability changes), the scheduling of future allocations tends to fail. Accordingly, we consider an instantaneous assignment of roles based on the context of the involved devices.
 
 %The later is specially important in volunteer based applications such as mobile crowdsensing, as efficient and fair use of devices resources works as an incentive for participation. 
 
 %FIGURE: META MODEL FOR NODE-ROLE
 
-\textbf{Requirements} As the we consider a scenario in which application nodes hosted by volatile and resource constrained devices must self-organize their activities, the allocation method shall satisfy the following requirements:
+%\textbf{Requirements} As the we consider a scenario in which application nodes hosted by volatile and resource constrained devices must self-organize their activities, the allocation method shall satisfy the following requirements:
+%
+%\begin{enumerate}[label=R\arabic*.]
+%	
+%	\item Distributed: allocation decision should not be centralized by one device in order to avoid bottlenecks;
+%	
+%	\item Communication overhead: only essential data should be exchanged in order to minimize communication overhead; 
+%	
+%	\item Coherence: the allocation method performance/cost should be tuned according to the role constraints and criticality.
+%	  
+%\end{enumerate} 
 
-\begin{enumerate}[label=R\arabic*.]
+%TODO: Move this to the related works section;
+%TODO: Add heterogeneity and volatility to the paragraph
+In the literature, many works have tackled the problem of distributed task allocation~\cite{DTA}. In contrast with a task, a functional role defines a set of functionalities (possibly tasks) that a member of an organization is responsible to provide (perform). Hence, within an organization, a \textit{role} precedes a \textit{task}. Then, depending on the type of role, if multiple instances of a role have been assigned, a task allocation among these instances may still take place. Last but not least, while tasks usually have a concrete criteria for their beginning and completion and their assignment happens before task execution, roles lifespan tend to include multiple repetitions of a given functionality (or task). Therefore, in a dynamic scenario, a role assignment may have to evolve meanwhile roles are been performed.
+
+Notwithstanding their differences, the two types of allocation problems share commonalities. For instance, in both cases an utility function may be used as a criteria for choosing an optimal or sub-optimal assignment of roles/tasks. Whereas the optimization of quality attributes may deem unfeasible due to its complexity, a sub-optimal allocation of can still be guided by the \textit{fitness} (or utility) of nodes in performing these tasks/roles. To this end, fitness/utility is modeled as real-value function of relevant features affecting one or more attributes of the application. Also, some of the existing taxonomy for classifying a task allocation problem can also be applied to the role allocation problem. 
+
+%Thus, our method for role allocation follows the classification and algorithm from existing works.
+
+\subsubsection{\textbf{Classification}} Gerkey and Matarić’s~\cite{} proposed a taxonomy for the classification of multi-robot task allocation problems along three axes. In the first axis, robots are categorized into single-robot versus multi-robot tasks%\footnote{Originally, the taxonomy refers to \textit{robots} and \textit{tasks}, while in this paper we refer to the (application) \textit{nodes} and the \textit{roles} they can perform.}. 
+In the second axis, roles are categorized into two types: single-node vs multi-node roles. Finally, in the third axis, the allocation is also categorized into two types: instantaneous assignment or time-extended assignment.
+
+As application nodes are generally capable of performing more than one role at a time -- for instance, to fetch from multiple sensors -- nodes are considered as multi-role. While certain types of role are performed by a single node -- for instance, the sensor data aggregator -- there are cases in which a role must be performed by multiple nodes. Thus, node cardinality depends on the role type. Due to the volatility of mobile devices (churn and capability changes), the scheduling of future allocations tends to fail. Accordingly, we consider an instantaneous assignment of roles based on the context of the involved devices.
+
+\subsubsection{\textbf{Allocation Method}} Auction-based allocation methods have been extensively studied in multi-agents/robots domain. [describe an auction-based allocation method].
+
+In comparison with the task allocation problem tackled by auction-based methods, an assignment of roles to pervasive and mobile devices subject to high volatility needs to evolve as nodes leave or join the system and their fitness change. However, if the assignment should continuously reflect any context change, a frequent message exchange between bidding and auctioneers would lead to excessive communication overhead. Accordingly, the replacement of existing role positions (herein referred as reelection) should take into account the trade off between the gain of having a more fit node elected and the replacement cost. 
+
+%To mitigate this problem, nodes should evaluate their fitness (self-evaluation) and only advertise it to other group members if a delta in the value occurs.
+
+Before presenting the methods for the election of vacant and occupied role positions, we first elicit the kind of events that require an election process:
+
+\begin{itemize}
 	
-	\item Distributed: allocation decision should not be centralized by one device in order to avoid bottlenecks;
+	\item \textbf{Vacancy:} a new role position is opened or the node playing a role exists the system (churn) due to a network disconnection from the remaining nodes or the abnormal termination of the application instance after a failure;
 	
-	\item Communication overhead: only essential data should be exchanged in order to minimize communication overhead; 
+	\item \textbf{Resignation:} the node playing a role calls for a new election; e.g., the application node is exiting the system following a termination command issued by the users or the operational system;
 	
-	\item Coherence: the allocation method performance/cost should be tuned according to the role constraints and criticality.
-	  
-\end{enumerate} 
+	\item \textbf{Challenge:} one of eligible nodes calls for a new election; e.g., an eligible node has a significantly higher fitness for that role position than the actual node at the time it was elected;
+	
+	%\item \textbf{Consensus:} the set of nodes dependent from a functionality provided by an elected node calls for a new election; e.g., the latency experienced between a set of nodes and an elected node is high despite its higher fitness to play that role (latency is not part of the fitness criteria);
+	
+\end{itemize}
+\medskip
+ 
+The subtitle difference between vacancy and resignation consists of the way it is handled: the former implies in a \textit{vacant} period in which the role functionality is interrupted until the vacancy is detected and occupied (hard reelection), whereas the later allows the replacement of the position before discontinuing the functionality provided by the resigning node (soft reelection). In both cases, the eligible nodes must proceed with the election of a new candidate.
 
-%TODO: Move this to the related works section
-In the literature, many works have tackled the problem of distributed allocation of tasks~\cite{DTA}. Table~\ref{fig:asymmetry} classifies these methods according to their type and their satisfaction of the requirements R[1-3].
+The later case presents an inverse situation: the caller of the election is another node that perceives its fitness as higher than what the actual node scored by the time it was elected. Thus, it \textit{assumes} this value has not increased, which must be confirmed by letting the actual node to participate in the election. To mitigate the overhead, the following strategy is proposed:
 
-\begin{table}[ht!]
-	\centering
-	\begin{tabularx}{\linewidth}{@{}| *1{>{\centering\arraybackslash}X}|c|c|c|@{}}
-		\hline 
-		 & \textbf{R1} & \textbf{R2} & \textbf{R3} \\
-		\hline
-		M1 & Y & N & Y\\
-		\hline 
-		M2 & Y & N & Y\\ 
-		\hline
-		M3 & Y & N & Y\\
-		\hline
-	\end{tabularx}
-	\caption{Distributed allocation methods}
-	\label{tab:role_node_cardinality}
-\end{table}
+\begin{enumerate}
 
-Auction-based allocation methods have been extensively studied in the multi-agents field. In comparison with the dynamic scenarios tackled by these approaches, the problem of allocating roles to a large scale of mobile devices subject to high volatility tends to be much more intensive in terms of how often the allocation scheme must be reevaluated. Accordingly, a frequent message exchange between bidding and auctioneers nodes is expected. To mitigate this problem, nodes should evaluate their fitness (self-evaluation) and only advertise it to other group members if a delta in the value occurs.
+\item The challenge must only be called if the challenger fitness score ($FS_c$) is greater than the actual fitness score ($FS_e$) by a degree of $\alpha$, i.e., $FS_c = \alpha * FS_e$, with $\alpha > 1$;
 
-\textbf{Fitness} Whereas the optimization of quality attributes may deem unfeasible due to its complexity, the allocation of roles can still be guided by the fitness (or utility) of nodes in performing distinct roles. For each role, fitness is modeled as real-value function of relevant features affecting one or more attributes of the application. For example, the fitness function of an \textit{aggregator} role in a OMCS application be modeled as: 
+\item Assuming all eligible nodes adopt the same $\alpha$, they are exempt of participating and the election happens between the challenger and the actual nodes;
 
+\end{enumerate}
+
+If the challenger node has indeed a higher $FS$ than its challenger, it assumes the role position and this result is advertised; otherwise, the actual fitness score of the elected node ($FS_a$) is advertised so that new challenges are based on the most updated score.
+
+
+
+%The first and foremost overhead is due to the exchange of messages among eligible nodes ()
+
+%like the vacancy of a role position due to churn or  resignation of the node in that position, 
+
+%as the new node must be elected and advertised. Second, the context of the role, kept by the leaving node, may have to be transfered to the elected node (if the role is stateful). Depending on the domain of the application, other costs may apply.
+
+%Table~\ref{fig:asymmetry} classifies these methods according to their type and their satisfaction of requirements R[1-3].
+%
+%\begin{table}[ht!]
+%	\centering
+%	\begin{tabularx}{\linewidth}{@{}| *1{>{\centering\arraybackslash}X}|c|c|c|@{}}
+%		\hline 
+%		 & \textbf{R1} & \textbf{R2} & \textbf{R3} \\
+%		\hline
+%		M1 & Y & N & Y\\
+%		\hline 
+%		M2 & Y & N & Y\\ 
+%		\hline
+%		M3 & Y & N & Y\\
+%		\hline
+%	\end{tabularx}
+%	\caption{Distributed allocation methods}
+%	\label{tab:role_node_cardinality}
+%\end{table}
+
+
+\subsubsection{\textbf{Example}}
+
+The fitness function of an \textit{aggregator} role in a OMCS application could be modeled as: 
 
 $$
-f_{aggregator} = battery\_level * membership\_factor
+f_{aggregator} = battery\_level * membership\_age
 $$
 
 \noindent
 in which $battery\_level$ and $membership\_age$ are both real positive numbers ranging from 0 to 1. The former parameter can be accessed from the platform hosting the node, while the last parameter refers to the time a node belongs to a group. The following function illustrates how this parameter could be evaluated:
 
 $$
-membership\_factor = MIN((60 - age)/60, 1)
+membership\_age = MIN((60 - age)/60, 1)
 $$
 
 \noindent
-in which $age$ is given in seconds and refer to the uninterrupted time a given node is in the group. Thus, if the node has been more than a minute in the group, it has a $membership\_factor$ of one; otherwise, $0 \le membership\_factor \le 1$.
+in which $age$ is given in seconds and refer to the uninterrupted time a given node is in the group. Thus, if the node has been more than a minute in the group, it has a $membership\_age$ of one; otherwise, $0 \le membership\_factor \le 1$.
 
-If a role position is been elected for the first time, every node should advertise its fitness value and agree on the node to assume that position. Otherwise, the replacement of the current position should consider the trade off between the gain of having a new node elected and the cost of replacing the current node. 
+Thus, given a set of eligible nodes, the one with the highest product of battery level and membership age becomes elected as an aggregator. 
 
-%Figure~\ref{fig:asymmetry} presents the activity diagram for the procedure performed by each node.
+\subsubsection{\textbf{Complexity Analysis}}
 
+%TODO: check the definition of FS and use it accross the paper
+
+The distributed role election involves the exchange of fitness scores among eligible nodes in the advent of the events depicted in the previous subsection. As each node receives the FS from the other nodes, this value is added to the classification list in polynomial time. The number of exchanged messages depend on the network topology and the event that triggers the election. 
+
+In the worse case, represented by an election of a vacant position and no broadcast, each node $e$ in the set of eligible nodes $E$ must send each other an unicast message. If $|E| = n$, the asymptotic message count is given by $O(n * (n-1)) = O(n^2)$. If the nodes in $E$ can communicate through broadcast, this number is reduced to $O(n)$. In its turn, the challenge event produces smaller overhead as the exchange of messages is restricted to a request-response between challenger and challenged and to the subsequent advertisement of the result ($O(n)$ without broadcast, otherwise $(O(1))$).
+
+Once the communication overhead of a single election has been showed, the overall overhead can be estimated by the number of roles in the application and the frequency of events triggering new elections. Whereas the vacancy and resignation event cannot be avoided, the frequency of  challenges depend on the choice for $\alpha$: the higher this factor is, the lower the probability of a challenge to happen. Therefore, unless the quality of the functionality provided by the role is strongly affected by variations in the fitness score to the point of justifying the election overhead, $\alpha$ should be set with higher values. 
 
 %For example, one-out-of-many device may be a better candidate to host the coordinator of the activities performed by a group of application nodes or to use specific sensors to extract information from the physical environment. Whenever asymmetry characterizes a behavior, i.e., not every node must perform it, and the performance, the cost, or other attributes of such behavior are to be considered, the decision of which node to perform it should take the context of the hosting devices into account. In this work, we considered asymmetric tasks whose importance for the system justifies the overhead for their allocation. %We compare our approach with straightforward solutions to demonstrate the feasibility and benefits of a context-dependent allocation. 
 
@@ -195,4 +266,4 @@ The relation between the number of instances of a given role and different non-f
 
 Since the encounter of mobile application nodes is opportunistic and not deterministic, group membership criteria specifies no size threshold or limit: as long as a node satisfies the group's membership criteria, it becomes/remains a member. This choice avoids the need for a group membership control by a trustful component and simplifies the grouping process. Accordingly, the size of a group, kept stable the membership criteria satisfaction by each of its members, can only be changed by making this criteria more relaxed or strict. 
 
-Whereas the self-organization mechanisms presented address the \textit{solution space}, i.e., which nodes provide which application functionality, here the \textit{requirement space} is the target of the adaptation, i.e., the application requirements evolve to accommodate situations in which no solution can satisfy those requirements.
+Whereas the self-organization mechanisms presented address the \textit{solution space}, i.e., which nodes provide which application functionality, here the \textit{requirement space} is the target of the adaptation, i.e., the application requirements evolve to accommodate situations in which no solution can satisfy those requirements~\cite{RELAX}. 

@@ -1,2 +1,136 @@
-%\section{Background}
-%\label{sec:background}
+\section{Background}\label{sec:mobile_applications}
+
+%TODO architectural fluidity
+%TODO characterize the music stream example w.r.t. C[1-5] and anticipate the benefits of collaboration
+
+%1: The network model
+\subsection{Wireless Networking}
+
+Bring background information about Wi-Fi zones and D2D communication technology, including Wi-Fi direct and near-future D2D in 5G
+
+\begin{figure*}[t!]
+	\centering
+	\includegraphics[width=0.75\textwidth]{figures/discovery}
+	\caption{Application nodes in the same network must become aware of each other}
+	\label{fig:discovery}
+\end{figure*}
+
+%2: Nowadays Pervasive and mobile computing
+\subsection{Pervasive and Mobile Applications}~\label{sec:characterization}
+
+%TODO: fix this paragraph
+The market of applications crafted for pervasive and specially mobile devices continues to increase as more people have access to this kind of devices. In specific, applications can be hosted by pervasive devices with less degree of mobility, such as smartphones, tables, gadges, and miniaturized computer platforms like Arduino and Raspberry PI, as well as the wireless networks previously mentioned, 
+
+\section{Overview}\label{sec:mobile_applications}
+
+
+
+\subsection{Motivating Scenarios}\label{sec:motivating}
+
+The kind of application targeted by the proposed framework have some or all of the following characteristics:
+
+\begin{enumerate}[label=C\arabic*]
+	
+	\item \textbf{Connectivity:} devices are expected to communicate with each other, while in the same area, through infrastructure Wi-Fi or mobile ad hoc networks (MANETs);
+	
+	\item \textbf{Volatility:} application nodes are expected to enter/leave a given zone/network without notice; also, the physical and computational environment in which application nodes operate is subject to changes that may affect capabilities required by the application;
+	
+	\item \textbf{Intensity:} application nodes may be required to perform frequent resource-intensive tasks, exchange large volumes of data, or a mix of both;
+	
+	\item \textbf{Delay-sensitive:} among the application features, some may require low latency communication;
+	
+	\item \textbf{Scale:} up to a large number of application nodes are expected to co-exist in a given zone/network and potentially interact.
+	
+	
+	%	\item \textbf{Interactivity:} application nodes need to interact in order to synchronize the application state, coordinate the execution of tasks, or collaborate to achieve goals more efficiently;
+	
+	
+	
+	%\item \textbf{Complexity:} application nodes are expected to perform data/computational-intensive tasks 
+	
+	%\item Ad hoc: the interaction between application nodes are expected to happen opportunistically without the intermediation or support of dedicated servers.
+	
+	%\item Transient: application data is created, shared, and modified locally; remote persistence, when needed, should happen asynchronously.
+	
+	%poses the challenge of dealing with scalability issues; thus, the algorithms and methods that support the ad hoc interaction among application nodes must scale to a large number of interacting devices.
+	
+	%\item Robustness: responsibilities assigned to local devices that leave the system or fail must be resumed by other available devices without disruption of normal behavior.
+	%
+	%\item Efficiency: responsibilities assigned to local devices must take into account their functional and non-functional capabilities according to system specification.
+	%
+	%\item Fairness: responsibilities assigned to local devices must take into account their participation history to avoid unfair use of devices resources.
+	
+	%the problems caused by the intermittent connectivity to remote servers should be mitigated either by opportunistically assigning responsibilities to local devices. 
+	
+\end{enumerate}
+
+%Each of these characteristics imposes challenges to the engineering of mobile applications for which interactions among nodes is a requirement. Next, we present a case example for which the aforementioned characteristics apply.
+
+
+
+%TBA: a music streamming app with an use case that lets people to collaborativelly manage a playlist and send the audio to a nearby bluetooth
+
+\subsubsection{Collaborative Music Streaming}
+
+Nowadays, free and paid services allow users to listen to music streamed from Internet servers to their devices. It has also become popular the use of portable speakers equipped with Bluetooth, so that users can enjoy a more powerful audio than provided by their smartphones and tablets. This combination of pervasive devices is specially appealing for ad hoc social gatherings (\textbf{C1, C2}). However, both the streaming of music from the Internet and the communication through Bluetooth are expensive features in terms of battery, as large volumes of data must be transferred (\textbf{C3}) with minimum delay (\textbf{C4}). Therefore, it would be fair to let capable devices to share this responsibility without the manual intervention of its users. For this, a \textit{streaming-role} must be dynamically assigned to one device at a time with minimum or no disruption of the music execution. Finally, it wouldn't be unrealistic to expect multiple capable devices in a larger social gathering  (\textbf{C5}).
+
+%Considering the already existing features of collaborative management of playlists, a step further would be to let the devices in a social gathering to share the responsibility for streaming music from the Internet and to the Bluetooth speakers. 
+
+
+
+\subsubsection{Mobile Crowd-sensing}
+
+Mobile crowd-sensing (MCS) consists of a paradigm in which the sensors of user-companioned devices are employed in the measurement of urban and social phenomena~\cite{}. Existing MCS applications range from private and public urban transportation monitoring (e.g., Waze\footnote{waze website} and Moovit\footnote{moovit website}) to atmospheric pressure, noise and air pollution measurement (e.g., AirPatrol\footnote{airpatrol website}, PressureNet\footnote{pressurenet website}, and Ear-Phone~\footnote{}). In the first two cases, geolocation -- fetched from GPS sensors -- is the main type of data, while in the others geolocation is used to contextualize the data fetched from other sensors. In particular, AirPatrol requires an additional wearable sensor that monitors the quality of air and sends results through Bluetooth to a main device (e.g., smartphone) also carried by the user.
+
+Many MCS applications target a well defined geographic region and period of time. Accordingly, multiple mobile devices running the application may be sharing the same Wi-Fi network or within range of D2D communication (\textbf{C1}) until they become disconnected (\textbf{C2}). Also, while in a campaign area, devices may suffer from fluctuations of the received Wi-Fi/Bluetooth/GPS signals, as well as have distinct levels of battery and computational resources available (\textbf{C2}).
+%Also, user-companioned devices hosting the application are expected to join/leave the campaign area (\textbf{C2}). 
+Whereas some campaigns allow data to be analyzed later, real-time crowdsensing require a minimum delay between the collection of data from devices sensors, their delivery to backend servers for further processing and publication (\textbf{C3}). Sensors like GPS impose a significant battery drain, and campaigns like traffic monitoring require a frequent activation of this sensor (\textbf{C4}). Finally, with the popularization of crowdsensing applications, a large number of participants may eventually co-exist in the same campaign area (\textbf{C5}). 
+
+%In general, crowdsensing involves the activation of battery-draining sensors which would otherwise be idle or used sporadically. 
+
+Like other mobile applications, the majority of nowadays MCS are designed following a client-server architecture in which application nodes collect data from their sensors independently from one another. 
+%At most, sensing activities in the client applications are coordinated by the backend server, incurring in additional processing by these servers and exchange of data through Internet. 
+This common approach has the following drawbacks:
+
+%\begin{itemize}
+%	
+%	\item A backend server coordinates the activation of the sensing tasks, which increases the server and the network loads; or
+%	
+%	\item Each application node perform the same tasks -- there is no coordination nor collaboration between nodes; 
+%	
+%\end{itemize}
+
+\begin{itemize}
+	
+	\item \textbf{Coordination}
+	
+	\begin{enumerate}[label=-]
+		
+		\item Without coordination, application nodes cannot adapt to situations in which multiple devices can provide the same information, thus they tend to consume unnecessary resources as sensing tasks could be allocated to a subset of the available devices;
+		
+		\item With coordination, nodes could perceive each other and agree on which nodes should perform which tasks, as well as to collectively adapt to changes in physical and social contexts (e.g., churn of devices, variations in the quality of sensors measurements, battery level, etc). 
+		
+	\end{enumerate}
+	
+	\item \textbf{Collaboration}
+	
+	\begin{enumerate}[label=-]
+		
+		\item Without collaboration, each node sends its data to the backend server responsible for filtering and aggregating samples, which also increases the server and the network loads. Additionally, all nodes are assumed to have Internet access to communicate with the server and no collaborative routing of data is used;
+		
+		\item With collaboration, elected application nodes could aggregate data collected from different sensors and average those with higher accuracy. Accordingly, less data would to be transmitted to and processed by backend servers.
+		
+	\end{enumerate}
+\end{itemize}
+
+%\subsubsection{Messaging Application} Once of the most popular types of mobile applications, messaging apps are used for both social and professional communication and exchange of multi-media like photos, audios, and videos. The majority of these apps use a message server deployed in the cloud to relay messages among users. This model, however, requires each application node to have Internet connection. Additionally, when a message is addressed to a group of users whose devices may happen to be in the same physical area and sharing the same network, messages are still delivered separately. Hence, there is no distinction in the functionality of each client application node.  
+%
+%To achieve the simpler use case of \textit{off-line}~\footnote{among nodes with local network connection} messaging, peers would need to discover each other and communicate locally. In another case, to improve the communication efficiency between server and members of a conversation group, a single group member could be elected to perform the role of a local relay. The responsibility of this role would be to relay messages received from the remote server to all group members locally connected to the node playing a gateway. Thus, instead of sending $n$ messages through the Internet, the server would send just one. Nonetheless, the decision of which node should play the relay role could greatly affect this result, as if it becomes unavailable before concluding the retransmission, other nodes would still have to receive the message from the server after detecting the relay failure.
+%
+%%In the chat application example mentioned before, a conversation group provides a straightforward criteria for grouping the distributed nodes able to communicate. The same holds for the real-time mobile multiplayer game example: the roles of a local relay/server and the role of receivers/clients would be dynamically assigned to the members of the conversation/game groups. Finally, in the mobile crowdsensing example, campaigns targeting multiple types of sensors data may further define specialized groups -- e.g., one for collecting data about the noise pollution, another for measuring air pollution --  and different instances of these groups may co-exist in different city areas according to the campaign specification. 
+%
+%\subsubsection{Real-time Mobile Multiplayer Game} One of the problems in real-time multiplayer games hosted by mobile devices is to achieve low-latency synchronization of the game among players, as the quality of the connection from the mobile devices to backend servers tend to be affected by fluctuations of the radio/wi-fi signal. In addition, mobile data plans tend to be limited and expensive in comparison with fixed Internet service. 
+%
+%To enable a use case in which players must get together in a city area to interact among themselves and with virtual entities augmenting their reality (e.g., monsters that must be collaboratively battled), one-out-of-n nodes in the area sharing a common network may become a buffer server. The responsibility of this role would be to interface the updates in the game world triggered by backend servers (e.g., to add a monster in Central Park) and the updates in the game world following user actions (e.g., inflicting damage to the monster or receiving damage to their virtual characters). While the first type of update tolerates more delay, the later requires a hight throughput and low-latency to avoid disruptions in the game experience. Nonetheless, the decision of which node should play the server role could also affect the game experience, as some devices could have less computational resources available to perform the necessary game calculations. Figure~\ref{} illustrates this scenario.
+
+

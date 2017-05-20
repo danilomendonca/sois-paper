@@ -1,10 +1,78 @@
-%!TEX root = main.tex
-% -*- root: main.tex -*-
+%%!TEX root = main.tex
+%% -*- root: main.tex -*-
+%\section{Middleware}\label{sec:middleware}
+%
+%\subsection{SOIS with Existing Coordination Models} 
+%
+%\subsection{Interoperation} 
+%
+%\subsection{Discovery and Contextualization} 
+%
+%The application nodes sharing the same interaction space must become aware of each other. In the more trivial cases, social awareness is part of the application requirements (e.g., in a chatting or in a multiplayer game application); or, the social context affects the way the application can achieve its requirements. The later may refer to the cases in which functionalities are provided by specialized nodes (e.g., by sensors, actuators, gadgets, and other devices composing the application). It may also refer to situations in which the quantity and quality of nodes defines a social context to which the application must adapt to (e.g., if too many sensors are available, a subset can be chosen to spare the other's resources).
+%
+%%Whereas the discovery of ambient and web services are important and have been addressed by many works~\cite{Zhu:2005, Meshkova:2008}, 
+%
+%%hosted by devices able to provide multiple functionalities, i.e., that can assume different roles in application organization. 
+%
+%To better suit the characteristics in Section~\ref{sec:characterization}, the discovery mechanism should not be centralized by remote components; instead, to avoid latency and Internet dependency, discovery must be carried out and managed from inside, i.e, by the application nodes themselves. To this end, discovery can still rely on some degree of centralization (discovery-nodes) or be completely distributed. The decision of which approach to use must cope with the volatility and large scale characteristics discussed in Section~\ref{sec:characterization}. 
+%
+%%Popular platforms such as Android NDS~\cite{ANDROID_NSD} and Apple Bonjour~\cite{APPLE_BONJOUR} provide native mechanisms that allow nodes to advertise and discover their services and resources. Additionally, third party frameworks provide multi-platform discovery~\cite{Alljoyn, IoTivity}. We later discuss how this mechanisms could be enriched to suit the type of application described in Section~\ref{sec:characterization}.
+%
+%
+%
+%
+%
+%%TODO explain the gap (if any) or which discovery mechanism should be used
+%
+%%Following the taxonomy in~\cite{}, 
+%
+%%\subsubsection{Interoperability}
+%
+%%In a blackbox architecture (e.g., service-oriented and resource-oriented architectures), endpoints providing a service or resource encapsulate their inner components and logic and expose their functionalities through remotely accessible interfaces. This type of architecture suits well the cases in which different platforms and applications need to interoperate by means of request-response between clients and agnostic services. However, the overhead and limitations they impose may not be justified in the case of interactions among nodes of the same application. Thus, a component-based architectural style provides the loose-coupling and flexibility required by the volatility of mobile devices. 
+%
+%%Different paradigms and architectural models for distributed systems provide their own discovery technology and specification. The discovey mechanisms in these models is either an industrial standard (e.g., the service registry in SOA~\footnote{http://uddi.xml.org/}) or are currently been investigated (e.g., the P-REST extension to REST~\cite{Caporuscio:2015}). 
+%
+%%TODO refactore this paragraph and continue this ssection
+%%In specific, components are independent, loose-coupled entities that can be added/removed from the system at runtime. Therefore, mobile devices can host components that, once in the network, advertise their presence and become aware by its peers.
+%
+%%%Content and control can be broadcasted;  
+%
+%%%In mobile crowdsensing, the discovery of peer nodes is particularly important as each node is a potential contributor to the existing campaigns. 
+%
+%%TALK ABOUT THE DCVRY METHODS AND THEIR SUITABILITY TO THE SCENARIO AND REQUIREMENTS PRESENTED BY THIS WORK.
+%
+%%Whereas previous coordinating models for mobile computing assumed the worse case for connectivity (nodes eventually meet and exchange data)~\cite{LIME, TUCSON, OTHERS}, nowadays wireless technologies makes it possible for multiple application nodes to be interconnected at the same time. Given the resource limitations of mobile devices, discovery mechanisms must avoid creating too much computational overhead or flood the network with discovery messages. As the peer scale grows, such requirements becomes critic for the feasibility of an edge space for interactive applications. 
+%
+%\subsection{Underlying Framework}
+%
+%While the choice of a specific framework is orthogonal to the main concepts and the self-organization mechanisms presented by this work, we considered the arguments for a resource-oriented architecture~\cite{PRIME} and adopted IoTivity as the underlying framework on top of which the abstractions and mechanisms of self-organizing edge spaces are built and operate.
+
 \section{Evaluation and Discussion}\label{sec:evaluation}
 
+\subsection{Public Transport Monitoring}
 
-\subsection{Underlying Framework}
+The approach was evaluated with an opportunistic mobile crowd-sensing application. In specific, we simulated a public transport monitoring application to compare the efficiency of a pure client-server architecture with a solution based on SOIS.
 
-While the choice of a specific framework is orthogonal to the main concepts and the self-organization mechanisms presented by this work, we considered the arguments for a resource-oriented architecture~\cite{PRIME} and adopted IoTivity as the underlying framework on top of which the abstractions and mechanisms of self-organizing edge spaces are built and operate.
+The simulation experiments aimed at two aspects: to show the gain in efficiency of the crowd-sensing campaign based on our framework when compared with a client-server approach; and to show the scalability and performance of the mechanisms proposed, as they impose a communication overhead. 
+
+\subsection{Simulation Design}
+
+%Distributed role allocation
+
+%-> Each node must calculate and advertise its fitness value for the roles with vacant positions: protocol to calculate; protocol to advertise;
+%-> Each node must compare its fitness value with the other nodes and update the assignment for existing positions and assume/resign to a position if another node has a higher value
+%-> 
+
+The scalability and performance of the self-organization mechanisms were evaluated using a simulator for P2P  \textit{PeerSim}, an open source peer-to-peer simulator~\cite{p2p09-peersim}. This tool supports the creations of different network topologies and.... 
+
+To simulate a public bus monitoring crowd-sensing application, experiments were performed with an increasing number of nodes. Each role can potentially play a \textit{gps-monitor}, a \textit{acceleration-monitor}, or an \textit{aggregator} role. Each role has been implemented as a protocol extending the \textit{CDProtocol} class. At each simulation cycle, 
+
+the application roles of a \textit{gps-monitor} and \textit{acceleration-monitor} were implemented as protocols, which are called at each simulation cycle. 
+
+The simulation was executed in a computer with .... 
 
 
+
+\subsection{Results}
+
+\subsection{Discussion}
