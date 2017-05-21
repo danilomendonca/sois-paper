@@ -124,7 +124,15 @@ Among the characteristics of the applications target by this work, the following
 
 Next, we present examples of applications with these characteristics and discuss some of the use cases that motivate our approach.
 
-\subsubsection{\textbf{Collaborative Music Streaming}}
+%THE WOLRD CONTEXT (PHYSICAL + SOCIAL) --> THE NODE CONTEXT (ROLE) --> THE NODE BEHAVIOR
+\begin{figure*}[t!]
+	\centering
+	\includegraphics[width=0.95\linewidth]{figures/rationale}
+	\caption{Role-orientation rationale}
+	\label{fig:rationale}
+\end{figure*}
+
+\subsubsection{Collaborative Music Streaming}
 
 nowadays, popular services allow users to listen to music streamed from the Internet to their mobile devices. It has also become popular the use of portable speakers equipped with Bluetooth, so that users can enjoy a more powerful audio than provided by their smartphones and tablets. This combination of pervasive devices is specially appealing for ad hoc social gatherings (\textbf{C1, C2}). However, both the streaming of music from the Internet and the communication through Bluetooth are expensive features in terms of battery, as large volumes of data must be transferred (\textbf{C3}) with minimum delay (\textbf{C4}). Therefore, it would be fair to let capable devices to share this responsibility without the manual intervention of its users. For this, a \textit{streaming-role} must be dynamically assigned to one device at a time with minimum or no disruption of the music execution. 
 
@@ -134,7 +142,7 @@ As a challenge for the realization of this feature... Finally, it wouldn't be un
 
 
 
-\subsubsection{\textbf{Mobile Crowd-sensing}}
+\subsubsection{Mobile Crowd-sensing}
 
 mobile crowd-sensing (MCS) consists of a paradigm in which the sensors of user-companioned devices are employed in the measurement of urban and social phenomena~\cite{}. Existing MCS applications range from private and public urban transportation monitoring (e.g., Waze\footnote{waze website} and Moovit\footnote{moovit website}) to atmospheric pressure, noise and air pollution measurement (e.g., AirPatrol\footnote{airpatrol website}, PressureNet\footnote{pressurenet website}, and Ear-Phone~\footnote{}). In the first two cases, geolocation -- fetched from GPS sensors -- is the main type of data, while in the others geolocation is used to contextualize the data fetched from other sensors. In particular, AirPatrol requires an additional wearable sensor that monitors the quality of air and sends results through Bluetooth to a main device (e.g., smartphone) also carried by the user.
 

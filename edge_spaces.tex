@@ -1,13 +1,7 @@
+
+
+
 \section{Self-organizing Interaction Spaces}\label{sec:edge_spaces}
-
-%THE WOLRD CONTEXT (PHYSICAL + SOCIAL) --> THE NODE CONTEXT (ROLE) --> THE NODE BEHAVIOR
-\begin{figure*}[t!]
-	\centering
-	\includegraphics[width=0.95\linewidth]{figures/rationale}
-	\caption{Role-orientation rationale}
-	\label{fig:rationale}
-\end{figure*}
-
 
 \subsection{Role-orientation}
 
@@ -50,23 +44,7 @@ In this work, we inherit the concept of a role, more commonly used in human orga
 %Before, a group had a stric semantical relation with the role within: a group was always a group of a specific type of agent, like a vaccum cleaner or a humidity sensor or an actuator. Thus, I have envisioned the membership criteria strongly coupled to the needs of a single role within the group.
 %That been said, now I must reason on the more heterogeneous sense of a group. What if I want to define, in terms of A-3, different criteria for the followers and for the supervior? 
 
-\lstset{
-	language=XML,
-	breaklines=true,
-	backgroundcolor=\color{lightgrey},
-	basicstyle=\color{blue},
-	keywords={group,cardinality,role,name,criteria,type,term,value,minimum,maximum},
-	keywordstyle={\bfseries\color{blue}}
-}
-\begin{lstlisting}[caption=Specification of the music streaming group, label=lst:ms_criteria, captionpos=b]
-<group name="music-streaming">
-  <role name="streamer" cardinality="1">
-    <criteria type="boolean" term="INTERNET" value="TRUE" />
-    <criteria type="boolean" term="BLUETOOTH" value="TRUE" />
-    <criteria type="float" term="BATTERY_LEVEL" minimum="25" />
-  </role>
-</group>
-\end{lstlisting}
+
 
 %Similarly to well studied allocation of tasks to agents/robots with dynamic and distinct capabilities~\cite{}, mobile devices are heterogeneous and subject to hight volatility, therefore their fitness in performing different tasks varies from one device to the other and throughout time. 
 
@@ -99,7 +77,7 @@ In this work, we inherit the concept of a role, more commonly used in human orga
 
 \begin{figure}[t!]
 	\centering
-	\includegraphics[width=0.85\linewidth]{figures/group_view}
+	\includegraphics[width=0.9\linewidth]{figures/group_view}
 	\caption{Example of a group with a relaxed membership criteria; out of 7 members, 2 nodes are idle (light blue) and 5 nodes are playing one of two types of roles: 1 node (red) plays a role related to the role played by the 4 others nodes (orange);}
 	\label{fig:group_view}
 \end{figure}
@@ -122,7 +100,7 @@ In this work, we inherit the concept of a role, more commonly used in human orga
 %Three dimensions characterizes the ecosystem of applications hosted by pervasive and mobile devices: \textit{space}, \textit{time}, and \textit{heterogeneity}. 
 
 
-%Figure~\ref{fig:rationale} illustrates the rationale behind the assignment of roles to an application node.
+
 
 %The combination of the social context with the individual context of each node 
 
@@ -139,13 +117,37 @@ To its members, a group defines a \textit{social context} in which they (a) may 
 
 \begin{itemize}
 	
-	\item \textbf{Strict:} a m-m specification (m instances of a role in a group of m nodes) defines a symmetric role, i.e., a role that must be played by all members.
+	\item \textbf{Strict:} a m-m specification (m instances of a role in a group of m nodes) defines a strict membership, i.e., a role that must be played by all members.
 	
-	\item \textbf{Relaxed:} a k-m specification defines an asymmetric role, i.e., a role to be played by a subset $K$ of the set $M$ of nodes in the group, with $|K| = k$, $|M| = m$, and $k < m$.
+	\item \textbf{Relaxed:} a k-m specification defines a relaxed membership, i.e., a role to be played by a subset $K$ of the set $M$ of nodes in the group, with $|K| = k$, $|M| = m$, and $k < m$.
 	
 \end{itemize}
 
-Whenever the relation between nodes in a group is asymmetric, and there is no predefined criteria for their allocation, nodes must agree on the specific roles they will play (a). Conversely, if the relation between nodes in a group is symmetric, there is no decision to be made: all nodes must play the same role (b). Figure~\ref{fig:asymmetry} illustrates cases of both symmetrical and asymmetrical relations within a group. 
+%3: The k-out-of-m allocation problem
+Whenever the group specification is relaxed, the actual distribution of roles to group members must be decided dynamically (k-out-of-m allocation problem). This kind of specification is particularly useful for applications that explore the resources from a crowd of devices. For example, in mobile crowd-sensing, due to the potentially high density of devices within a given area, there may be a surplus of nodes able to perform one or more sensing tasks. Accordingly, a crowd-sensing group could be formed by all capable nodes, and only a few would actually be playing the sensing roles (decided by the k-out-of-m allocation). Figure~\ref{fig:group_view} shows the representation of a group with relaxed membership specification and two types of roles.
+
+%Conversely, if the relation between nodes in a group is symmetric, there is no decision to be made: all nodes must play the same role. 
+
+%To this end, members would need to solve among them the k-out-of-m allocation problem, where $m$ is the group size (of capable nodes). In contrast, a strict membership would imply choosing nodes to become active members from all the available nodes, including those that may not fit to play the role. Thus, in these cases, a relaxed membership reduces the scope in which the decision of which nodes must play a role in the group.
+ 
+%This decision has the advantage to reduce the role assignment scope, as eligible nodes are picked from the group and not from the whole set of application nodes. 
+
+%for applications such as MCS, in which application nodes provides functionalities whose purpose is to address the needs of an external actor and not the users themselves, 
+
+%4: The refined k-out-of-m allocation problem
+The same logic applies to a group specified with two or more types of roles. If there is no predefined criteria for their assignment to specific nodes, e.g., based on the class of device, nodes must also agree on the specific roles they will play. Figure~\ref{fig:asymmetry} illustrates cases of both symmetrical and asymmetrical relations within a group. Finally, Figure~\ref{fig:rationale} summarizes the rationale behind assignment of functional roles the nodes of an application based on their social and individual contexts.
+
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=0.48\textwidth]{figures/asymmetry}
+	\caption{Left: application nodes perform the same behavior (e.g., content sharing); middle: application nodes perform asymmetric roles without hierarchy among them (e.g., different sensing tasks); right: one node performs an hierarchical control (e.g., coordinator) or communication (e.g., data aggregator).}
+	\label{fig:asymmetry}
+\end{figure}
+
+\subsection{Role Fitness}
+
+%5: Role fitness and group specification
+Once the cases in which roles must be dynamically assigned to the members of a group has been depicted and before moving to more complete and concrete examples, we introduce the last key concept of the framework: the \textit{role fitness}.
 
 
 
@@ -159,17 +161,7 @@ Whenever the relation between nodes in a group is asymmetric, and there is no pr
 %TODO what is the purpose of this paragraph?
 %Furthermore, once this specification exists, group members must agree on the actual allocation of roles. Such \textit{distributed role allocation} mechanism is presented in Section~\ref{sec:self_organization}.
 
-\begin{figure}[t!]
-	\centering
-	\includegraphics[width=0.48\textwidth]{figures/asymmetry}
-	\caption{Left: application nodes perform the same behavior (e.g., content sharing); middle: application nodes perform asymmetric roles without hierarchy among them (e.g., different sensing tasks); right: one node performs an hierarchical control (e.g., coordinator) or communication (e.g., data aggregator).}
-	\label{fig:asymmetry}
-\end{figure}
 
-
-%Due to the potentially high density of application nodes within a given zone/network, there may be a surplus of nodes able to perform one or more roles. Hence, instead of adopting a strict causality (I) between group membership and the role(s) to be played, we adopt a relaxed causality (II) in which group membership defines only the context in which its members \textit{may} play certain roles (precondition). This decision has the advantage to reduce the role assignment scope, as eligible nodes are picked from the group and not from the whole set of application nodes. 
-
-%for applications such as MCS, in which application nodes provides functionalities whose purpose is to address the needs of an external actor and not the users themselves, 
 
 
 
@@ -205,6 +197,28 @@ The modeling of an application group starts with the specification of its member
 		\item \textbf{Application domain:} refers to the application states a node must be to belong to a group. E.g.: currently a member of another group (or non-member), joining a chat or game session, etc.
 	\end{itemize}
 \end{itemize}
+
+\subsection{Examples}
+
+\lstset{
+	language=XML,
+	breaklines=true,
+	backgroundcolor=\color{lightgrey},
+	basicstyle=\color{blue},
+	keywords={group,cardinality,role,name,criteria,type,term,value,minimum,maximum},
+	keywordstyle={\bfseries\color{blue}}
+}
+\begin{lstlisting}[caption=Specification of the music streaming group, label=lst:ms_criteria, captionpos=b]
+<group name="music-streaming">
+<role name="streamer" cardinality="1">
+<criteria type="boolean" term="INTERNET" value="TRUE" />
+<criteria type="boolean" term="BLUETOOTH" value="TRUE" />
+<criteria type="float" term="BATTERY_LEVEL" minimum="25" />
+</role>
+</group>
+
+\end{lstlisting}
+
 
 For example, a mobile crowdsensing campaign is designed to monitor the real-time geolocation of public buses in a city and to register unusual acceleration and deceleration events that may affect the user experience in this service. To avoid disturbing the users with the need of starting the application whenever they are within a bus, an opportunistic approach~\cite{} requires the automatic detection of such context. In this example, we assume city buses to provide wi-fi. Accordingly, a \textit{bus group} is specified with the following criteria:
 
