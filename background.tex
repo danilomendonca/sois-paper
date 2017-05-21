@@ -6,20 +6,22 @@
 %1: The network model
 \subsection{Wireless Networking}
 
-Bring background information about Wi-Fi zones and D2D communication technology, including Wi-Fi direct and near-future D2D in 5G
+Not only computers have pervaded the space inhabit by humans, wireless networking is quickly fulfilling any remaining gaps in connectivity through which pervasive devices can remain connected, including while they are carried from one region to the other. Whereas the connectivity between devices was mostly restricted to the areas with a private or public Wi-Fi coverage, recent developments in device-to-device (D2D) technology expand the situations in which devices can communicate and interoperate. For example, in addition to the already consolidated Wi-Fi direct and Bluetooth Low Energy (BLE) technologies, the fifth generation mobile networks (5G) standards include the support for D2D communication~\cite{Tehrani:2014}. Thus, a new and exciting landscape for pervasive and mobile computing is taking form. Figure~\ref{fig:network_model} illustrates this scenario.
 
 \begin{figure*}[t!]
 	\centering
-	\includegraphics[width=0.75\textwidth]{figures/discovery}
-	\caption{Application nodes in the same network must become aware of each other}
-	\label{fig:discovery}
+	\includegraphics[width=0.8\textwidth]{figures/network_model}
+	\caption{Application nodes communicating through Wi-Fi or D2D technologies}
+	\label{fig:network_model}
 \end{figure*}
 
 %2: Nowadays Pervasive and mobile computing
-\subsection{Pervasive and Mobile Applications}~\label{sec:characterization}
+\subsection{Pervasive Applications}~\label{sec:characterization}
 
 %TODO: fix this paragraph
-The market of applications crafted for pervasive and specially mobile devices continues to increase as more people have access to this kind of devices. In specific, applications can be hosted by pervasive devices with less degree of mobility, such as smartphones, tables, gadges, and miniaturized computer platforms like Arduino and Raspberry PI, as well as the wireless networks previously mentioned, 
+The market of applications crafted for pervasive and specially mobile devices continues to increase as more people have access to this technology. In specific, applications can be hosted by pervasive devices with more less degree of mobility and computational power, such as smartphones, tables, gadges, and miniaturized computer platforms such as Raspberry PI, which now supports the Android platform for Internet of Things~\footnote{https://developer.android.com/things/hardware/raspberrypi.html}. Also, new types of specialized devices like Bluetooth beacons compose the rich ecosystem in which pervasive applications can exist.
+
+While mobile devices represent the preeminent type of pervasive computing nowadays and the majority of applications target mobile platforms, we adopted \textit{pervasive} as a broader qualitative (instead of mobile) to avoid the exclusion of pervasive devices that exhibit limit mobility. 
 
 \section{Overview}\label{sec:mobile_applications}
 
@@ -27,20 +29,19 @@ The market of applications crafted for pervasive and specially mobile devices co
 
 \subsection{Motivating Scenarios}\label{sec:motivating}
 
-The kind of application targeted by the proposed framework have some or all of the following characteristics:
+Among the characteristics of the applications target by this work, the following are considered as key features:
 
 \begin{enumerate}[label=C\arabic*]
 	
-	\item \textbf{Connectivity:} devices are expected to communicate with each other, while in the same area, through infrastructure Wi-Fi or mobile ad hoc networks (MANETs);
+	\item \textbf{Connectivity:} devices are expected to communicate with each other, while in the same area, through infrastructure Wi-Fi or D2D communication;
 	
 	\item \textbf{Volatility:} application nodes are expected to enter/leave a given zone/network without notice; also, the physical and computational environment in which application nodes operate is subject to changes that may affect capabilities required by the application;
 	
-	\item \textbf{Intensity:} application nodes may be required to perform frequent resource-intensive tasks, exchange large volumes of data, or a mix of both;
+	\item \textbf{Intensity:} application nodes may be required to perform resource-intensive tasks or to exchange large volumes of data, or a mix of both;
 	
-	\item \textbf{Delay-sensitive:} among the application features, some may require low latency communication;
+	\item \textbf{Delay-sensitive:} among the application features, some may be sensible to latency;
 	
 	\item \textbf{Scale:} up to a large number of application nodes are expected to co-exist in a given zone/network and potentially interact.
-	
 	
 	%	\item \textbf{Interactivity:} application nodes need to interact in order to synchronize the application state, coordinate the execution of tasks, or collaborate to achieve goals more efficiently;
 	
@@ -64,11 +65,9 @@ The kind of application targeted by the proposed framework have some or all of t
 	
 \end{enumerate}
 
-%Each of these characteristics imposes challenges to the engineering of mobile applications for which interactions among nodes is a requirement. Next, we present a case example for which the aforementioned characteristics apply.
+%Each of these characteristics imposes challenges to the engineering of mobile applications for which interactions among nodes is a requirement. 
 
-
-
-%TBA: a music streamming app with an use case that lets people to collaborativelly manage a playlist and send the audio to a nearby bluetooth
+Next, we present examples of applications with these characteristics and discuss use cases that motivate our approach.
 
 \subsubsection{Collaborative Music Streaming}
 

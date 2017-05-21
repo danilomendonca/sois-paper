@@ -7,7 +7,7 @@
 	\label{fig:rationale}
 \end{figure*}
 
-\subsection{Separation of Responsibilities}
+\subsection{Functional Plasticity and Separation of Responsibilities}
 
 %A tree with the types of role: symmetric and asymmetric branches with the corresponding types of roles in increasing levels of concreteness 
 
@@ -20,10 +20,9 @@ In contrast with the rigid symmetry that characterizes the behavior performed by
 %3: what (functional) roles are
 In an organization structure, a functional role defines a context in which an individual assume the responsibility over some functionality. 
 %4: why they are important for pervasive applications
-Considering the collective of application nodes as an organization, different reasons may motivate \textit{separation-of-responsibilities} among them. 
-
+Considering the collective of application nodes as an organization, different reasons may motivate a \textit{separation-of-responsibilities} among these nodes. 
 %4.1a: the case of MCS; application nodes are employers of an organization, which must efficiently employ their resources
-For instance, with the purpose of increasing the \textit{efficiency} in which the organization deliver its results, namely:
+For instance, with the purpose of increasing the \textit{efficiency} in which the organization deliver its results:
 	
 \begin{itemize}
 	\item Specific roles can be played by a subset of the available nodes (e.g., only a subset of nodes in a given region must collect data about the noise pollution);
@@ -47,13 +46,14 @@ In addition, separation-or-responsibilities becomes evident whenever nodes of an
 
 
 %5: When relations among nodes can be established
-Whenever two nodes of an application become visible to each other and are able to communicate, there is a potential for a collaborative relation between them to be established. 
+Still regarding collaboration, we argue that, whenever two nodes of an application become visible to each other and are able to communicate, there is a potential for a collaborative relation between them to be established. 
 %In this relation, each part plays a similar (symmetric) or different (asymmetric) roles. 
 This same premise holds true for multiple interconnected devices. 
+
 %6: The nature of the relation between nodes in different situations
-While the nature of the relation between nodes hosted by devices of different classes is mostly predefined (e.g., between a smartphone and a gadged, a tablet and a smart-tv), the nature of the relation between devices of the same class may depend on the context each device operates (e.g., a smartphone that acts as the gateway for other smatphones without Internet access). 
+While the nature of the relation between nodes hosted by devices of different classes is mostly predefined (e.g., between a smartphone and a gadged, a tablet and a smart-tv), the nature of the relation between devices of the same class may depend on the dynamic context each device operates (e.g., a smartphone that, in a given moment and situation, acts as the gateway for other smatphones without Internet access). 
 %7: How the social context defines the nature of the relation between nodes when they are not predefined
-Accordingly, the social context, as defined by which and how many other nodes a node can interact with at a given time, further delimits which potential relations can be established between this node and its peers. 
+Accordingly, the social context, as defined by which and how many other nodes a node can interact with at a given time, in addition to the individual context, as defined by the availability of resources and state of the node, delimit which potential relations can be established between this node and its peers. 
 
 %Whereas a P2P file sharing can be considered as a collaboration between nodes with symmetric responsibilities (all nodes are clients and servers), in other cases a single node can address the needs of its peers, i.e., to assume an asymmetric responsibility. 
 
@@ -70,17 +70,29 @@ In today's client-server model, the functionalities to be performed by the appli
 %9: What do we propose in terms of role-orientation
 In this work, we inherit the concept of a role, more commonly used in human organizations, as part of a framework for the engineering of pervasive applications. By making the concept of a role a first-class abstraction, we provide the means to, since the early stages of its development, reason on the organizational aspects of the application, namely:
 
-\begin{itemize}
+\begin{enumerate}[label=\roman*]
 	
-	\item The roles in the application-to-be;
+	\item What are the roles in the application-to-be;
 	
-	\item The functionalities to be provided by each role, as well as the capabilities required by these functionalities (e.g., computational resources, specific hardware components, etc); 
+	\item What functionalities must be provided by each role;
 	
-	\item The relation between roles in terms of hierarchy and how they interact (e.g., which communication or coordination model);
+	\item What capabilities are required by these functionalities; 
 	
-	\item The cardinality relation between roles (e.g., in the symmetric cases, all nodes play the same roles; in the asymmetric cases, k-out-of-n nodes should play a given role);	
+	%(e.g., computational resources, specific hardware components, etc); 
 	
-\end{itemize}
+	\item How existing roles relate to each other: 
+	
+	\begin{enumerate}[label=-]
+		
+		\item The hierarchy of control. E.g.: a coordinator and its coordinated;
+		
+		\item The flow of data. E.g.: from sensors to an aggregator;
+	
+		\item The symmetry. E.g.: symmetric relation between file-sharing peers, or asymmetric relations between server/client, supervisor/follower, coordinator/coordinated, provider/consumer, etc
+		
+	\end{enumerate}	
+	
+\end{enumerate}
 
 %Figure~\ref{fig:asymmetry} presents some examples of asymmetric roles played by different application nodes. 
 
@@ -122,6 +134,14 @@ In this work, we inherit the concept of a role, more commonly used in human orga
 
 \subsection{Groups}
 
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=0.85\linewidth]{figures/group_view}
+	\caption{Example of a group with a relaxed membership criteria; out of 7 members, 2 nodes are idle (light blue) and 5 nodes are playing one of two types of roles: 1 node (red) plays a role related to the role played by the 4 others nodes (orange);}
+	\label{fig:group_view}
+\end{figure}
+
+
 %From the collective of roles to the collective of grouped roles
 %Why to group nodes together?
 %What defines a group?
@@ -145,7 +165,7 @@ In this work, we inherit the concept of a role, more commonly used in human orga
 
 %10: 
 The application organization -- so far represented by the roles that can be played by its nodes -- may be further characterized by its partitions, here named as \textit{groups}. 
-At its highest level, a group may correspond to the set of application nodes within the same network partition. Nonetheless, these nodes, or a subset of them, may exhibit common properties or states of interest to the application. For instance, a group may have a \textit{functional} meaning (e.g., a group of nodes able to fetch data from a specific type of sensor), a \textit{non-functional} meaning (e.g., all nodes within a specific geographical area), or a mix of both (e.g., all nodes able to fetch data from a specific type of sensor within a specific geographical area). Thus, multiple types of criteria may define the membership of a group.
+At its highest level, a group correspond to the network partition in which application nodes can interact. Nonetheless, these nodes, or a subset of them, may exhibit common properties or states of interest to the application. For instance, a group may have a \textit{functional} meaning (e.g., a group of nodes able to fetch data from a specific type of sensor), a \textit{non-functional} meaning (e.g., all nodes within a specific geographical area), or a mix of both (e.g., all nodes able to fetch data from a specific type of sensor within a specific geographical area). Thus, multiple types of criteria may define the membership of a group.
 
 To its members, a group defines a \textit{social context} in which they (a) may or (b) must play certain roles. Whenever the relation between nodes in a group is asymmetric, and there is no predefined criteria, nodes must agree on the specific roles they will play (a). Conversely, if the relation between nodes in a group is symmetric, there is no decision to be made: all nodes must play the same role (b). However, as (a) can be seen as a more general case of (b), we adopt a relaxed membership causality, i.e., group membership only defines the context in which its members \textit{may} play one or more roles, unless its specification makes such restriction. Accordingly, each of these cases can be specified as:
 
@@ -160,7 +180,7 @@ To its members, a group defines a \textit{social context} in which they (a) may 
 
 %TODO: look out for the difference between asymmetric group-role relation and asymmetric role-role relation
 
-The later case encompasses any kind of asymmetric relation between roles, including the common cases in which one node in the group interacts with all other members through an hierarchical relation (e.g., a supervisor and its followers~\cite{}). Furthermore, once this specification exists, group members must agree on the actual allocation of roles. Such \textit{distributed role allocation} mechanism is presented in Section~\ref{sec:self_organization}. Figure~\ref{fig:asymmetry} illustrates examples of both symmetrical and asymmetrical relations within a group. 
+The later case encompasses any kind of asymmetric relation between roles, including the common cases in which one node in the group interacts with all other members through an hierarchical relation (e.g., a supervisor and its followers~\cite{Baresi:2011}). Furthermore, once this specification exists, group members must agree on the actual allocation of roles. Such \textit{distributed role allocation} mechanism is presented in Section~\ref{sec:self_organization}. Figure~\ref{fig:asymmetry} illustrates examples of both symmetrical and asymmetrical relations within a group. 
 
 \begin{figure}[t!]
 	\centering
@@ -275,24 +295,24 @@ Both criteria are similar, except for the type of sensor the device must have an
 %Due to the heterogeneity and volatility of the devices hosting a mobile application, some nodes may not satisfy the requirements to perform one or more roles. Conversely, the nodes that satisfy these requirements form a group of eligible nodes. 
 
 
-\begin{figure}[t!]
-	\centering
-	\begin{subfigure}[b]{0.4\textwidth}
-		\centering
-		\includegraphics[width=1\textwidth]{figures/physical_view}
-		\caption{Spatial criteria: application components (white circles) grouped by their position in the physical space (blue shapes).}
-		\label{fig:spatial_criteria}
-	\end{subfigure}%
-	
-	\begin{subfigure}[b]{0.4\textwidth}
-		\centering
-		\includegraphics[width=1\textwidth]{figures/logical_view}
-		\caption{Virtual criteria: application components (white circles) grouped by logical criteria defined by the application.}
-		\label{fig:virtual_criteria}
-	\end{subfigure}
-	\caption{Application nodes grouped by different types of criteria}
-	\label{fig:grouping_criteria}
-\end{figure}
+%\begin{figure}[t!]
+%	\centering
+%	\begin{subfigure}[b]{0.4\textwidth}
+%		\centering
+%		\includegraphics[width=1\textwidth]{figures/physical_view}
+%		\caption{Spatial criteria: application components (white circles) grouped by their position in the physical space (blue shapes).}
+%		\label{fig:spatial_criteria}
+%	\end{subfigure}%
+%	
+%	\begin{subfigure}[b]{0.4\textwidth}
+%		\centering
+%		\includegraphics[width=1\textwidth]{figures/logical_view}
+%		\caption{Virtual criteria: application components (white circles) grouped by logical criteria defined by the application.}
+%		\label{fig:virtual_criteria}
+%	\end{subfigure}
+%	\caption{Application nodes grouped by different types of criteria}
+%	\label{fig:grouping_criteria}
+%\end{figure}
 
 %Whereas the isolation provided by groups can be achieved using  methods that limit the audience of messages -- for instance,  publish/subscribe mechanisms in which events are only captured by registered listeners -- the group abstraction complement the organizational view of the system provided by the role abstraction and make its social aspect more explicit. Together, these abstractions form the building blocks that allow engineers to think and program highly distributed mobile applications in terms of their organizational structure. The decision of which communication and coordination methods to use within each group remains orthogonal: message queues, events, and data-centered models are likely to suit better different applications and use cases.
 
