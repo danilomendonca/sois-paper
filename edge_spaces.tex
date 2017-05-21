@@ -21,23 +21,23 @@ In this work, we inherit the concept of a role, more commonly used in human orga
 
 \begin{enumerate}[label=\roman*]
 	
-	\item What are the roles in the application-to-be;
+	\item what are the roles in the application-to-be;
 	
-	\item What functionalities must be provided by each role;
+	\item what functionalities must be provided by each role;
 	
-	\item What capabilities are required by these functionalities; 
+	\item what capabilities are required by these functionalities; and
 	
 	%(e.g., computational resources, specific hardware components, etc); 
 	
-	\item How existing roles relate to each other: 
+	\item how existing roles relate to each other: 
 	
 	\begin{enumerate}[label=-]
 		
-		\item The hierarchy of control;%. E.g.: a coordinator and its coordinated;
+		\item the hierarchy of control%. E.g.: a coordinator and its coordinated;
 		
-		\item The flow of data;%. E.g.: from sensors to an aggregator;
+		\item the flow of data%. E.g.: from sensors to an aggregator;
 	
-		\item The symmetry%. E.g.: symmetric relation between file-sharing peers, or asymmetric relations between server/client, supervisor/follower, coordinator/coordinated, provider/consumer, etc
+		\item the symmetry%. E.g.: symmetric relation between file-sharing peers, or asymmetric relations between server/client, supervisor/follower, coordinator/coordinated, provider/consumer, etc
 		
 	\end{enumerate}	
 	
@@ -129,22 +129,35 @@ In this work, we inherit the concept of a role, more commonly used in human orga
 %1: Briedge with the role abstraction
 The application organization -- so far represented by the roles that can be played by its nodes -- may be further characterized by its divisions, here named as \textit{groups}. 
 
-At its highest level, a group boundary is limited by the network partition in which application nodes can interact. Nonetheless, these nodes, or a subset of them, may exhibit common properties or states of interest to the application. For instance, a group may have a \textit{functional} membership criteria (e.g., a group of nodes able to fetch data from a specific type of sensor), a \textit{non-functional} membership criteria (e.g., all nodes within a specific geographical area), or a mix of both (e.g., all nodes able to fetch data from a specific type of sensor within a specific geographical area). %Thus, multiple types of criteria may define the membership of a group.
+%2: What a group is for an organization
+At its highest level, a group boundary is limited by the network partition in which application nodes can interact. Nonetheless, these nodes, or a subset of them, may exhibit common properties or states of interest to the application. For instance, a group may have a \textit{functional} meaning (e.g., a group of nodes able to fetch data from a specific type of sensor), a \textit{non-functional} meaning (e.g., all nodes within a specific geographical area), or a mix of both (e.g., all nodes able to fetch data from a specific type of sensor within a specific geographical area). 
 
-To its members, a group defines a \textit{social context} in which they (a) may or (b) must play certain roles. Whenever the relation between nodes in a group is asymmetric, and there is no predefined criteria for their allocation, nodes must agree on the specific roles they will play (a). Conversely, if the relation between nodes in a group is symmetric, there is no decision to be made: all nodes must play the same role (b). However, as (a) can be seen as a more general case of (b), we adopt a relaxed membership causality, i.e., group membership only defines the context in which its members \textit{may} play one or more roles, unless the group specification makes such restriction. In particular, each of these cases can be specified as:
+%Thus, multiple types of criteria may define the membership of a group.
+
+%2: What a group is for a node
+To its members, a group defines a \textit{social context} in which they (a) may or (b) must play certain roles. As the former case can be seen as a more general case of later case, we adopt a relaxed membership causality (a), i.e., group membership only defines the context in which its members \textit{may} play one or more roles, unless the group specification makes such restriction. Each of these cases are specified as follows:
 
 \begin{itemize}
 	
-	\item \textbf{Symmetric:} A m-m specification (m instances of a role in a group of m nodes) defines a symmetric role, i.e., a role played by all group members (strict membership causality);
+	\item \textbf{Strict:} a m-m specification (m instances of a role in a group of m nodes) defines a symmetric role, i.e., a role that must be played by all members.
 	
-	\item \textbf{Asymmetric:} A k-m specification defines an asymmetric role, i.e., a role played by a subset $K$ of the set $M$ of nodes in the group, with $|K| = k$, $|M| = m$, and $k < m$;
-	
+	\item \textbf{Relaxed:} a k-m specification defines an asymmetric role, i.e., a role to be played by a subset $K$ of the set $M$ of nodes in the group, with $|K| = k$, $|M| = m$, and $k < m$.
 	
 \end{itemize}
 
+Whenever the relation between nodes in a group is asymmetric, and there is no predefined criteria for their allocation, nodes must agree on the specific roles they will play (a). Conversely, if the relation between nodes in a group is symmetric, there is no decision to be made: all nodes must play the same role (b). Figure~\ref{fig:asymmetry} illustrates cases of both symmetrical and asymmetrical relations within a group. 
+
+
+
 %TODO: look out for the difference between asymmetric group-role relation and asymmetric role-role relation
 
-The later case encompasses any kind of asymmetric relation between roles, including the common cases in which one node in the group interacts with all other members through an hierarchical relation (e.g., a supervisor and its followers~\cite{Baresi:2011}). Furthermore, once this specification exists, group members must agree on the actual allocation of roles. Such \textit{distributed role allocation} mechanism is presented in Section~\ref{sec:self_organization}. Figure~\ref{fig:asymmetry} illustrates examples of both symmetrical and asymmetrical relations within a group. 
+%TODO: this paragraph talks about symmetry between roles, not about the group membership causality
+%For instance, in a peer-to-peer file sharing group,
+%% can be considered as a collaboration between 
+%nodes play symmetric roles (all nodes plays both clients and servers roles). In contrast, any kind of relation between role, including the common cases in which one node in the group interacts with all other members through an hierarchical relation (e.g., a supervisor and its followers~\cite{Baresi:2011}), configures an asymmetric relation. 
+
+%TODO what is the purpose of this paragraph?
+%Furthermore, once this specification exists, group members must agree on the actual allocation of roles. Such \textit{distributed role allocation} mechanism is presented in Section~\ref{sec:self_organization}.
 
 \begin{figure}[t!]
 	\centering
@@ -169,7 +182,10 @@ The later case encompasses any kind of asymmetric relation between roles, includ
 
 
 
-Within a group, member nodes are aware of each other. Not only they can agree on which roles should be performed by which nodes, the elected roles can engage in interactions following an architectural style specified for them. Thus, a group abstraction provides a container to which roles can be added or removed dynamically. Considering the functional plasticity and role asymmetric previously discussed, more than one type of role may co-exist in a group. Also, the distribution of roles to the group members should follow a \textit{fitness criteria}. This criteria must provide a metric indicating which nodes are best suit to play the group roles.
+Within a group, member nodes are aware of each other. Not only they can agree on which roles should be performed by which nodes, the elected roles can engage in interactions following an architectural style specified for them. Thus, a group abstraction provides a container to which roles can be added or removed dynamically. 
+
+Considering the functional plasticity and role asymmetric previously discussed, more than one type of role may co-exist in a group. Also, the distribution of roles to the group members should follow a \textit{fitness criteria}. This criteria must provide a metric indicating which nodes are best suit to play the group roles.
+
 
 The modeling of an application group starts with the specification of its membership criteria. Any type of criteria that can be modeled as a proposition and evaluated is a potential criteria, including:
 
@@ -178,21 +194,16 @@ The modeling of an application group starts with the specification of its member
 	\item Static criteria
 	
 	\begin{itemize}
-		
 		\item \textbf{Hardware capabilities:} refers to the presence of a given hardware component/module. E.g.: camera, GPS, thermometer, accelerometer, gyroscope, etc.
-		
 	\end{itemize}
 	
 	\item Dynamic criteria
 	
 	\begin{itemize}
-		
 		\item \textbf{Physical world:} refers to the physical world states a node must operate in. E.g.: its current battery level, available memory, geolocation coordinates, acceleration, speed, temperature, etc.
 		
 		\item \textbf{Application domain:} refers to the application states a node must be to belong to a group. E.g.: currently a member of another group (or non-member), joining a chat or game session, etc.
-		
 	\end{itemize}
-	
 \end{itemize}
 
 For example, a mobile crowdsensing campaign is designed to monitor the real-time geolocation of public buses in a city and to register unusual acceleration and deceleration events that may affect the user experience in this service. To avoid disturbing the users with the need of starting the application whenever they are within a bus, an opportunistic approach~\cite{} requires the automatic detection of such context. In this example, we assume city buses to provide wi-fi. Accordingly, a \textit{bus group} is specified with the following criteria:
