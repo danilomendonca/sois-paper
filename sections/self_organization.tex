@@ -1,0 +1,135 @@
+\section{Self-organization Mechanisms}\label{sec:self_organization}
+
+%1: On the need for a maleable organization structure
+The structure of the application organization
+%, formed by the two abstractions presented -- namely, roles and groups -- 
+must be malleable (plastic) to accommodate changes in the units composing the pervasive ecosystem and in its physical environment. 
+
+%2: What must evolve
+In contrast with the much less dynamic cases of organizations in human societies (e.g. industry and military organizations), the volatility that affects and characterizes pervasive and mobile devices, caused by their mobility or fluctuations of their resources, may imply the formation or dissolution of relations among nodes and require the reassessment of the roles they play in the organization.
+
+%3: What self-organization means in the literature
+%TODO: move this to the related works
+Self-organization have been extensively studied in the context of multi-agents and other fields as a phenomena and method to achieve system properties and goals by means of actions and interactions between individuals based on their local knowledge and no external control~\cite{DiMarzoSerugendo:2005, Banzhaf:2009}. In contrast, self-organization in this work refers to the constitution and adaptation of the application organization as understood by the serendipitous relations between application nodes formed and dissolved while the are able to communicate and collaborate. In specific, we propose mechanisms for each of the following organization aspects:
+
+\begin{itemize}
+	
+	\item \textbf{Group membership:} as nodes join or leave a group, a group registry must be kept consistent among members;
+	%a node must join or leave a group according to its satisfaction to the criteria in that group; 
+	to address this, a \textit{self-grouping} mechanism is proposed;
+	
+	\item \textbf{Role allocation:} the nodes within a group must agree on which roles they shall play; to address this, a  \textit{discentralized role election} mechanism is proposed;
+		
+\end{itemize}
+
+
+\subsection{Self-grouping} 
+
+
+\subsubsection{\textbf{Definition}} As the idea of a group in this work is not related to security, the \textit{self-grouping} mechanism is not controlled by special-purpose components external to the system; instead, each node is responsible for checking its own satisfaction to the existing membership criteria in the application organization. 
+
+Whenever an application group comes into contact with others and join an existing group, this event must be  advertised to current members, who in turn update their group membership registry. Analogously, when a member node leaves, this event must also be perceived by existing members, who must update their registry.
+
+\subsubsection{\textbf{Grouping Protocol}} 
+
+%1: Check restrictive criteria
+A node should join a group if it satisfies all restrictive criteria of at least one of the roles (hereafter referred to as RRC) in that group. In this paper, we assume the group specification to be performed off-line and be available for each application node as part of its resources (e.g., as an XML specification, as depicted in Section~\ref{sec:group_specification}). Thus, each node have access the restrictive criteria of roles in a group specification and can locally check for their satisfaction. 
+
+
+
+The diagrams in Figures~\ref{fig:join_or_leave} and~\ref{fig:registry_replica} present the activities of the self-grouping protocol. At each iteration, the node checks for its satisfaction of the RRC (Figure~\ref{fig:join_or_leave}, activity 1). If no RRC is satisfied and the node is currently a member, it must leave the group and advertise this event to the other members (Figure~\ref{fig:join_or_leave}, activity 2). Conversely, if a node satisfies an RRC, it proceed by joining the group and advertise this event (Figure~\ref{fig:join_or_leave}, activity 3). Last but not least, as nodes entering a group have no information about its current members, this knowledge must be acquired. In specific, after been notified about the new member, the oldest group member is responsible for sending the registry replica to the newcomer (Figure~\ref{fig:registry_replica}, activity 1).
+
+%TODO despict how the problem of time coupling by using gossip or other algorithms for advertisement/discovery
+
+\begin{figure}[t!]
+	\centering
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=0.9\textwidth]{figures/join_or_leave}
+		\caption{Protocol for joining or leaving a group}
+		\label{fig:join_or_leave}
+	\end{subfigure}%
+	
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=0.5\textwidth]{figures/registry_replica}
+		\caption{Oldest member protocol following a new member event}
+		\label{fig:registry_replica}
+	\end{subfigure}
+	\caption{The self-grouping protocol}
+	\label{fig:self_grouping}
+\end{figure}
+
+
+%TODO: describe which nodes is responsible for sending this information
+
+
+%TODO: decide if the group registry must be sent to newcomers only for the first time they join the group (which implies to continue updating them while they are outside the group). R: always send the the group registry to newcomers
+ 
+\subsection{Distributed Role Allocation} 
+
+
+\begin{figure}[t!]
+	\centering
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=0.65\textwidth]{figures/elected_node}
+		\caption{Elected node's protocol for advertising its $FS$}
+		\label{fig:elected_node}
+	\end{subfigure}%
+	
+	\begin{subfigure}[b]{0.55\textwidth}
+		\centering
+		\includegraphics[width=0.5\textwidth]{figures/eligible_node}
+		\caption{Eligible node's protocol for triggering a challenge event}
+		\label{fig:eligible_node}
+	\end{subfigure}
+	\caption{The distributed role election protocol}
+	\label{fig:role_allocation}
+\end{figure}
+ 
+\subsubsection{\textbf{Definition}} The decision of which nodes should be assigned to which roles in a group may depend on many aspects. Any node capable of performing a role is a potential candidate. Notwithstanding this, attribute such as the wireless connections throughput, sensors accuracy, as well as the availability of resources like battery, memory and processing capacity tend to variate from one node to another and throughout time. Thus, a balanced role allocation must respect the trade off between what is best for the application goals and for the individual devices. 
+
+\subsubsection{\textbf{Allocation Classification}} Gerkey and Matarić~\cite{Gerkey:2004} proposed a taxonomy for the classification of task allocation problems along three axes. We adopted this taxonomy as a means to improve the characterization of the role allocation problem.
+
+In the first axis, robots~\footnote{in their proposed taxonomy, the authors refers to \textit{robots} and \textit{tasks}, while in this paper we refer to the (application) \textit{nodes} and the \textit{roles} they can perform.} 
+are categorized into single-task versus multi-task robots. In the second axis, tasks are categorized into single-robot versus multi-robot tasks. Finally, in the third axis, the allocation is also categorized into two types: instantaneous assignment or time-extended assignment.
+
+Regarding the first axis, as application nodes are generally capable of performing more than one role at a time (e.g., to fetch from multiple types of sensors) nodes are here considered as multi-role (analogous to multi-task robots in ~\cite{Gerkey:2004}). Regarding the second axis, many types of roles are to be performed by a single application node (e.g., the sensor data aggregator role), while others must be simultaneously performed by multiple nodes (e.g., simultaneously fetch from the same type of sensor). Thus, roles can be either single-node (analogous to single-robot tasks in ~\cite{Gerkey:2004}) or multi-node (analogous to multi-robot tasks in ~\cite{Gerkey:2004}). Finally, due to the volatility of mobile devices, including churn and fluctuations of their capabilities, the scheduling of future allocations tends to fail. Accordingly, we consider an instantaneous and adaptable assignment of roles based on the context of the involved devices. 
+
+\subsubsection{\textbf{Allocation Method}} Auction-based allocation methods have been extensively studied in the multi-agents/robots domain~\cite{Korsah:2013}. In comparison with the task allocation problem tackled by auction-based methods, an assignment of roles to pervasive and mobile devices subject to high volatility needs to evolve as nodes leave or join the system and their fitness change. If the assignment should continuously reflect any context change, a frequent message exchange between bidding and auctioneers would lead to excessive communication overhead. Accordingly, the replacement of existing role positions (herein referred as reelection) should take into account the trade off between the gain of having a more fit node elected and the replacement cost. 
+
+%To mitigate this problem, nodes should evaluate their fitness (self-evaluation) and only advertise it to other group members if a delta in the value occurs.
+
+To address this problem, we propose an event-based protocol inspired in electoral systems. Accordingly, instead of reevaluating and potentially changing the assignment of role positions at fixed control periods, we define the set of events in which new elections for these positions should be performed (event-triggered control). In specific, these events are:	
+
+\begin{itemize}
+	
+	\item \textbf{Vacancy:} a new role position is opened or the node playing a role exists the system (churn) due to a network disconnection from the remaining nodes or the abnormal termination of the application instance after a failure;
+	
+	\item \textbf{Resignation:} the node playing a role calls for a new election before quitting; e.g., the application node is exiting the system following a termination command issued by the users or the operational system;
+	
+	\item \textbf{Challenge:} one of eligible nodes calls for a new election after detecting it has a significantly higher fitness score for that role position than the actual node by the time it was elected;
+	
+	%\item \textbf{Consensus:} the set of nodes dependent from a functionality provided by an elected node calls for a new election; e.g., the latency experienced between a set of nodes and an elected node is high despite its higher fitness to play that role (latency is not part of the fitness criteria);
+	
+\end{itemize}
+\medskip
+ 
+The subtitle difference between vacancy and resignation consists of the way it is handled: the former implies in a \textit{vacant} period in which the role functionality is interrupted until the vacancy is detected and occupied (hard transition), whereas the later allows the replacement of the position before discontinuing the functionality provided by the resigning node (soft transition). 
+
+In both cases, the eligible nodes must proceed with the election of a candidate by checking their current fitness score ($FS$) and advertising it (bidding). After receiving the fitness scores from all other candidates, each node becomes aware of the election result. Thus, each node proceeds either by: assuming the role position and registering itself as the winner (if it has the highest $FS$); or registering the identify of the winner (otherwise). 
+
+The later case presents an inverse situation: the caller of the election is a node that perceives its actual fitness score ($FS_a$) as higher than the value scored by the elected node by time it was elected ($FS_e$). Thus, the challenger assumes this value has not increased, which must be confirmed or denied by the node currently in the position. To mitigate the communication overhead, the following strategy is proposed:
+
+\begin{enumerate}
+
+\item The challenge must only be called if the $FS_a$ of the challenger is greater than the $FS_e$ by a degree of $\delta$, i.e., $FS_a \ge \delta * FS_e$, with $\delta > 1$;
+
+\item Assuming all eligible nodes adopt the same $\delta$, they are exempt of participating and the election happens between the challenger and the actual nodes;
+
+\item To reduce the chances of having a failed challenge (when the actual $FS$ of the elected node has increased since it was elected), elected nodes should update their peers whenever their $FS$ has changed by a degree of $\delta$, i.e., $FS_a \ge \delta * FS_e$ or $FS_a \le (1 - \delta) * FS_e$.
+
+\end{enumerate}
+
+If the challenger node has indeed a higher $FS$ than its challenger, it assumes the role position and this result is advertised; otherwise, the actual fitness score of the elected node ($FS_a$) is advertised so that new challenges are based on the most updated score. The diagrams in Figures~\ref{fig:elected_node} and~\ref{fig:eligible_node} describe, respective, the protocol of an elected node and of an eligible node.

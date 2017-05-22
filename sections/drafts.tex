@@ -1,0 +1,643 @@
+% % % % % % % DRAFTS % % % % % % %
+
+%Introduction
+
+
+%the distribution of functional responsibilities (roles) among application nodes can be asymmetric, with some nodes playing other than just the role of a client of a backend server. Among others, some nodes may become coordinators and control the activities of other nodes; some may relay messages from the server to its local peers or, inversely, some may become responsible for aggregating data from its local peers before sending a preprocessed version to the server. To this end, nodes must agree on the roles they perform based on their capabilities and state. 
+
+%with the popularization of miniaturized platforms able to provide general purpose computing (e.g., Raspberry PI~\footnote{}), new kinds of relations between the devices composing the pervasive ecosystem can be opportunistically created and dissolved.
+
+
+%Background
+
+
+
+%whereas for some applications be predefined (e.g., a P2P messaging application) or 
+
+%7: How the social context defines the nature of the relation between nodes when they are not predefined; 
+%TODO: OUT OF PLACE
+%Accordingly, the social context, as defined by which and how many other nodes a node can interact with at a given time, in addition to the individual context, as defined by the availability of resources and state of the node, delimit which potential relations can be established between this node and its peers. 
+
+
+
+	
+	%	\item \textbf{Interactivity:} application nodes need to interact in order to synchronize the application state, coordinate the execution of tasks, or collaborate to achieve goals more efficiently;
+	
+	
+	
+	%\item \textbf{Complexity:} application nodes are expected to perform data/computational-intensive tasks 
+	
+	%\item Ad hoc: the interaction between application nodes are expected to happen opportunistically without the intermediation or support of dedicated servers.
+	
+	%\item Transient: application data is created, shared, and modified locally; remote persistence, when needed, should happen asynchronously.
+	
+	%poses the challenge of dealing with scalability issues; thus, the algorithms and methods that support the ad hoc interaction among application nodes must scale to a large number of interacting devices.
+	
+	%\item Robustness: responsibilities assigned to local devices that leave the system or fail must be resumed by other available devices without disruption of normal behavior.
+	%
+	%\item Efficiency: responsibilities assigned to local devices must take into account their functional and non-functional capabilities according to system specification.
+	%
+	%\item Fairness: responsibilities assigned to local devices must take into account their participation history to avoid unfair use of devices resources.
+	
+	%the problems caused by the intermittent connectivity to remote servers should be mitigated either by opportunistically assigning responsibilities to local devices. 
+
+
+
+%Each of these characteristics imposes challenges to the engineering of mobile applications for which interactions among nodes is a requirement. 
+
+
+%Considering the already existing features of collaborative management of playlists, a step further would be to let the devices in a social gathering to share the responsibility for streaming music from the Internet and to the Bluetooth speakers. 
+
+%In general, crowdsensing involves the activation of battery-draining sensors which would otherwise be idle or used sporadically. 
+
+%\begin{itemize}
+%	
+%	\item A backend server coordinates the activation of the sensing tasks, which increases the server and the network loads; or
+%	
+%	\item Each application node perform the same tasks -- there is no coordination nor collaboration between nodes; 
+%	
+%\end{itemize}
+
+
+
+%\subsubsection{Messaging Application} Once of the most popular types of mobile applications, messaging apps are used for both social and professional communication and exchange of multi-media like photos, audios, and videos. The majority of these apps use a message server deployed in the cloud to relay messages among users. This model, however, requires each application node to have Internet connection. Additionally, when a message is addressed to a group of users whose devices may happen to be in the same physical area and sharing the same network, messages are still delivered separately. Hence, there is no distinction in the functionality of each client application node.  
+%
+%To achieve the simpler use case of \textit{off-line}~\footnote{among nodes with local network connection} messaging, peers would need to discover each other and communicate locally. In another case, to improve the communication efficiency between server and members of a conversation group, a single group member could be elected to perform the role of a local relay. The responsibility of this role would be to relay messages received from the remote server to all group members locally connected to the node playing a gateway. Thus, instead of sending $n$ messages through the Internet, the server would send just one. Nonetheless, the decision of which node should play the relay role could greatly affect this result, as if it becomes unavailable before concluding the retransmission, other nodes would still have to receive the message from the server after detecting the relay failure.
+%
+%%In the chat application example mentioned before, a conversation group provides a straightforward criteria for grouping the distributed nodes able to communicate. The same holds for the real-time mobile multiplayer game example: the roles of a local relay/server and the role of receivers/clients would be dynamically assigned to the members of the conversation/game groups. Finally, in the mobile crowdsensing example, campaigns targeting multiple types of sensors data may further define specialized groups -- e.g., one for collecting data about the noise pollution, another for measuring air pollution --  and different instances of these groups may co-exist in different city areas according to the campaign specification. 
+%
+%\subsubsection{Real-time Mobile Multiplayer Game} One of the problems in real-time multiplayer games hosted by mobile devices is to achieve low-latency synchronization of the game among players, as the quality of the connection from the mobile devices to backend servers tend to be affected by fluctuations of the radio/wi-fi signal. In addition, mobile data plans tend to be limited and expensive in comparison with fixed Internet service. 
+%
+%To enable a use case in which players must get together in a city area to interact among themselves and with virtual entities augmenting their reality (e.g., monsters that must be collaboratively battled), one-out-of-n nodes in the area sharing a common network may become a buffer server. The responsibility of this role would be to interface the updates in the game world triggered by backend servers (e.g., to add a monster in Central Park) and the updates in the game world following user actions (e.g., inflicting damage to the monster or receiving damage to their virtual characters). While the first type of update tolerates more delay, the later requires a hight throughput and low-latency to avoid disruptions in the game experience. Nonetheless, the decision of which node should play the server role could also affect the game experience, as some devices could have less computational resources available to perform the necessary game calculations. Figure~\ref{} illustrates this scenario.
+
+
+%Edge Spaces
+
+
+%behaviors and responsibilities that an individual or a group of individuals can assume. 
+
+
+%DISCUSSION
+%I don't know if a need a fitness criteria or a group membership criteria.
+%While the first is a comparative one, the later just filters what nodes can be or cannot be in a group.
+%This doubt has much to do with the interpretation of what a group is.
+%Before, a group had a stric semantical relation with the role within: a group was always a group of a specific type of agent, like a vaccum cleaner or a humidity sensor or an actuator. Thus, I have envisioned the membership criteria strongly coupled to the needs of a single role within the group.
+%That been said, now I must reason on the more heterogeneous sense of a group. What if I want to define, in terms of A-3, different criteria for the followers and for the supervior? 
+
+
+
+%Similarly to well studied allocation of tasks to agents/robots with dynamic and distinct capabilities~\cite{}, mobile devices are heterogeneous and subject to hight volatility, therefore their fitness in performing different tasks varies from one device to the other and throughout time. 
+
+%and contextualization, the dynamic allocation of tasks to different application nodes is a central feature that further distinguishes this work from previous frameworks~\cite{}. 
+
+
+%their need to send/receive from each other application data or control directives (or both). 
+%For instance, a coordinator is responsible for controlling the activities of its coordinates and an aggregator is responsible for aggregating data from multiple sources. The relation between roles may be further characterized by the multiplicity in each side of the relation. 
+
+
+
+%For this, there must be a clear separation of concerns and modularization of the application logic from different roles. 
+
+
+%Whereas the type of role depends on the domain of the application, in this paper we propose general abstractions and mechanisms to address the range of pervasive applications whose functionalities may be asymmetrically distribute among its nodes. 
+
+
+
+%The relation between roles is defined based on what they are expected to provide one another. For instance, a node may be responsible for giving control directives to other nodes or to process a batch of data from other nodes. For instance,
+%TODO refine this paragraph and add examples from the other motivating scenarios 
+%in opportunistic MCS, application nodes may collaborate by aggregating fetched data from multiple devices into a single device~\cite{Rajagopalan:2006}, which in turn sends a preprocessed data to the server (e.g., the one with higher battery level). Thus, one-out-of-many nodes must assume the role of an aggregator, meaning that the functional role of this node changes to fit a given context. Also, if the number of nodes at a given moment is high, not every node must perform the same sensing tasks. Instead, a subset of application nodes can be assigned to a subset of sensors, reducing the overall battery consumption and networking. Once again, the functional role of these nodes varied to reflect the context they were exposed. 
+
+%Together, the specification of what a role does (behavior specification) and how it interacts with other roles (social specification) defines the organization structure of the application. 
+
+%FIGURE: CIRCLE WITH HALF SYMMETRIC HALF ASYMMETRIC BEHAVIOR
+
+
+
+%From the collective of roles to the collective of grouped roles
+%Why to group nodes together?
+%What defines a group?
+%How grouping works?
+
+%Further refines the context of an application node: the role is not automatically set, but must be agreed 
+%Strict vs relaxed group membership
+%Figure of a circle representing the set of members and an inner circle representing the active members
+%Relation of a group and the physical space
+
+%Group membership criteria filters out heterogeneity
+
+%The paradigm shift from a bipolar into a multi-polar organization discussed by this paper is strongly motivated by the co-existence of a plethora of pervasive devices from different kinds in the physical space inhabited by people. As human society evolves and blends itself with a fabric of interconnected cyber-physical devices, a question emerges: how should this ecosystem be organized? Whereas the client-server has been proven a simple and scalable answer, the potential of peer-to-peer interactions must not be ignored.
+
+%Three dimensions characterizes the ecosystem of applications hosted by pervasive and mobile devices: \textit{space}, \textit{time}, and \textit{heterogeneity}. 
+
+
+
+%Conversely, if the relation between nodes in a group is symmetric, there is no decision to be made: all nodes must play the same role. 
+
+%To this end, members would need to solve among them the k-out-of-m allocation problem, where $m$ is the group size (of capable nodes). In contrast, a strict membership would imply choosing nodes to become active members from all the available nodes, including those that may not fit to play the role. Thus, in these cases, a relaxed membership reduces the scope in which the decision of which nodes must play a role in the group.
+
+%This decision has the advantage to reduce the role assignment scope, as eligible nodes are picked from the group and not from the whole set of application nodes. 
+
+%for applications such as MCS, in which application nodes provides functionalities whose purpose is to address the needs of an external actor and not the users themselves, 
+
+
+
+%Considering the relaxed membership and the role asymmetric discussed in the previous section, more than one type of role may co-exist in a group. Also, the distribution of roles to the group members should follow a \textit{fitness criteria}. This criteria must provide a metric indicating which nodes are best suit to play the group roles.
+
+
+
+
+%QUESTION: is the specification of how roles should interact inherent to the role specification or to the group specification? If the interaction should happen between roles of different kinds, this specification do not belong to one role class; it can belong to the group, which allows different groups to define different architectural styles for the same class of role. Thus, I believe this specification belongs to the group in which a role is to be played. 
+
+%Additionally, groups provide a well defined scope in which these roles can interact according to a specified architectural style. Functional groups are further associated with the roles that can 
+
+%s a functional group is associated to a set of functionalities, its specification must also include the intended type of role(s) to be played. In addition to that, its specification must define the relation between these roles, i.e., how they interact.  
+
+%In addition to the functional precondition aspect, a group membership criteria may also be useful to group correlated nodes according to some application semantic. For instance, 
+
+%Due to the heterogeneity and volatility of the devices hosting a mobile application, some nodes may not satisfy the requirements to perform one or more roles. Conversely, the nodes that satisfy these requirements form a group of eligible nodes. 
+
+
+%\begin{figure}[t!]
+%	\centering
+%	\begin{subfigure}[b]{0.4\textwidth}
+%		\centering
+%		\includegraphics[width=1\textwidth]{figures/physical_view}
+%		\caption{Spatial criteria: application components (white circles) grouped by their position in the physical space (blue shapes).}
+%		\label{fig:spatial_criteria}
+%	\end{subfigure}%
+%	
+%	\begin{subfigure}[b]{0.4\textwidth}
+%		\centering
+%		\includegraphics[width=1\textwidth]{figures/logical_view}
+%		\caption{Virtual criteria: application components (white circles) grouped by logical criteria defined by the application.}
+%		\label{fig:virtual_criteria}
+%	\end{subfigure}
+%	\caption{Application nodes grouped by different types of criteria}
+%	\label{fig:grouping_criteria}
+%\end{figure}
+
+%Whereas the isolation provided by groups can be achieved using  methods that limit the audience of messages -- for instance,  publish/subscribe mechanisms in which events are only captured by registered listeners -- the group abstraction complement the organizational view of the system provided by the role abstraction and make its social aspect more explicit. Together, these abstractions form the building blocks that allow engineers to think and program highly distributed mobile applications in terms of their organizational structure. The decision of which communication and coordination methods to use within each group remains orthogonal: message queues, events, and data-centered models are likely to suit better different applications and use cases.
+
+%abstraction brings forward the social aspect of applications whose components should behave and interact based on the role they are assigned to in the organization they belong to
+
+%patterns of interaction and behavior that compose the structure 
+
+
+%behaviors (generally asymmetric) that fulfills one or more application requirements. This concept has been used by organization centered multi-agent systems~\cite{}, for which organizations are frameworks where agents with different capabilities may interact. Such abstraction brings forward the social aspect of applications whose components should behave and interact based on the role they are assigned to in the organization they belong to, going beyond the static client-server roles of today's mainstream model for mobile applications. %Figures~\ref{fig:client-server} and~\ref{fig:crowdsensing} illustrate the difference between these models.
+
+%FIGURE: a) CLIENTS + SERVER; b) INTERACTING ROLES + SERVER
+
+
+%DISCUSSION: one could argue that the dynamicity of the scenario does not fit well with the idea of a group, as the update of the group view may become constant. In this scenario, nodes could just advertise their fitness to perform different roles/tasks for a given application. Accordingly, they would still be able to build a table and decide for the allocation. The need for a group seems superfluous, unless there are many-many application nodes/roles and all of these nodes must broadcast their fitness for all eligible roles. In this case, group membership could be seen as the state in which nodes must do something while non-members must not. For instance, only group members must advertise their fitness, and the lowest threshold (lowest FV) is made public so the non-members would know when to become a member. 
+%Ex: a sonore pollution group is defined with cardinality=8. There are, simultaneasly, 20 devices in the target campaign area. When the campaign is about to start, each device broadcasts its FV for that role, which allows them to build a shared FV table. The first 8 devices in the resulting FV table are considered as active. Whenever the 8th position FV threshold is met by a non-active node or by a superior position, the corresponding node advertises its FV: the node currently in the 8th position will go, respectivelly, to the 7th position or it will become a non-active member. In both cases, all nodes become have their FV table updated. Conversely, if the FV of the 8th position node changes, it must advertise this change and let other nodes to become aware of the new threshold.
+%So, the group abstraction is mostly useful for modeling purposes, but also for programming and for guiding the implementation of the middleware. 
+
+
+%Self-organization Mechanisms
+
+
+%While self-organization principles have been extensively used in the context of multi-agents and robots, as well as in other fields, they have mostly addressed the achievement of a specific set of application goals (e.g., in the design of rescue robots that, based on their local knowledge, actions, and interactions, will lead to the emergent behavior of finding and rescuing the victims). In contrast, in this work self-organization means the literal self-adaptation of the system organization. 
+
+%Additionally, bio-inspired and other self-organization methods have a strong relation with the restrictions imposed by the physical world. For instance, the actions of a robot are based on its own knowledge and the knowledge it receives from its neighbors. In many cases, this is due to the limitation in the communication methods. The concept of a neighbor is, in this case, determined by spatial proximity. However, if the communication method is powerful enough to let all robots to exchange information, the concept of a neighbor cannot be determined by the spatial vicinity.
+
+
+%Whereas the self-organization principles of discentralization and local knowledge based decisions are followed by our proposed mechanisms, However, whereas the majority of works in the literature~\cite{} employ self-organization as a means to achieve system goals through emergency, we employ self-organization mechanisms reason on a meta-level: on the roles that may or must be played by application nodes given the social and individual context they are in.  
+%to the extent of shared by interconnected nodes,
+%shared by interconnected nodes
+
+
+
+
+
+%The long term evolution of the system has also been studied 
+
+%As an example, rescue robots are designed to decide where to go next based on their own sensors or the knowledge received from other robots they meet~\cite{}. will lead to the emergent behavior of finding and rescuing the victims). In contrast, in this work self-organization means the literal self-adaptation of the system organization. 
+
+%The term \textit{self-organization} have been mostly used to refer to emergent behaviors of the system based on local knowledge and actions~\cite{SELF_ORGANIZATION^4}. In this work, it denotes the distributed and autonomous adaptation of the system organization in the advent of context changes, i.e., it literally means \textit{self-organization} of the ecosystem formed by the application nodes. Nonetheless, the self-organization mechanisms proposed here share many of the characteristics of ....:
+
+%\begin{itemize}
+%	
+%	\item \textbf{No external control:} no external component participates in the decision making to adapt the organization;
+%	
+%	\item \textbf{Distributed decision making:} ... 
+%	
+%\end{itemize}
+
+%In this sense, each application node takes part in the process of perceiving its individual context (availability of resources, capabilities), as well as its social context (with who the node can interact). In this paper, we focus on two different self-organization mechanisms:
+
+
+
+
+
+%	\item \textbf{Role cardinality:} the relation between the number of instances of a role and attributes of system may vary with the context; to address this, a \textit{role cardinality}  mechanism is proposed;
+%	
+%	\item \textbf{Group cardinality:} finally, in some situations the membership criteria may have to be relaxed to allow more nodes to join a group and achieve its goals; to address this, \textit{group cardinality} mechanism is proposed.
+
+
+
+%mobile crowdsensing campaigns may target specific city areas; thus, only the nodes which are currently within these areas are eligible for participating of the respective campaigns. Campaign groups can be modeled with a physical criteria specifying the geolocation coordinates of the area (Figure~\ref{fig:spatial_criteria}). Also, specific sensing activities may also correspond to groups using the hardware membership criteria (Figure~\ref{fig:virtual_criteria}).
+
+
+
+%Once it is able to join a group, the decision of which role to play is based on the group specification and the different membership strategies as defined in Section~\ref{sec:groups}.
+
+
+%In specific, we adopt the definition of context as...+++..., including their physical and the social contexts; in specific, context is reified as:
+%
+%\begin{itemize} 
+%	
+%	\item which application nodes are currently present (provided by existing discovery mechanisms);
+%	
+%	\item the capability and fitness of these nodes to perform functionalities required by the application (addressed by this framework).
+%	
+%\end{itemize}
+
+%Despite the many possible types of asymmetric tasks, in this paper we focus on those whose importance for the application and cost for the devices are significant, i.e., the computation and communication overhead for its allocating is justified. 
+
+
+%The later is specially important in volunteer based applications such as mobile crowdsensing, as efficient and fair use of devices resources works as an incentive for participation. 
+
+%FIGURE: META MODEL FOR NODE-ROLE
+
+%\textbf{Requirements} As the we consider a scenario in which application nodes hosted by volatile and resource constrained devices must self-organize their activities, the allocation method shall satisfy the following requirements:
+%
+%\begin{enumerate}[label=R\arabic*.]
+%	
+%	\item Distributed: allocation decision should not be centralized by one device in order to avoid bottlenecks;
+%	
+%	\item Communication overhead: only essential data should be exchanged in order to minimize communication overhead; 
+%	
+%	\item Coherence: the allocation method performance/cost should be tuned according to the role constraints and criticality.
+%	  
+%\end{enumerate}  
+
+%Thus, our method for role allocation follows the classification and algorithm from existing works.
+
+
+
+
+
+%The first and foremost overhead is due to the exchange of messages among eligible nodes ()
+
+%like the vacancy of a role position due to churn or  resignation of the node in that position, 
+
+%as the new node must be elected and advertised. Second, the context of the role, kept by the leaving node, may have to be transfered to the elected node (if the role is stateful). Depending on the domain of the application, other costs may apply.
+
+%Table~\ref{fig:asymmetry} classifies these methods according to their type and their satisfaction of requirements R[1-3].
+%
+%\begin{table}[ht!]
+%	\centering
+%	\begin{tabularx}{\linewidth}{@{}| *1{>{\centering\arraybackslash}X}|c|c|c|@{}}
+%		\hline 
+%		 & \textbf{R1} & \textbf{R2} & \textbf{R3} \\
+%		\hline
+%		M1 & Y & N & Y\\
+%		\hline 
+%		M2 & Y & N & Y\\ 
+%		\hline
+%		M3 & Y & N & Y\\
+%		\hline
+%	\end{tabularx}
+%	\caption{Distributed allocation methods}
+%	\label{tab:role_node_cardinality}
+%\end{table}
+
+
+%\subsubsection{\textbf{Example}}
+%
+%The fitness function of an \textit{aggregator} role in a OMCS application could be modeled as: 
+%
+%$$
+%f_{aggregator} = battery\_level * membership\_age
+%$$
+%
+%\noindent
+%in which $battery\_level$ and $membership\_age$ are both real positive numbers ranging from 0 to 1. The former parameter can be accessed from the platform hosting the node, while the last parameter refers to the time a node belongs to a group. The following function illustrates how this parameter could be evaluated:
+%
+%$$
+%membership\_age = MIN((60 - age)/60, 1)
+%$$
+%
+%\noindent
+%in which $age$ is given in seconds and refer to the uninterrupted time a given node is in the group. Thus, if the node has been more than a minute in the group, it has a $membership\_age$ of one; otherwise, $0 \le membership\_factor \le 1$.
+%
+%Thus, given a set of eligible nodes, the one with the highest product of battery level and membership age becomes elected as an aggregator. 
+
+%For example, one-out-of-many device may be a better candidate to host the coordinator of the activities performed by a group of application nodes or to use specific sensors to extract information from the physical environment. Whenever asymmetry characterizes a behavior, i.e., not every node must perform it, and the performance, the cost, or other attributes of such behavior are to be considered, the decision of which node to perform it should take the context of the hosting devices into account. In this work, we considered asymmetric tasks whose importance for the system justifies the overhead for their allocation. %We compare our approach with straightforward solutions to demonstrate the feasibility and benefits of a context-dependent allocation. 
+
+%In specific, we focus on the \textit{efficiency, robustness, and fairness} resulting from an appropriate distribution of system responsibilities to local devices taking into account the dynamicity of their resources and capabilities, as well as their history of participation (fairness). To achieve a scalable solution for these problems, we propose a two-level mechanism for the partitioning of the edge space into subset of devices (groups) and the classification of these subsets by their fitness to play different system roles (assignment). 
+
+
+
+%the partitioning of the edge space according to different criteria and
+
+%In special, we are concerned with system functionalities that can assigned to one or more devices within the edge space. 
+%The main novelties here are:
+%
+%\begin{itemize}
+%
+%\item Pervasive and mobile devices are seen as volatile and heterogeneous computational platforms with resource limitations.
+%
+%\item Distinct responsibilities may be assigned to a subset of the mobile devices running the same application.
+%
+%\end{itemize}
+
+
+%First, we show how our framework can enable ad hoc interactions without external storage and control provided by cloud infrastructure. Second, we present a mobile multi-player game scenario in which low latency communication is the main requirement. Finally, we describe a mobile crowdsensing application, which combines different requirements, including efficient use of battery and mobile data plan. 
+
+
+
+%which here are hampered by volatility, 
+%
+%\begin{itemize}
+%
+%\item Discovery: devices must be able to recognize each other in the space
+%
+%\item Transparency: devices must be able to communicate without previous knowledge of their network address
+%
+%\item Dynamic allocation: devices must be able to agree on the role they will play in the system 
+%
+%\item Partitioning: devices must be able to further partition the interaction space 
+%
+%\end{itemize}
+
+%Evaluation
+
+%%!TEX root = main.tex
+%% -*- root: main.tex -*-
+%\section{Middleware}\label{sec:middleware}
+%
+%\subsection{SOIS with Existing Coordination Models} 
+%
+%\subsection{Interoperation} 
+%
+%\subsection{Discovery and Contextualization} 
+%
+%The application nodes sharing the same interaction space must become aware of each other. In the more trivial cases, social awareness is part of the application requirements (e.g., in a chatting or in a multiplayer game application); or, the social context affects the way the application can achieve its requirements. The later may refer to the cases in which functionalities are provided by specialized nodes (e.g., by sensors, actuators, gadgets, and other devices composing the application). It may also refer to situations in which the quantity and quality of nodes defines a social context to which the application must adapt to (e.g., if too many sensors are available, a subset can be chosen to spare the other's resources).
+%
+%%Whereas the discovery of ambient and web services are important and have been addressed by many works~\cite{Zhu:2005, Meshkova:2008}, 
+%
+%%hosted by devices able to provide multiple functionalities, i.e., that can assume different roles in application organization. 
+%
+%To better suit the characteristics in Section~\ref{sec:characterization}, the discovery mechanism should not be centralized by remote components; instead, to avoid latency and Internet dependency, discovery must be carried out and managed from inside, i.e, by the application nodes themselves. To this end, discovery can still rely on some degree of centralization (discovery-nodes) or be completely distributed. The decision of which approach to use must cope with the volatility and large scale characteristics discussed in Section~\ref{sec:characterization}. 
+%
+%%Popular platforms such as Android NDS~\cite{ANDROID_NSD} and Apple Bonjour~\cite{APPLE_BONJOUR} provide native mechanisms that allow nodes to advertise and discover their services and resources. Additionally, third party frameworks provide multi-platform discovery~\cite{Alljoyn, IoTivity}. We later discuss how this mechanisms could be enriched to suit the type of application described in Section~\ref{sec:characterization}.
+%
+%
+%
+%
+%
+%%TODO explain the gap (if any) or which discovery mechanism should be used
+%
+%%Following the taxonomy in~\cite{}, 
+%
+%%\subsubsection{Interoperability}
+%
+%%In a blackbox architecture (e.g., service-oriented and resource-oriented architectures), endpoints providing a service or resource encapsulate their inner components and logic and expose their functionalities through remotely accessible interfaces. This type of architecture suits well the cases in which different platforms and applications need to interoperate by means of request-response between clients and agnostic services. However, the overhead and limitations they impose may not be justified in the case of interactions among nodes of the same application. Thus, a component-based architectural style provides the loose-coupling and flexibility required by the volatility of mobile devices. 
+%
+%%Different paradigms and architectural models for distributed systems provide their own discovery technology and specification. The discovey mechanisms in these models is either an industrial standard (e.g., the service registry in SOA~\footnote{http://uddi.xml.org/}) or are currently been investigated (e.g., the P-REST extension to REST~\cite{Caporuscio:2015}). 
+%
+%%TODO refactore this paragraph and continue this ssection
+%%In specific, components are independent, loose-coupled entities that can be added/removed from the system at runtime. Therefore, mobile devices can host components that, once in the network, advertise their presence and become aware by its peers.
+%
+%%%Content and control can be broadcasted;  
+%
+%%%In mobile crowdsensing, the discovery of peer nodes is particularly important as each node is a potential contributor to the existing campaigns. 
+%
+%%TALK ABOUT THE DCVRY METHODS AND THEIR SUITABILITY TO THE SCENARIO AND REQUIREMENTS PRESENTED BY THIS WORK.
+%
+%%Whereas previous coordinating models for mobile computing assumed the worse case for connectivity (nodes eventually meet and exchange data)~\cite{LIME, TUCSON, OTHERS}, nowadays wireless technologies makes it possible for multiple application nodes to be interconnected at the same time. Given the resource limitations of mobile devices, discovery mechanisms must avoid creating too much computational overhead or flood the network with discovery messages. As the peer scale grows, such requirements becomes critic for the feasibility of an edge space for interactive applications. 
+%
+%\subsection{Underlying Framework}
+%
+%While the choice of a specific framework is orthogonal to the main concepts and the self-organization mechanisms presented by this work, we considered the arguments for a resource-oriented architecture~\cite{PRIME} and adopted IoTivity as the underlying framework on top of which the abstractions and mechanisms of self-organizing edge spaces are built and operate.
+
+%two aspects: to show the gain in efficiency of the crowd-sensing campaign based on our framework when compared with a client-server approach; and to show the scalability and performance of the mechanisms proposed, as they impose a communication overhead. 
+
+
+%Distributed role allocation
+
+%-> Each node must calculate and advertise its fitness value for the roles with vacant positions: protocol to calculate; protocol to advertise;
+%-> Each node must compare its fitness value with the other nodes and update the assignment for existing positions and assume/resign to a position if another node has a higher value
+%-> 
+
+
+
+%The approach was evaluated with an opportunistic mobile crowd-sensing application. In specific, we simulated a public transport monitoring application to compare the efficiency of a pure client-server architecture with a solution based on SOIS.
+
+
+%Related Works
+
+
+%Regarding data-centered models, Linda~\cite{Gelernter:1985} is a coordination language that allows processes to communicate through objects stored in and retrieved from a tuple space. While Linda provides a globally accessible and persistent tuple space, the Lime~\cite{Murphy:2006} model tackles host mobility with transient tuples which are carried by mobile nodes and can be merged or split according to their connectivity. The Lime model have more similarities with our work, as in both cases tuples are transient and kept by mobile hosts. Nonetheless, while in Lime tuples are private and will follow their hosting devices, in our work tuples are associated to groups and must outlive exiting members. As another data-centered solution, TOTA~\cite{Mamei:2003} also provides a distributed tuple space solution. Unlike previous models, tuples in TOTA are not associated with network nodes. Instead, they can be injected and propagated in the network following patterns. %TODO
+%In contrast with TOTA, our work associate tuple spaces with groups and group compositions to provide means for robust coordination among distributed components subject to hight degrees of volatility.
+
+%Other works based on partitions target specific domains such as mobile ad hoc networks (MANET). As an example, ...
+
+
+
+
+
+
+
+
+
+
+%this \textit{interactive} applications can be achieved by 
+
+%In order to explore the potential of a more distributed architecture and, without intermediation of remote servers, to improve the user experience of mobile applications for which interaction among nodes is an important requirement, application nodes must be able to set up and manage an interaction space in which they can interact and behave according to their individual and social contexts. 
+
+
+
+% more complex use cases in which application tasks are resource demanding or must be performed without user participation have emerged, 
+
+%-- such as in mobile crowdsensing. Finally, some applications explore the collaboration among different nodes to improve efficiency and other attributes -- like in opportunistic routing applications designed to work without Internet.
+
+
+%In common, these cyber-physical devices are able to communicate and, depending on the application, are required to interact and combine their capabilities, exchange data, or coordinate their behavior. 
+
+
+
+%Among the advantages of this model are the client-server architecture simplicity in which client applications communicate with servers and between themselves through servers.
+
+%and meet requirements such as low latency, availability, reliability and efficient use of mobile data plans.
+
+%based on existing and forthcoming wireless technologies (e.g., device-to-device communication in 5G),
+
+%application nodes must be able to perceive each other's presence and each other's state and (discovery and contextualization). Also, interacting nodes should form an organization structure that defines the responsibilities and behavior of distinct nodes. As mobile devices are expected to come and go (churn) and are subject to changes that affect their capabilities and conditions (volatility), such organization structure must evolve to the different physical and social contexts the application nodes are exposed to (self-organization).
+
+% to achieve common goals more efficiently. 
+
+%Examples of data-intensive applications for which one or more of the aforementioned restrictions apply are mobile crowdsensing applications~\cite{MCSC} -- e.g., air/noise pollution measurement and traffic dynamics -- and situated social applications for which user interactions are based on proximity and locality -- e.g., autonomous vehicles and mobile gaming applications~\cite{MOBILE_USE_CASES}. 
+
+%the assignment of these asymmetric roles is a central feature of the interaction spaces management. 
+
+%For instance, some nodes may play key roles such as a group leader, supervisor, coordinator or local server; and some application roles may be assigned to specific nodes -- e.g., those which have the capability and the best conditions to perform tasks like sensing the environment in mobile crowdsensing. Thus, to setup a self-organizing space in which application nodes assume managing and application roles 
+
+%However more distributed than a pure client-server architecture, local interaction spaces can still rely on some degree of centralization. For instance, some nodes may play key roles such as a group leader, supervisor, coordinator or local server. In addition, some application roles may also be distributed to specific nodes -- for instance, those which have the capability and the best conditions to perform tasks like sensing the environment in opportunistic crowdsensing. Finally, as devices are expected to come and go and are subject to changes that affect their capabilities and conditions, the assignment of these asymmetric roles is a central feature of the interaction spaces management. 
+
+%In the literature and since before the advent and popularization of cloud computing, there has been a long lasting research effort to develop the models, methods, algorithms, middlewares and tools for pervasive and mobile computing. From grid computing and peer-to-peer communication protocol to mobile multi-agents and distinct coordination models.
+%% that provides decoupling from space and time.
+%. %There has also been a significant effort to address the formation of coalitions between multi-agents and multi-robots according to their dynamic capabilities. 
+%Despite the wideness of these fields, they are all characterized by the multiplicity of the entities involved, or ensembles. %, usually targeting the same goals. 
+%Considering today's and the near future world in which cyber-physical devices are everywhere and carried by everyone, will the cloud be able to solve every computational problem and to proxy all interactions? If not, could existing and new models help to achieve the whole potential of pervasive and mobile computing?
+
+
+%it can seamlessly cope with cloud services while latency is reduced and less data has to be transmitted and processed at the cloud.
+
+%%available to the to the general public with affordable prices and 
+%This technology has been adopted at very large scales. According to predictions \cite{IHS:2016}, many more of these devices will join the \textit{internet of things} in the years to come. Such rich scenario enables the creation of systems that have strong impact in peoples' lives, such as social and smart city applications. Nonetheless, their realization require tackling the emerging problems.
+
+%%problem introduction
+%An important challenge in this scenario is \textit{volatility}. As mobile devices come and go for many reasons, components churn create abrupt context changes that must be handled swiftly to avoid disruptions of the normal application behavior or violations of non-functional requirements. 
+%%Depending on the role played by an exiting component, it must be resumed by other(s). 
+%In addition to churn, the \textit{heterogeneity} of the devices that can compose the application must also be considered. Such heterogeneity has many sources. First, hosting devices have different hardware components and configurations. Second, they are subject to distinct and dynamic policies for the use of their resources. Third, the use of resources by concurrent applications varies in time. Last but not least, changes in the physical world % or in the hosting platform 
+%can also affect the behavior of sensors and other components. As a consequence, the capabilities of different devices to perform system tasks vary from one to another and through time.
+
+%For example, onboard sensors can be (de)activated by users or be affected by fluctuations in the physical world. 
+
+
+%%gap in the current solutions
+%In the last decades, data-centric models, like the \textit{tuple spaces} proposed in Linda~\cite{Gelernter:1985}, are the state-of-art of distributed components coordination. These models allow for both space and time decoupling among components. % since created data can outlive exiting nodes and be accessed by new nodes. 
+%Nonetheless, they have a high abstraction level and do not address how system components should prevail in situations with high levels of volatility and heterogeneity. While some proposals have dealt with the mobility of hosts~\cite{Murphy:2001}\cite{Mamei:2003}~\cite{Murphy:2006:2}, they do not explore further abstractions and mechanisms 
+
+%Also, they assumed an agent-centered perspective with no \textit{supra-agent} abstractions. 
+
+%%Q: Now it is the time to differentiate my work from what 
+
+%In contrast with these proposals, other coordination models have adopted organizational abstractions~\cite{Baresi:2011, Baresi:2011:2}, but have not addressed the problem of the autonomous adaptation of the organization in the advent of churn and other context changes.
+
+%but without relying on a data-centered solution for distributed coordination.
+
+
+
+%In this paper, we propose a framework based on the key concepts of \textit{groups} and \textit{roles}. In contrast with previous works that focus on the interaction among single -- and here considered volatile -- agents/components, we give special importance to what can be achieved by collections. In accordance with an organizational perspective, we use the term role to define a component with a set of capabilities responsible for one or more system functionalities. Also, groups are seen not as implicitly sets formed and dissolved as components register and unregister their interest in a given event or data, like in event/data-centered models, 
+%%enter and leave the system, 
+%but explicitly and more stable entities that can outlive components churn by means of replication, redundancy, and dynamic reallocation of existing resources.
+
+%While cloud-computing has successfully enabled the outsourcing of computation to remote providers, this model may not provide the low latency required by some applications or may not scale to a very high number of components~\cite{FOG}. Conversely, the resource limitations of devices reduce their capability to solve complex computational problems. As part of our framework, we propose a method for the adaptation of the group-role structure that respect such constraints. %For this, we adopted the principles of self-organizing systems for which a given property or behavior emerges from the sole interaction between components and their local knowledge~\cite{}. 
+%In specific, we propose the autonomous assignment (membership) of resources (roles) into partitions (groups) according to the context of these devices and to high-level application requirements -- expressed in terms of grouping criteria, roles cardinality, and non-functional attributes. 
+%
+%should emerge from the decisions of distinct nodes to join, stay or leave the existing groups.
+
+
+%dynamic assignment of system roles to groups of heterogeneous and volatile devices (nodes), according to the 
+
+
+
+%For this, the group-role structure should reflect what is been required from each group and what can be provided by each involved device.
+
+%, we target the dynamic and autonomous assignment of system roles to groups of heterogeneous and volatile devices (nodes), according to the context of these devices and to high-level application requirements -- expressed in terms of grouping criteria, roles cardinality (direct specification), and non-functional attributes (indirect specification). 
+
+%As such, groups are seen not as implicitly sets formed and dissolved as components register and unregister their interest in a given event or data,
+%enter and leave the system, 
+%but more enduring and stable entities that can outlive components. 
+
+%In accordance with an organizational perspective, we use the term role to define a component with a set of capabilities responsible for one or more system functionalities. We also propose the integration of these abstractions a data-centered model for decoupled intra-group and inter-group coordination. The contribution of the model is twofold, as its features and properties can be employed by the managed system (distributed application) and also by its managing system.
+
+
+%Figure~\ref{fig:motivation} presents two types of criteria for grouping distributed components.
+
+%\begin{figure*}[t!]
+%    \centering
+%    \begin{subfigure}[b]{0.4\textwidth}
+%        \centering
+%        \includegraphics[width=1\textwidth]{figures/physical_view}
+%        \caption{Physical partitioning: application components (white circles) grouped by their position in the physical space (blue shapes).}
+%    \end{subfigure}%
+%    ~ 
+%    \begin{subfigure}[b]{0.4\textwidth}
+%        \centering
+%        \includegraphics[width=1\textwidth]{figures/logical_view}
+%        \caption{Logical partitioning: application components (white circles) grouped by logical criteria defined by the application.}
+%    \end{subfigure}
+%    \caption{Different grouping criteria.}
+%    \label{fig:motivation}
+%\end{figure*}
+
+
+
+
+%Groups as more stable containers in which a collection of components (\textit{roles}) can be dynamically deployed and coordinate their activities through the \textit{group tuple space}. While the application roles should compose the distributed logic of the \textit{managed} system, \textit{managing} roles should be responsible for adapting the managed system in the advent of context changes. To accomplish this, we explore both intragroup and intergroup adaptations methods.
+
+%hat can be equipped with a tuple space for the coordination of its members and a variety of mechanisms for robustness.
+
+%In this paper, we propose a framework for the creation of distributed systems based on the key concepts of groups and roles. These abstractions should guide the organization of the system into partitions (groups) in which distributed components (roles) can be dynamically deployed. 
+%and to enable the distribution of the application logic within these partitions (roles). 
+
+
+%achieving solutions with a high level of robustness, availability, and other attributes.
+
+%Q: What is the difference between a partition and a collection?
+
+%that can be achieved through the autonomous and distributed management of groups components and also through mechanisms of self-organization between different groups.
+
+%As such, the potential of data-centric models can be further extended with abstractions for the development of applications based on the plethora of pervasive devices available in everyday life situations. In specific, design and programming abstractions should guide the organization of distributed components according to application specific criteria like the role they play in the system (modularization) and to optimize the flux of information among components and modules. Moreover, the system should be empowered with the methods and mechanisms for: 1) autonomously coping with a high level of volatility and heterogeneity; 2) efficiently employ the resources of pervasive devices, be they scarce or abundant.
+
+%TODO complete the scale(lability) aspect and consequences
+%as well as the resource allocation of pervasive devices.
+
+%More than just reacting, a preventive approach should assign replacements to standby and quickly assume orphan tasks, thus improving availability. 
+
+%solution introduction
+%Some of the relevant problems that must be handled autonomously during execution are: how to organize the components interaction; how to perform the system composition; and how to distribute the responsibilities among them. The resulting solution must be scalable to address scenarios with a high number of devices; it must also be able to adapt to context changes and maintain normal system behavior.
+%
+%
+%the problem in this paragraph refers to the ability of interacting locally
+%Nowadays, the majority of mobile~\footnote{from this point forward the terms mobile, distributed, and pervasive are used interchangeably.} applications follow a client-server architecture in which backend servers in the cloud perform significant part of the computation. However, there is an increasing interest in enabling peer-to-peer interactions among devices through local and mobile ad hoc networks. 
+%This approach has been referred by some as fog-computing~\cite{FOG}. 
+%In some cases, low-latency is the main requirement that justifies a local interaction. In others, connectivity to the cloud is poor or cannot be assumed. Accordingly, in these cases devices are expected to interact locally to achieve some of the distributed application goals without the centralized coordination of backend servers. Regardless of the reason for creating distributed systems at the network edge, an adequate model should ease the complexness of its development and to enable a flexible, robust, and scalable solution. 
+%In this paper we propose a model for the self-organization of distributed systems. The
+
+
+
+%The proposed self-organization method is implemented by a supporting middleware, which also provides essential features such as discovery, communication, distributed state management, and group operations. %We make use of a tuple space model tailored for mobile environment to support decoupled interaction between components while preserving data availability even in scenarios of high volatility.
+
+
+%\begin{figure}[t!]
+%	\centering
+%	\includegraphics[width=\linewidth]{figures/fog_computing}
+%	\caption{Fog computing as a complementary solution to cloud computing}
+%	\label{fig:fog_computing}
+%\end{figure}
+
+%paper structure
+
+%At the application level, organization abstractions allows similar or different components running at different devices to form groups in which they can interact and coordinate their actions to achieve application goals. Second, at the organization structure level, the distributed application should autonomously adapt to events such as components failures, churn, environment changes, etc.
+
+
+%suits applications for which global knowledge about the system or centralized adaptation is infeasible or prohibitive. 
+
+
+%The premise followed by this work is that system partitions reduce the coordination space and improve the coordination scalability between distributed components. In different words, whenever a distributed system can be reduced into a set of partitions, doing so will reduce the coordination complexity. However, as changes are expected to happen, the partitioning must evolve to changes in order to keep the system operational and avoid violations of requirements. We argue that the formation and adaptation of the organization structure can benefit from a well defined model.
+
+%we tackle the problem of designing distributed systems at the edge of the network infrastructure, i.e., composed of pervasive devices at local or ad hoc networks with a high degree of volatility. In specific, we propose a model that enables the partition of the system into a set of self-organizing, autonomous parts. The proposed model is based on the key concepts of \textbf{g}roups, \textbf{r}oles, and \textbf{d}evices (GRD). Groups are system partitions composed of roles. Roles implement the functionalities required to achieve system goals. Each role can be played by one or more devices in one or more groups. Groups can have different degrees of centralization, ranging from a client-server to a peer-to-peer architectural style, according to the application design. Additionally, to evolve the system in the occurrence of changes in its components and environment, we propose a method based on self-organizing principles, in which adaptation happens through local group interactions without any external control.
+
+
+%motivation
+
+%we discuss the most important requirements related to the realization of such applications, the current solutions and the gaps to achieve these requirements.
+
+%This last example brings more complexity to the ad hoc edge space formation and maintenance. To illustrate it, let's consider a city in which public transport agency provides no real time information of the whereabouts of buses. A collaborative crowdsensing application has bee designed to collect this information from the GPS in passengers devices. Users participation is conditioned to a low battery consumption and mobile data plan usage. Next, we describe how the proposed Ad Hoc Edge Spaces features can help to improve these metrics when compared to a self-contained, cloud-based solution.
+%
+%The physical-virtual space mapping in this example is clear: each bus is a physical space where an ad hoc edge space may exist. In a cloud-based solution, each mobile device would host a self-contained application that would collect the GPS data and send it to the server. Instead, the first device to enter the bus creates a \textit{bus monitoring group}, in which two roles can be performed: \textit{GPS fetcher} and \textit{GPS aggregator}. While the former requires just one instance, the GPS fetcher role is replicated to increase geolocation data accuracy, as it varies in time and from one device to another. Each fetcher sends the data to the aggregator to be validated and sent to the backend servers to be further processed and shared with users waiting for that bus.
+%
+%The advantages of this solution are: total GPS use is reduced, as not all devices must play the GPS fetcher role; quality of the data sent to backend servers is improved, while the quantity is reduce, thus reducing the use of the mobile data plan and the load of the backend servers. Considering the plethora of sensors in the smartphones, the efficiency of mobile crowdsensing campaigns could be significantly improved by reproducing this model with other types of data.
+
+
+
+%TODO: this paragraph talks about symmetry between roles, not about the group membership causality
+%For instance, in a peer-to-peer file sharing group,
+%% can be considered as a collaboration between 
+%nodes play symmetric roles (all nodes plays both clients and servers roles). In contrast, any kind of relation between role, including the common cases in which one node in the group interacts with all other members through an hierarchical relation (e.g., a supervisor and its followers~\cite{Baresi:2011}), configures an asymmetric relation. 
+
+%TODO what is the purpose of this paragraph?
+%Furthermore, once this specification exists, group members must agree on the actual allocation of roles. Such \textit{distributed role allocation} mechanism is presented in Section~\ref{sec:self_organization}.
+
+
+%For example, 10 out of 15 devices are capable to measure the noise level, but only two are needed. In one hand, if the membership to a noise-pollution group would imply sensing the noise (I), only two nodes would be allowed in the group. Also, the distributed election of these two members would include all 15 devices, even those not able to perform such behavior. In the other hand, if membership implies capability (II), all 10 capable nodes would join the group and the distributed election of the two nodes would happen among the 10 member.
+
+%Hence, at a first level, groups provide a subspace in which its members may (II) play specific roles. 
+
+%TODO: go into details about what happens once a group is formed and roles are allocated, i.e., how roles interact with each other
+%Within a group, member nodes are aware of each other. Not only they can agree on which roles should be performed by which nodes, the elected roles can engage in interactions following an architectural style specified for them. Thus, a group abstraction provides a container to which roles can be added or removed dynamically. 

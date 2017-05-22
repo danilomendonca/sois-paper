@@ -1,0 +1,53 @@
+
+
+\section{Evaluation and Discussion}\label{sec:evaluation}
+
+
+
+The simulation experiments aimed at measuring the overhead of the self-organization mechanisms, namely self-grouping and distributed role allocation. As these methods add no significant overhead in terms of processing or memory, the evaluation has focused in the communication overhead, as the exchange of messages through wireless mediums consumes battery from devices and is subject to delays that may interfere with the application behavior. In specific, this metric was evaluated with:
+
+\begin{enumerate}[label=\Alph*]
+	
+	\item The asymptotic overhead, given by worse case number of exchanged messages required by each self-organization mechanism, as a function of the number of application nodes, groups and roles (Section~\ref{fig:asymmetry}). 
+	
+	\item The measured overhead, given by the number of exchanged messages counted during simulated executions of a MCS application for public bus monitoring, in which the number of group/roles is fixed and the number of nodes, as well as their capabilities, varies according to probabilistic distributions.
+	
+\end{enumerate}
+
+
+\subsection{Asymptotic Analysis} 
+
+\subsubsection{\textbf{Self-grouping}} We analyze the complexity of the grouping method by means of the communication overhead, i.e., the number of messages exchanged between nodes and their payload size. The analysis is divided in two parts: a) the overhead when a node joins/leaves a group (registry update); b) the additional overhead when a node joins a group (registry copy).
+
+In the worse case scenario, registry update (a) takes $n-1$ unicast messages, ($O(n)$), with $n$ the group size, and a single registry line as payload. However, if a broadcast communication is used, a single broadcast message can advertise the registry update ($O(1)$).
+%This is the case, e.g., of an UDP broadcast over the 802.11 network protocol (Wi-Fi). 
+The registry copy (b), in its turn, requires a single unicast message to be transmitted each time a node joins a group. In contrast with the previous type of message, the registry copy includes information about all $n-1$ nodes in the group. Thus, the total overhead is given by $O(p)$.
+
+\subsubsection{\textbf{Discentralized Role Allocation}} 
+
+%TODO: check the definition of FS and use it accross the paper
+
+The distributed role election involves the exchange of fitness scores among eligible nodes in the advent of the events depicted in the previous subsection. As each node receives the FS from the other nodes, this value is added to the classification list in polynomial time. The number of exchanged messages depend on the network topology and the event that triggers the election. 
+
+In the worse case, represented by an election of a vacant position and no broadcast, each node $e$ in the set of eligible nodes $E$ must send each other an unicast message. If $|E| = n$, the asymptotic message count is given by $O(n * (n-1)) = O(n^2)$. If the nodes in $E$ can communicate through broadcast, this number is reduced to $O(n)$. In its turn, the challenge event produces smaller overhead as the exchange of messages is restricted to a request-response between challenger and challenged and to the subsequent advertisement of the result ($O(n)$ without broadcast, otherwise $(O(1))$).
+
+Once the communication overhead of a single election protocol is known, the overall overhead can be estimated by the number of groups and roles in the application and the frequency of events triggering new elections. Whereas the vacancy and resignation events should be handled by a new election, the frequency in which a challenge event happens depend on the choice for $\delta$: the higher this factor is, the lower the probability of a challenge (and the need for the elected nodes to update their peers about changes in their $FS$). Therefore, the decision of which $\delta$ to be used depends on the criticality or the importance of the attributes that compose the fitness score of a node. 
+
+
+
+\subsection{Simulations}
+
+\subsubsection{Experiments Design}
+
+
+The scalability and performance of the self-organization mechanisms were evaluated using a simulator for P2P  \textit{PeerSim}, an open source peer-to-peer simulator~\cite{p2p09-peersim}. This tool supports the creations of different network topologies and.... 
+
+%To simulate a public bus monitoring crowd-sensing application, experiments were performed with an increasing number of nodes. Each role can potentially play a \textit{gps-monitor}, a \textit{acceleration-monitor}, or an \textit{aggregator} role. Each role has been implemented as a protocol extending the \textit{CDProtocol} class. At each simulation cycle, 
+%
+%the application roles of a \textit{gps-monitor} and \textit{acceleration-monitor} were implemented as protocols, which are called at each simulation cycle. 
+%
+%The simulation was executed in a computer with .... 
+
+\subsection{Results}
+
+\subsection{Discussion}

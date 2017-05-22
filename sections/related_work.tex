@@ -1,0 +1,28 @@
+\section{Related Work}\label{sec:related_work}
+
+\subsection{Group and Role Abstractions}
+
+The A-3 model~\cite{Baresi:2011:2} defined an architectural style consisting of groups that can be populated by a supervisor and its followers and composed with other groups. While this work share many of the motivations and have similarities with A-3, our model does not rely on the rigid \textit{supervisor-follower} structured, nor group compositions depend on shared members.
+% features for topology control operations and 
+In contrast with the more abstract A-3 support for self-adaptation~\cite{Baresi:2011:2}, we also investigate adaptation mechanisms that should guarantee the basic properties of groups, such as robustness, a high availability, efficient use of resources, and other attributes defined by the application through extension points. Finally, while A-3 rely on classical group communication methods, we investigate the integration of groups with tuple spaces for both inter-group and intra-group coordination.
+
+Group and role abstractions has also been used in other domains. Ferber et al.~\cite{Ferber:2004} proposed an organization centered model for multi-agents systems that contrasts with agent centered models in which agents can communicate and interact freely. Among the problems of agent centered models, the authors cited security, modularity and the lack of support to other frameworks besides the multi-agent platform itself. In our work, we agree with those arguments as part of the justification for an organizational approach for distributed systems. Despite the model similarities, the works target different domains: instead of agents, we consider pervasive and mobile devices as the hosts of components that play roles in groups of distributed applications. %In addition, our work targets the particular problems of a high volatile and heterogeneous scenario that requires autonomous adaptation of the group-role organization.
+
+ %Furthermore, we focus on the self-management of the group-based organization in the advent of context changes, while Ferber et al. have addressed only the conceptual elements of the organizational model.
+ 
+\subsection{Self-organization and Self-adaptation} 
+ 
+Kota et al.~\cite{Kota:2012} have proposed a method for adapting the relationship between agents in a multi-agent system. In their work, agents reason about adaptation using only historical knowledge about past interactions and the cost of adaptation (meta-reasoning). Despite the similarities with our work, namely the use of self-organization principles and the focus on the dynamics of relations, in that aspect our work addresses a different domain (pervasive applications) and adopt an organization-oriented perspective in which application nodes can play distinct roles. Thus, our focus is rather on the nature of the relation and its dynamics than solely on the decision of when or not nodes should interact. Notwithstanding this, the method proposed by Kota et al. for adapting the organization structure of problem solving agents has provided valuable insight for our work. 
+
+A3-TAG, a programming model that facilitates the design of self-adaptive distributed systems based on group abstractions~[CT]. A3-TAG is an extension of the A-3 model, which is used as the organization model. A-3 key elements are groups and two types of roles, namely supervisor and follower. Each group has a supervisor and a variable number of followers. The main differences between this work and A3-TAG are dual: first, our organization model imposes no restriction about the number of roles a group can have, nor it specifies any hierarchy between roles. Second, our adaptation model is not based on coordination groups, but rather on the direct interaction between groups based on self-organization principles. We argue that the complexity of forming and managing coordination groups may result in excessive overhead. Instead, we propose a \textit{structureless} method to self-adapt the organization structure.
+
+\subsection{Distributed Allocation Problem}
+
+%TODO: Move this to the related works section;
+%TODO: Add heterogeneity and volatility to the paragraph
+In the literature, many works have tackled the problem of distributed task allocation~\cite{DTA}. In contrast with a task, a functional role defines a set of functionalities (possibly tasks) that a member of an organization is responsible to provide (perform). Hence, within an organization, a \textit{role} precedes a \textit{task}. Then, depending on the type of role, if multiple instances of a role have been assigned, a task allocation among these instances may still take place. Last but not least, while tasks usually have a concrete criteria for their beginning and completion and their assignment happens before task execution, roles lifespan tend to include multiple repetitions of a given functionality (or task). Therefore, in a dynamic scenario, a role assignment may have to evolve meanwhile roles are been performed.
+
+Notwithstanding their differences, the two types of allocation problems share commonalities. For instance, in both cases an utility function may be used as a criteria for choosing an optimal or sub-optimal assignment of roles/tasks. Whereas the optimization of quality attributes may deem unfeasible due to its complexity, a sub-optimal allocation of can still be guided by the \textit{fitness} (or utility) of nodes in performing these tasks/roles. To this end, fitness/utility is modeled as real-value function of relevant features affecting one or more attributes of the application. Also, some of the existing taxonomy for classifying a task allocation problem can also be applied to the role allocation problem.
+
+
+
