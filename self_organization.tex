@@ -5,11 +5,25 @@
 
 %Additionally, bio-inspired and other self-organization methods have a strong relation with the restrictions imposed by the physical world. For instance, the actions of a robot are based on its own knowledge and the knowledge it receives from its neighbors. In many cases, this is due to the limitation in the communication methods. The concept of a neighbor is, in this case, determined by spatial proximity. However, if the communication method is powerful enough to let all robots to exchange information, the concept of a neighbor cannot be determined by the spatial vicinity.
 
+%1: On the need for a maleable organization structure
 The structure of the application organization
 %, formed by the two abstractions presented -- namely, roles and groups -- 
-must be malleable (plastic) to accommodate changes in its ecosystem composition and environment. In contrast with the much less dynamic cases of organizations in human societies (e.g. industry and military organizations), the volatility of pervasive and mobile devices, caused by their mobility or fluctuations of their resources, may imply the formation or dissolution of relations among nodes and require the reassessment of the roles they play in the organization. 
+must be malleable (plastic) to accommodate changes in the units composing the pervasive ecosystem and in its physical environment. 
 
-While self-organization have been extensively used in the context of multi-agents and other fields, they have mostly addressed the achievement of system goals by means of actions and interactions to be performed by individuals based on local knowledge and without external control~\cite{Banzhaf:2009}. In contrast, in this work we propose autonomous mechanisms to adapt the organization the application, i.e., to let application nodes to agree on their role in the system according to what is required from the system and the context these nodes perceive themselves in. In specific, we propose a mechanism for each of the following dynamics:
+%2: What must evolve
+In contrast with the much less dynamic cases of organizations in human societies (e.g. industry and military organizations), the volatility that affects and characterizes pervasive and mobile devices, caused by their mobility or fluctuations of their resources, may imply the formation or dissolution of relations among nodes and require the reassessment of the roles they play in the organization.
+
+%3: What self-organization means in the literature
+%TODO: move this to the related works
+Self-organization have been extensively studied in the context of multi-agents and other fields as a phenomena and method to achieve system properties and goals by means of actions and interactions between individuals based on their local knowledge and no external control~\cite{DiMarzoSerugendo:2005, Banzhaf:2009}. In contrast, self-organization in this work refers to the constitution and adaptation of the application organization as understood by the serendipitous relations between application nodes formed and dissolved while the are able to communicate and collaborate. In specific, we propose mechanisms for each of the following organization aspects:
+
+
+%Whereas the self-organization principles of discentralization and local knowledge based decisions are followed by our proposed mechanisms, However, whereas the majority of works in the literature~\cite{} employ self-organization as a means to achieve system goals through emergency, we employ self-organization mechanisms reason on a meta-level: on the roles that may or must be played by application nodes given the social and individual context they are in.  
+%to the extent of shared by interconnected nodes,
+%shared by interconnected nodes
+ 
+
+
 
 
 %The long term evolution of the system has also been studied 
@@ -30,13 +44,15 @@ While self-organization have been extensively used in the context of multi-agent
 
 \begin{itemize}
 	
-	\item \textbf{Group membership:} a node may join or leave a group according to its satisfaction to the group membership criteria; to address this, a \textit{grouping} mechanism is proposed;
+	\item \textbf{Group membership:} as nodes join or leave a group, a group registry must be kept consistent among members;
+	%a node must join or leave a group according to its satisfaction to the criteria in that group; 
+	to address this, a \textit{self-grouping} mechanism is proposed;
 	
-	\item \textbf{Role election:} the nodes within a group must agree on which roles they shall perform; to address this, a  \textit{role election} mechanism is proposed;
+	\item \textbf{Role allocation:} the nodes within a group must agree on which roles they shall play; to address this, a  \textit{discentralized role election} mechanism is proposed;
 	
-	\item \textbf{Role cardinality:} the relation between the number of instances of a role and attributes of system may vary with the context; to address this, a \textit{role cardinality}  mechanism is proposed;
-	
-	\item \textbf{Group cardinality:} finally, in some situations the membership criteria may have to be relaxed to allow more nodes to join a group and achieve its goals; to address this, \textit{group cardinality} mechanism is proposed.
+%	\item \textbf{Role cardinality:} the relation between the number of instances of a role and attributes of system may vary with the context; to address this, a \textit{role cardinality}  mechanism is proposed;
+%	
+%	\item \textbf{Group cardinality:} finally, in some situations the membership criteria may have to be relaxed to allow more nodes to join a group and achieve its goals; to address this, \textit{group cardinality} mechanism is proposed.
 	
 \end{itemize}
 
@@ -48,26 +64,43 @@ While self-organization have been extensively used in the context of multi-agent
 
 %TODO: replace the figures bellow with a MC example
 
-\subsubsection{\textbf{Definition}} As the idea of a group in this work is not related to security, the \textit{self-grouping} mechanism is not controlled by special-purpose components external to the system; instead, each node is responsible for checking its own satisfaction to the existing membership criteria in the application organization. Whenever the satisfaction of a group membership criteria changes, this event must be  advertised to other nodes, who update their group membership registry. 
+\subsubsection{\textbf{Definition}} As the idea of a group in this work is not related to security, the \textit{self-grouping} mechanism is not controlled by special-purpose components external to the system; instead, each node is responsible for checking its own satisfaction to the existing membership criteria in the application organization. 
 
-\subsubsection{\textbf{Grouping Method}} Nodes entering the application have no registry of the existing group membership. They must acquire this information from the members of the groups they eventually join for the first time. In specific, we defined the oldest member of a group to be responsible for sending the registry replica to the newcomer. The complete self-grouping procedure is further depicted by the diagram in Figure~\ref{fig:self_grouping}.
+Whenever an application group comes into contact with others and join an existing group, this event must be  advertised to current members, who in turn update their group membership registry. Analogously, when a member node leaves, this event must also be perceived by existing members, who must update their registry.
+
+\subsubsection{\textbf{Grouping Protocol}} 
+
+%1: Check restrictive criteria
+A node should join a group if it satisfies all restrictive criteria of at least one of the roles (hereafter referred to as RRC) in that group. In this paper, we assume the group specification to be performed off-line and be available for each application node as part of its resources (e.g., as an XML specification, as depicted in Section~\ref{sec:group_specification}). Thus, each node have access the restrictive criteria of roles in a group specification and can locally check for their satisfaction. 
+
+%Once it is able to join a group, the decision of which role to play is based on the group specification and the different membership strategies as defined in Section~\ref{sec:groups}.
+
+The diagrams in Figure~\ref{fig:join_or_leave} and~\ref{fig:registry_replica} present the activities of the self-grouping protocol. At each iteration, the node checks for its satisfaction of the RRC (Figure~\ref{fig:join_or_leave}, activity 1). If no RRC is satisfied and the node is currently a member, it must leave the group and advertise this event to the other members (Figure~\ref{fig:join_or_leave}, activity 2). Conversely, if a node satisfies an RRC, it proceed by joining the group and advertise this event (Figure~\ref{fig:join_or_leave}, activity 3). Last but not least, as nodes entering a group have no information about its current members, this knowledge must be acquired. In specific, after been notified about the new member, the oldest group member is responsible for sending the registry replica to the newcomer (Figure~\ref{fig:registry_replica}, activity 1).
+
 %TODO despict how the problem of time coupling by using gossip or other algorithms for advertisement/discovery
- 
-%TODO: update the diagram
+
 \begin{figure}[t!]
 	\centering
-	\includegraphics[width=0.45\textwidth]{figures/join_or_create}
-	\caption{Activities of the self-grouping procedure performed by each application node}
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=0.9\textwidth]{figures/join_or_leave}
+		\caption{Activities of the self-grouping procedure performed by each application node}
+		\label{fig:join_or_leave}
+	\end{subfigure}%
+	
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=0.5\textwidth]{figures/registry_replica}
+		\caption{Activities of the self-grouping procedure performed by each application node}
+		\label{fig:registry_replica}
+	\end{subfigure}
+	\caption{The self-grouping protocol}
 	\label{fig:self_grouping}
 \end{figure}
 
+
 %TODO: describe which nodes is responsible for sending this information
 
-\subsubsection{\textbf{Complexity Analysis}} We analyze the complexity of the grouping method by means of the communication overhead, i.e., the number of messages exchanged between nodes and their payload size. The analysis is divided in two parts: a) the overhead when a node joins/leaves a group (registry update); b) the additional overhead when a node joins a group (registry copy).
-
-In the worse case scenario, registry update (a) takes $n-1$ unicast messages, ($O(n)$), with $n$ the group size, and a single registry line as payload. However, if a broadcast communication is used, a single broadcast message can advertise the registry update ($O(1)$).
-%This is the case, e.g., of an UDP broadcast over the 802.11 network protocol (Wi-Fi). 
-The registry copy (b), in its turn, requires a single unicast message to be transmitted each time a node joins a group. In contrast with the previous type of message, the registry copy includes information about all $n-1$ nodes in the group. Thus, the total overhead is given by $O(p)$.
 
 %TODO: decide if the group registry must be sent to newcomers only for the first time they join the group (which implies to continue updating them while they are outside the group). R: always send the the group registry to newcomers
  
@@ -110,13 +143,7 @@ The registry copy (b), in its turn, requires a single unicast message to be tran
 %	
 %	\item Coherence: the allocation method performance/cost should be tuned according to the role constraints and criticality.
 %	  
-%\end{enumerate} 
-
-%TODO: Move this to the related works section;
-%TODO: Add heterogeneity and volatility to the paragraph
-In the literature, many works have tackled the problem of distributed task allocation~\cite{DTA}. In contrast with a task, a functional role defines a set of functionalities (possibly tasks) that a member of an organization is responsible to provide (perform). Hence, within an organization, a \textit{role} precedes a \textit{task}. Then, depending on the type of role, if multiple instances of a role have been assigned, a task allocation among these instances may still take place. Last but not least, while tasks usually have a concrete criteria for their beginning and completion and their assignment happens before task execution, roles lifespan tend to include multiple repetitions of a given functionality (or task). Therefore, in a dynamic scenario, a role assignment may have to evolve meanwhile roles are been performed.
-
-Notwithstanding their differences, the two types of allocation problems share commonalities. For instance, in both cases an utility function may be used as a criteria for choosing an optimal or sub-optimal assignment of roles/tasks. Whereas the optimization of quality attributes may deem unfeasible due to its complexity, a sub-optimal allocation of can still be guided by the \textit{fitness} (or utility) of nodes in performing these tasks/roles. To this end, fitness/utility is modeled as real-value function of relevant features affecting one or more attributes of the application. Also, some of the existing taxonomy for classifying a task allocation problem can also be applied to the role allocation problem. 
+%\end{enumerate}  
 
 %Thus, our method for role allocation follows the classification and algorithm from existing works.
 
@@ -207,16 +234,6 @@ $$
 in which $age$ is given in seconds and refer to the uninterrupted time a given node is in the group. Thus, if the node has been more than a minute in the group, it has a $membership\_age$ of one; otherwise, $0 \le membership\_factor \le 1$.
 
 Thus, given a set of eligible nodes, the one with the highest product of battery level and membership age becomes elected as an aggregator. 
-
-\subsubsection{\textbf{Complexity Analysis}}
-
-%TODO: check the definition of FS and use it accross the paper
-
-The distributed role election involves the exchange of fitness scores among eligible nodes in the advent of the events depicted in the previous subsection. As each node receives the FS from the other nodes, this value is added to the classification list in polynomial time. The number of exchanged messages depend on the network topology and the event that triggers the election. 
-
-In the worse case, represented by an election of a vacant position and no broadcast, each node $e$ in the set of eligible nodes $E$ must send each other an unicast message. If $|E| = n$, the asymptotic message count is given by $O(n * (n-1)) = O(n^2)$. If the nodes in $E$ can communicate through broadcast, this number is reduced to $O(n)$. In its turn, the challenge event produces smaller overhead as the exchange of messages is restricted to a request-response between challenger and challenged and to the subsequent advertisement of the result ($O(n)$ without broadcast, otherwise $(O(1))$).
-
-Once the communication overhead of a single election has been showed, the overall overhead can be estimated by the number of roles in the application and the frequency of events triggering new elections. Whereas the vacancy and resignation event cannot be avoided, the frequency of  challenges depend on the choice for $\alpha$: the higher this factor is, the lower the probability of a challenge to happen. Therefore, unless the quality of the functionality provided by the role is strongly affected by variations in the fitness score to the point of justifying the election overhead, $\alpha$ should be set with higher values. 
 
 %For example, one-out-of-many device may be a better candidate to host the coordinator of the activities performed by a group of application nodes or to use specific sensors to extract information from the physical environment. Whenever asymmetry characterizes a behavior, i.e., not every node must perform it, and the performance, the cost, or other attributes of such behavior are to be considered, the decision of which node to perform it should take the context of the hosting devices into account. In this work, we considered asymmetric tasks whose importance for the system justifies the overhead for their allocation. %We compare our approach with straightforward solutions to demonstrate the feasibility and benefits of a context-dependent allocation. 
 
