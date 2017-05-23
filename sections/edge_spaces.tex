@@ -5,13 +5,13 @@
 
 \subsection{Role-orientation}
 
-%8: The today's client-server model and the need for role-orientation
-In today's client-server model, the functionalities to be performed by the application nodes are seen as as monolithic. For the applications whose nodes are expected to collaborate and play others than just the role of a client, the functionalities that are particular to distinct application roles form a concern of their own, i.e., they must be designed and programmed accordingly. 
+%1: The today's client-server model and the need for role-orientation
+In today's client-server model, the different functionalities are modeled and programmed as part of a monolithic application. For the applications whose nodes are expected to interact, collaborate and play others than just the role of a client from a backend server, the distinct functionalities of each role form a concern of their own, i.e., they must be designed and programmed accordingly. 
 
-%9: What do we propose in terms of role-orientation
-In this work, we inherit the concept of a role, more commonly used in human organizations, as part of a framework for the engineering of pervasive applications. By making the concept of a role a first-class abstraction, we provide the means to, since the early stages of its development, reason on the organizational aspects of the application, namely:
+%2: What do we propose in terms of role-orientation
+In this work, we inherit the concept of a role, commonly used in human organizations, as part of a framework for the engineering of pervasive applications. By making the concept of a role a first-class abstraction, we provide the means to, since the early stages of its development, reason on the organizational aspects of the application, namely:
 
-\begin{enumerate}[label=\roman*]
+\begin{itemize}
 	
 	\item what are the roles in the application-to-be;
 	
@@ -21,19 +21,26 @@ In this work, we inherit the concept of a role, more commonly used in human orga
 	
 	%(e.g., computational resources, specific hardware components, etc); 
 	
-	\item how existing roles relate to each other: 
+	\item how existing roles relate to each other, including: 
 	
 	\begin{enumerate}[label=-]
 		
-		\item the hierarchy of control%. E.g.: a coordinator and its coordinated;
-		
-		\item the flow of data%. E.g.: from sensors to an aggregator;
+		\item the data flow, e.g.:
+			\subitem coordinator $\leftarrow$ coordinated 
+			\subitem aggregator  $\rightarrow$ sensors 
 	
-		\item the symmetry%. E.g.: symmetric relation between file-sharing peers, or asymmetric relations between server/client, supervisor/follower, coordinator/coordinated, provider/consumer, etc
+		\item their control hierarchy, e.g.:%. E.g.: 
+			\subitem orchestration (hierarchical)
+			\subitem choreography (non-hierarchical)
+	
+		\item their symmetry, i.e.:
+			\subitem between same roles (symmetric) 
+			\subitem between different roles (asymmetric)
+		%. E.g.: symmetric relation between file-sharing peers, or asymmetric relations between server/client, supervisor/follower, coordinator/coordinated, provider/consumer, etc
 		
 	\end{enumerate}	
 	
-\end{enumerate}
+\end{itemize}
 
 
 %TODO: add here the fitness function definition and examples
@@ -55,12 +62,12 @@ In this work, we inherit the concept of a role, more commonly used in human orga
 The application organization -- so far represented by the roles that can be played by its nodes -- may be further characterized by its divisions, here named as \textit{groups}. 
 
 %2: What a group is for an organization
-At its highest level, a group boundary is limited by the network partition in which application nodes can interact. Nonetheless, these nodes, or a subset of them, may exhibit common properties or states of interest to the application. For instance, a group may have a \textit{functional} meaning (e.g., a group of nodes able to fetch data from a specific type of sensor), a \textit{non-functional} meaning (e.g., all nodes within a specific geographical area), or a mix of both (e.g., all nodes able to fetch data from a specific type of sensor within a specific geographical area). 
+At its highest level, a group boundary is limited by the network partition in which application nodes can interact. Nonetheless, these nodes, or a subset of them, may exhibit common properties or states of interest to the application. For instance, nodes may be grouped according to a \textit{functional} criteria (e.g., a group of nodes able to fetch data from a specific type of sensor), a \textit{non-functional} criteria (e.g., all nodes within a specific geographical area), or a mix of both (e.g., all nodes able to fetch data from a specific type of sensor within a specific geographical area). 
 
 %Thus, multiple types of criteria may define the membership of a group.
 
 %2: What a group is for a node
-To its members, a group defines a \textit{social context} in which they (a) may or (b) must play certain roles. As the former case can be seen as a more general case of later case, we adopt a relaxed membership causality (a), i.e., group membership only defines the context in which its members \textit{may} play one or more roles, unless the group specification makes such restriction. Each of these cases are specified as follows:
+To its members, a group defines a \textit{social context} in which they (a) may or (b) must play certain roles. As the first case models a more general case of later case, we adopt a relaxed membership causality (a), i.e., group membership only defines the context in which its members \textit{may} play one or more roles, unless the group specification makes such restriction. Each of these cases are specified as follows:
 
 \begin{itemize}
 	
