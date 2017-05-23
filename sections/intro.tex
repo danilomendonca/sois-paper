@@ -11,7 +11,7 @@ In the last decade, the world has witnessed the massive popularization of pervas
 
 \begin{figure}[t!]
 	\centering
-	\includegraphics[width=0.75\linewidth]{figures/pervasive_devices}
+	\includegraphics[width=0.7\linewidth]{figures/pervasive_devices}
 	\caption{Different classes of pervasive devices; a) a laptop; b) a Raspberry PI; c) a smartphone; d) a tablet; e) a gadget (watch); f) a Bluetooth beacon}
 	\label{fig:pervasive_devices}
 \end{figure}
@@ -21,24 +21,24 @@ Today, the mainstream architectural model for pervasive applications consists of
 
 %3: Examples of P2P based solutions
 %TODO: rethink the purpose of this paragraph and fix it
-In its simplest form, a device-to-device interaction enables the exchange of application data. However, novel applications are targeting more complex and sophisticated goals (e.g., to autonomously sense the physical environment in specific areas of a city). In this paper, we argue that some of these goals can be achieved more efficiently through the direct interaction and collaboration between the application nodes. %In specific, we target the serendipitous situations in which the devices hosting these applications become visible to each other and are able to communicate. 
+In its simplest form, a device-to-device communication targets the exchange of application data. However, novel applications are targeting more complex and sophisticated goals (e.g., to autonomously sense the physical environment in specific areas of a city). In this paper, we argue that some of these goals can be achieved more efficiently through the direct communication and collaboration between the application nodes. %In specific, we target the serendipitous situations in which the devices hosting these applications become visible to each other and are able to communicate. 
 
-%3: Functional plasticity + relations between nodes
-In specific, given the functional plasticity of today's pervasive and mobile devices equipped with more powerful computational resources and several types of sensors, 
+%3: Functional plasticity + relations between nodes 
+In this paper, we focus on the relations that can be formed (and dissolved) between the application nodes composing a pervasive ecosystem. In specific, given the functional plasticity of today's pervasive and mobile devices equipped with more powerful computational resources and several types of sensors, 
 %we argue that 
 %sense and actuate the environment, or even to perform computation-intensive tasks,
-new types of relation -- others than just the one betwenn clients and backend servers -- can be opportunistically created and dissolved among devices at the edge of the network. These relations must cope with the heterogeneity and volatility characterizing the pervasive ecosystem, including the mobility of nodes and the fluctuations of their connectivity and resources. 
+new types of relations -- others than just the one between clients and backend servers -- can be opportunistically created and dissolved among devices at the edge of the network, i.e., without intermediation of remote servers. These relations must cope with the heterogeneity and volatility characterizing the pervasive ecosystem, including the mobility of nodes and the fluctuations of their connectivity and resources. 
 
 
 %4: Contributions
 \textbf{Contribution of the work:} 
 %4.1: SOIS concepts
-in this paper we introduce the concept of \textit{self-organizing interaction spaces} (SOIS) as part of a framework for the engineering of pervasive applications. 
+as contribution, this paper introduce the concept of a \textit{self-organizing interaction spaces} (SOIS) as part of a framework for the engineering of pervasive applications. 
 %that require or benefit from the interaction between its nodes. 
 %4.1a: The SOIS rationale
-Firstly, we discuss how some existing and emerging applications goals, empowered by nowadays technologies for wireless networking and the functional plasticity of its hosting devices, can be met by letting nodes to assume distinct functional roles in the dynamic pervasive ecosystem organization. 
+Firstly, we discuss the rationale of how some existing and emerging applications goals, empowered by nowadays technologies for wireless communication and the functional plasticity of its hosting devices, can be met by letting nodes to assume distinct functional roles. 
 %4.1b: The self-organization mechanisms
-Secondly, we provide the organization abstractions for modeling and programming these applications. Finally, we propose the self-organization mechanisms to maintain and evolve the ecosystem organization, which take into account the social and the individual contexts of hosting devices in the formation of groups and assignment of roles to the  distributed application nodes.
+Secondly, we provide the organization abstractions for modeling and programming these applications. Finally, we propose the self-organization mechanisms to maintain and evolve the organization structure based on the social and individual contexts of hosting devices.
 %application nodes capabilities and state in the formation and adaptation of the ecosystem organization. 
 %Finally, we present the requirements for a middleware to support the programming and operation of pervasive applications based on SOIS.
 
