@@ -5,13 +5,13 @@
 
 \subsection{Role-orientation}
 
-%8: The today's client-server model and the need for role-orientation
-In today's client-server model, the functionalities to be performed by the application nodes are seen as as monolithic. For the applications whose nodes are expected to collaborate and play others than just the role of a client, the functionalities that are particular to distinct application roles form a concern of their own, i.e., they must be designed and programmed accordingly. 
+%1: The today's client-server model and the need for role-orientation
+In today's client-server model, the different functionalities are modeled and programmed as part of a monolithic application. For the applications whose nodes are expected to interact, collaborate and play others than just the role of a client from a backend server, the distinct functionalities of each role form a concern of their own, i.e., they must be designed and programmed accordingly. 
 
-%9: What do we propose in terms of role-orientation
-In this work, we inherit the concept of a role, more commonly used in human organizations, as part of a framework for the engineering of pervasive applications. By making the concept of a role a first-class abstraction, we provide the means to, since the early stages of its development, reason on the organizational aspects of the application, namely:
+%2: What do we propose in terms of role-orientation
+In this work, we inherit the concept of a role, commonly used in human organizations, as part of a framework for the engineering of pervasive applications. By making the concept of a role a first-class abstraction, we provide the means to, since the early stages of its development, reason on the organizational aspects of the application, namely:
 
-\begin{enumerate}[label=\roman*]
+\begin{itemize}
 	
 	\item what are the roles in the application-to-be;
 	
@@ -21,20 +21,35 @@ In this work, we inherit the concept of a role, more commonly used in human orga
 	
 	%(e.g., computational resources, specific hardware components, etc); 
 	
-	\item how existing roles relate to each other: 
+	\item how existing roles relate to each other, including: 
 	
 	\begin{enumerate}[label=-]
 		
-		\item the hierarchy of control%. E.g.: a coordinator and its coordinated;
-		
-		\item the flow of data%. E.g.: from sensors to an aggregator;
+		\item the data flow, e.g.:
+			\subitem coordinator $\leftarrow$ coordinated 
+			\subitem aggregator  $\rightarrow$ sensors 
 	
-		\item the symmetry%. E.g.: symmetric relation between file-sharing peers, or asymmetric relations between server/client, supervisor/follower, coordinator/coordinated, provider/consumer, etc
+		\item their control hierarchy, e.g.:%. E.g.: 
+			\subitem orchestration (hierarchical)
+			\subitem choreography (non-hierarchical)
+	
+		\item their symmetry, i.e.:
+			\subitem between same roles (symmetric) 
+			\subitem between different roles (asymmetric)
+		%. E.g.: symmetric relation between file-sharing peers, or asymmetric relations between server/client, supervisor/follower, coordinator/coordinated, provider/consumer, etc
 		
 	\end{enumerate}	
 	
-\end{enumerate}
+\end{itemize}
 
+Figure~\ref{fig:asymmetry} illustrates cases of both symmetrical and asymmetrical relations among functional roles. 
+
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=0.48\textwidth]{figures/asymmetry}
+	\caption{Left: application nodes perform the same behavior (e.g., content sharing); middle: application nodes perform asymmetric roles without hierarchy among them (e.g., different sensing tasks); right: one node performs an hierarchical control (e.g., coordinator) or communication (e.g., data aggregator).}
+	\label{fig:asymmetry}
+\end{figure}
 
 %TODO: add here the fitness function definition and examples
 
@@ -47,20 +62,16 @@ In this work, we inherit the concept of a role, more commonly used in human orga
 	\label{fig:group_view}
 \end{figure}
 
-
-
-%The combination of the social context with the individual context of each node 
-
 %1: Briedge with the role abstraction
 The application organization -- so far represented by the roles that can be played by its nodes -- may be further characterized by its divisions, here named as \textit{groups}. 
 
 %2: What a group is for an organization
-At its highest level, a group boundary is limited by the network partition in which application nodes can interact. Nonetheless, these nodes, or a subset of them, may exhibit common properties or states of interest to the application. For instance, a group may have a \textit{functional} meaning (e.g., a group of nodes able to fetch data from a specific type of sensor), a \textit{non-functional} meaning (e.g., all nodes within a specific geographical area), or a mix of both (e.g., all nodes able to fetch data from a specific type of sensor within a specific geographical area). 
+At its highest level, a group boundary is limited by the network partition in which application nodes can interact. Nonetheless, these nodes, or a subset of them, may exhibit common properties or states of interest to the application. For instance, nodes may be grouped according to a \textit{functional} criteria (e.g., a group of nodes able to fetch data from a specific type of sensor), a \textit{non-functional} criteria (e.g., all nodes within a specific geographical area), or a mix of both (e.g., all nodes able to fetch data from a specific type of sensor within a specific geographical area). 
 
 %Thus, multiple types of criteria may define the membership of a group.
 
 %2: What a group is for a node
-To its members, a group defines a \textit{social context} in which they (a) may or (b) must play certain roles. As the former case can be seen as a more general case of later case, we adopt a relaxed membership causality (a), i.e., group membership only defines the context in which its members \textit{may} play one or more roles, unless the group specification makes such restriction. Each of these cases are specified as follows:
+To its members, a group defines a \textit{social context} in which they (a) may or (b) must play certain roles. As the first case models a more general case of later case, we adopt a relaxed membership causality (a), i.e., group membership only defines the context in which its members \textit{may} play one or more roles, unless the group specification makes such restriction. Each of these cases are specified as follows:
 
 \begin{itemize}
 	
@@ -71,23 +82,15 @@ To its members, a group defines a \textit{social context} in which they (a) may 
 \end{itemize}
 
 %3: The k-out-of-m allocation problem
-Whenever the group specification is relaxed, the actual distribution of roles to group members must be decided dynamically (k-out-of-m allocation problem). This kind of specification is particularly useful for applications that explore the resources from a crowd of devices. For example, in mobile crowd-sensing, due to the potentially high density of devices within a given area, there may be a surplus of nodes able to perform one or more sensing tasks. Accordingly, a crowd-sensing group could be formed by all capable nodes, and only a few would actually be playing the sensing roles (decided by the k-out-of-m allocation). Figure~\ref{fig:group_view} shows the representation of a group with relaxed membership specification and two types of roles.
-
+Whenever the group specification is relaxed, the actual distribution of roles to group members must be decided dynamically (k-out-of-m allocation problem). This kind of specification is particularly useful for applications that explore the resources from a crowd of devices. For example, in mobile crowd-sensing, due to the potentially high density of devices within a given area, there may be a surplus of nodes able to perform one or more sensing tasks. Accordingly, a crowd-sensing group could be formed by all capable nodes, and only a few would actually be playing the sensing roles (after solving the k-out-of-m allocation). Figure~\ref{fig:group_view} shows the representation of a group with relaxed membership specification and two types of roles.
 
 %4: The refined k-out-of-m allocation problem
-The same logic applies to a group specified with two or more types of roles. If there is no predefined criteria for their assignment to specific nodes, e.g., based on the class of device, nodes must also agree on the specific roles they will play. Figure~\ref{fig:asymmetry} illustrates cases of both symmetrical and asymmetrical relations within a group. Finally, Figure~\ref{fig:rationale} summarizes the rationale behind assignment of functional roles the nodes of an application based on their social and individual contexts.
-
-\begin{figure}[t!]
-	\centering
-	\includegraphics[width=0.48\textwidth]{figures/asymmetry}
-	\caption{Left: application nodes perform the same behavior (e.g., content sharing); middle: application nodes perform asymmetric roles without hierarchy among them (e.g., different sensing tasks); right: one node performs an hierarchical control (e.g., coordinator) or communication (e.g., data aggregator).}
-	\label{fig:asymmetry}
-\end{figure}
+The same reasoning applies to a group specified with two or more types of roles. If there is no predefined criteria for their assignment to specific nodes (e.g., based on the class of hosting devices), nodes must also agree on the specific roles they will play. Figure~\ref{fig:rationale} summarizes the rationale behind the assignment of functional roles to the nodes of an application based on their social and individual contexts.
 
 %5: Role fitness and group specification
-Once the cases in which roles must be dynamically assigned to the members of a group has been depicted, and before moving to the more concrete group specification, we introduce the last key concept of the framework: the \textit{role fitness}. 
+%Once the cases in which roles must be dynamically assigned to the members of a group has been depicted, and before moving to the more concrete group specification, we introduce the last key concept of the framework: the \textit{role fitness}. 
 
-\subsection{Role Fitness}
+\subsection{Group-Role Specification}\label{sec:group_specification}
 
 
 %1: What a role fitness is
@@ -104,7 +107,7 @@ Depending on the functionality to be provided by an application role, there may 
 %The modeling of an application group starts with the specification of its membership criteria. 
 
 %2: What each part composing a role fitness is useful for
-Restrictive criteria is useful for filtering out nodes whose static (e.g., a hardware component) or dynamic (e.g., the battery level) capabilities are not compatible with the functionalities to be provided by a role. In contrast, comparative criteria further distinguishes capable nodes in terms of their fitness to play a role. Thus, such criteria must be taken into account by the solution of the k-out-of-m role allocation problem. Next, a list of static and dynamic aspects of pervasive devices are presented as potential restrictive or comparative criteria.
+Restrictive criteria is useful for filtering out nodes whose static (e.g., a hardware component) or dynamic (e.g., the battery level) capabilities are not compatible with the functionalities to be provided by a role. In contrast, comparative criteria distinguishes capable nodes in terms of their fitness to play a role. Thus, this type of criteria must be taken into account by the solution of the k-out-of-m role allocation problem. Next, a list of static and dynamic aspects of pervasive devices are presented as potential restrictive or comparative criteria:
 
 \begin{itemize}
 	
@@ -123,25 +126,24 @@ Restrictive criteria is useful for filtering out nodes whose static (e.g., a har
 	\end{itemize}
 \end{itemize}
 
-\subsection{Group Specification}\label{sec:group_specification}
 
 %As SOIS refers to the collective of application nodes and their dynamic relations, 
 
-A group specification provides a flexible, intuitive, and unified placeholder for representing the key concepts of this framework: a group and its roles. Next, we illustrate this specification for each of the two examples in Section~\ref{sec:motivating}. For this, we used the eXtensible Markup Language (XML), as its standardized and well-known syntax enables the hierarchical representation of groups and roles, as well as the definition of their attributes.
+To enable a flexible, intuitive, and unified placeholder for both group and role specifications, we propose the use of an hierarchical syntax. For this, we have used the eXtensible Markup Language (XML), as its standardized and well-known syntax enables the hierarchical representation of groups and roles, as well as the definition of their attributes. Next, we illustrate this specification for each of the two examples in Section~\ref{sec:motivating}.
 
 \lstset{
 	language=XML,
 	breaklines=true,
 	backgroundcolor=\color{lightgrey},
 	basicstyle=\small\color{black},
-	keywords={group,cardinality,role,name,criteria,type,term,value,minimum,maximum, pattern},
+	keywords={group,cardinality,role,name,criteria,type,term,value,minimum,maximum, pattern, after},
 	keywordstyle={\bfseries\color{blue}},
 	numbers=left,
 	numbersep=5pt,
 	numberstyle=\tiny\color{black}
 }
 
-\subsubsection{Collaborative Music Streaming} for this application, we envisioned one group with a single streamer role position (lines 1 and 2 in Listing~\ref{lst:ms_criteria}). As the functionalities of this role requires both Internet (to stream music from remote servers) and Bluetooth (to stream music to the stereo), two restrictive (boolean) criteria have been added for both Internet and Bluetooth capabilities (lines 3 and 4). Finally, as the activity of streaming data in both directions are battery consuming, an additional criteria (line 5) has two purposes: a restrictive one (only devices with more than 20\% battery) and a comparative one (the best candidates are those with more battery level).
+\subsubsection{Collaborative Music Streaming} for this application, we envisioned one group with a single streamer role position (lines 1 and 3 in Listing~\ref{lst:ms_criteria}). As the functionalities of this role requires both Internet (to stream music from remote servers) and Bluetooth (to stream music to the stereo), two restrictive criteria have been added for both Internet and Bluetooth capabilities (lines 4 and 5). Finally, as the activity of streaming data in both directions are battery consuming, an additional criteria (line 6) has two purposes: a restrictive one (only devices with more than 20\% battery) and a comparative one (the best candidates are those with more battery level).
 
 \begin{lstlisting}[caption=Specification of the music streaming group, label=lst:ms_criteria, captionpos=t]
 <group name="music-streaming">
@@ -157,12 +159,16 @@ A group specification provides a flexible, intuitive, and unified placeholder fo
 \subsubsection{Public Transport Monitoring}  
 
 %TODO Remember to mention the importance of saving battery and other resources as a condition for the participation of users in MCS campaings
-a MCS application aims to monitor the real-time geolocation of public buses -- to notify waiting passengers about their whereabouts -- and to register and later report unusual acceleration and deceleration events that may affect the user experience in this service. To address this scenario, a \textit{bus-monitoring} group (lines 1 in Listing~\ref{lst:bm_criteria}) is defined with three roles: a geolocator (line 5), an accelerometer (line 10), and an aggregator (14). In contrast with the previous example, a group level criteria (line 3) has been added, which means all roles inherit a minimum battery level of 15\% as their criteria. This criteria is overwritten by the geolocator role (line 6), as the GPS sensor consumes significantly more battery. Each sensing role has a corresponding restrictive criteria for the sensor it requires (lines 7 and 11). Finally, as the aggregator is responsible for receiving data from the other nodes and sending a preprocessed version to the backend server, Internet has been added as a restrictive criteria.
+a MCS application aims to monitor the real-time geolocation of public buses -- to notify waiting passengers about their whereabouts -- and to register and later report unusual acceleration and deceleration events that may affect the user experience in this service. To address this scenario, a \textit{bus-monitoring} group (lines 1 in Listing~\ref{lst:bm_criteria}) is defined with three roles: a geolocator (line 5), an accelerometer (line 10), and an aggregator (14). In contrast with the previous example, a group level criteria (line 3) has been added, which means all roles inherit a minimum battery level of 15\% as a restrictive criteria. This criteria is overwritten by the geolocator role (line 6), as the GPS sensor consumes significantly more battery. Also, each sensing role has a corresponding restrictive criteria for the sensor it requires (lines 7 and 11). Finally, as the aggregator is responsible for receiving data from the other nodes and sending a preprocessed version to the backend server, Internet has been added as a restrictive criteria.
+
+Another novelty in Listing~\ref{lst:bm_criteria} is the parametrized cardinality ($k1$ and $k2$). We intentionally left these fine-tunning parameters unspecified as the actual number of instances of each sensing role may depend on the context they operate: the higher the overall accuracy, less samples need to be aggregated. Hence, at runtime, the aggregator could provide feedback with respect to $k1$ and $k2$ based on the data it receives from the instances of each sensing role. 
+
+
 
 \begin{lstlisting}[caption=Specification of a bus monitoring group, label=lst:bm_criteria, captionpos=t]
 <group name="bus-monitoring">
   
-  <criteria type="float" term="BATTERY_LEVEL" minimum="15" />
+  <criteria type="float" term="BATTERY_LEVEL" minimum="15"/>
   
   <role name="geolocator" cardinality="k1">
     <criteria type="boolean" term="GPS" value="TRUE" />
@@ -179,7 +185,7 @@ a MCS application aims to monitor the real-time geolocation of public buses -- t
 </group>
 \end{lstlisting}
 
-To avoid disturbing the users with the need of starting the application whenever they are within a bus, a fully opportunistic crowd-sensing solution~\cite{Guo:2015} requires the automatic detection of such context. By means of our framework, the facts defining this context can be modeled and later verified by the application. For example, if we assume that city buses provide wi-fi service -- as in an increasing number of real case scenarios -- the context of a passenger inside a bus ride can be defined with the following restrictive criteria: 
+To avoid disturbing the users with the need of starting the application whenever they are within a bus, a fully opportunistic crowd-sensing solution~\cite{Guo:2015} requires the automatic detection of such context. By means of our framework, the facts defining this context can be modeled and later verified by the application. For example, if we assume that city buses provide wi-fi service -- as in an increasing number of real case scenarios -- the context of a passenger inside a bus ride can be defined with the additional restrictive criteria in Listing~\ref{lst:br_criteria}.
 
 \begin{lstlisting}[caption=Additional criteria to specify a bus ride context, label=lst:br_criteria, captionpos=t]
 <group name="bus-monitoring">
@@ -193,6 +199,22 @@ To avoid disturbing the users with the need of starting the application whenever
 </group>
 \end{lstlisting}
 
-The additional criteria in Listing~\ref{lst:br_criteria}, indicating the context of a bus ride, should be read as follows: the BSSID criteria (line 1) requires that a Wi-Fi with a basic service set identifier (BSSID) matching the pattern used by the bus company (e.g., the company's name); plus, the WI-FI signal strength (line 3) must not be less than 50\%, meaning the user is likely a passenger within the bus and not in a nearby outside location. Finally, an important criteria identifying a bus ride is given by mobility: if the device's location, as measured by low-power detection methods like triangulation, remains unchanged for large periods, the use is either not in a bus ride or the bus is jammed and must not have its location monitored until it resumes its trip. In particular, this criteria has been modeled (line 5) with a boolean condition that fails unless it has been satisfied for more than 5 minutes (300 seconds).
+The additional criteria in Listing~\ref{lst:br_criteria} should be parsed as follows: the BSSID criteria (line 1) requires that a Wi-Fi with a basic service set identifier (BSSID) matching the pattern used by the bus company (e.g., the company's name); plus, the WI-FI signal strength (line 3) must not be less than 50\%, meaning the user is likely a passenger within the bus and not just in a nearby location. Finally, an important criteria identifying a bus ride is given by mobility: if the device's location, as measured by low-power detection methods like triangulation, remains unchanged for large periods, the use is either not in a bus ride or the bus is jammed and must not have its location monitored until it resumes its trip. In particular, this criteria has been modeled (line 5) with a boolean condition that fails unless it has been satisfied for more than 5 minutes (300 seconds).
 
+Each criteria in a group-role specification can be mapped to a concrete function returning either a boolean value (for restrictive) or a float value (for comparative). The conjunction of these terms produces what we define as a \textit{restrictive function} and a \textit{fitness function}:
+
+\begin{equation}\label{eq:rrc}
+rrc(C_r) = rc_1(c_1) \wedge rc_2(c_2) \wedge ... \wedge rc_i(c_i)
+\end{equation}
+
+\begin{equation}\label{eq:fitness}
+f(C_c) = cc_1(c_1) \wedge cc_2(c_2) \wedge ... \wedge cc_j(c_j)
+\end{equation}
+
+\noindent
+with $C_r$ and $C_c$ the set of measurable context facts (restrictive and comparative, respectively) for a role. Last but not least, the entrance of a node to a group (group membership) is conditioned to its satisfaction of at least one $rrc$, i.e.:
+
+\begin{equation}\label{eq:membership}
+gm([C_{r1},...,C_{rp}]) = rrc_1(C_{r1}) \vee ... \vee rrc_p(C_{rp})
+\end{equation}
 

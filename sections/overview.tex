@@ -1,4 +1,3 @@
-
 \section{Overview}\label{sec:overview}
 
 \subsection{Functional Plasticity and Separation of Responsibilities}
@@ -6,70 +5,66 @@
 %A tree with the types of role: symmetric and asymmetric branches with the corresponding types of roles in increasing levels of concreteness 
 
 %1: functional plasticity of nowaday's devices
-With the technology advancements, a class of pervasive and mobile devices acquired the ability to perform general purpose computing, as well as to communicate by different means and perceive the physical world through multiple sensors. These enhancements entails a \textit{functional plasticity}, i.e., the ability of these devices to provide variations of their functionalities not only in different applications, but in different contexts of the same application. 
+With the technology advancements, a class of pervasive devices acquired the ability to perform general purpose computing, as well as to communicate by different means and perceive the physical world through multiple sensors. These enhancements entails a \textit{functional plasticity}, i.e., the ability of these devices to provide variations of their functionalities not only for different applications, but also in different contexts of the same application. 
 
 %2: from functional plasticity to a separation of roles
-In contrast with the rigid symmetry that characterizes the behavior performed by clients nodes in a client-server architecture, commonly used in today's applications, or compared to the narrow set of functionalities provided by specialized and extremely resource-constrained devices, the functional plasticity of smartphones and other devices can be explored by letting application nodes hosted by these devices to assume distinct responsibilities, i.e., \textit{roles}.
+In contrast with the rigid symmetry that characterizes the behavior performed by client nodes in a client-server architecture -- commonly used in today's applications -- or compared to the narrow set of functionalities provided by specialized and extremely resource-constrained devices, the functional plasticity of smartphones and other devices can be explored by letting application nodes hosted by these devices to assume distinct responsibilities, i.e., \textit{roles}.
 
 %3: what (functional) roles are
-In an organization structure, a functional role defines a context in which an individual assume the responsibility over some functionality. 
+In an organization structure, a functional role defines a context in which an individual is given the responsibility over some functionality. 
 %4: why they are important for pervasive applications
 Considering the collective of application nodes as an organization, different reasons may motivate a \textit{separation-of-responsibilities} among these nodes. 
 %4.1a: the case of MCS; application nodes are employers of an organization, which must efficiently employ their resources
-For instance, with the purpose of increasing the \textit{efficiency} in which the organization deliver its results:
-
+For instance, with the purpose of increasing the \textit{efficiency} in which the organization achieve its goals. That is:
 \begin{itemize}
-	\item Specific roles can be played by a subset of the available nodes (e.g., only a subset of nodes in a given region must collect data about the noise pollution);
+	\item  when specific roles can be played by a subset of the available nodes (e.g., only a subset of nodes in a given region must collect data about the noise pollution); and
 	
-	\item Roles must be played by capable nodes (e.g., only the nodes with a minimum battery level and/or computational resources)
+	\item when performance, quality and other attributes may depend on which nodes are assigned for a task (e.g., nodes with access to more powerful computational resources, sensors with higher accuracy, or stronger wireless signals).
 \end{itemize}
 
 %4.1b: why did I mention organization efficiency as a motivation
 %Today, MCS is the main class of application in which mobile devices are employed not to satisfy its owners needs, but the needs of external actors (e.g., a public institution responsible for monitoring the noise pollution in certain urban areas). Despite their uniqueness, the broad range of MCS applications justifies the inclusion of efficiency as a motivation. 
 
 %4.2: the case of collaboration among nodes
-In addition, separation-or-responsibilities becomes evident whenever nodes of an application need to achieve their individual or common goals in a collaboratively way. That is:
+In addition, separation-or-responsibilities becomes evident whenever nodes of an application need to achieve their individual or common goals in a \textit{collaboratively} way. That is:
 
 \begin{itemize}
 	
-	\item When some nodes have a resource or capability and others don't (e.g., sensors, Internet connection, processing capabilities, free memory, free storage, battery level, etc);
+	\item when nodes have a resource or capability that others don't (e.g., sensors, Internet connection, processing capabilities, free memory, free storage, battery level, etc); and
 	
-	\item When a functionality that benefits multiple peers can be provided by one or a subset of them
+	\item when a functionality that benefits multiple peers can be provided by one or a subset of them.
 	
 \end{itemize}
 
-\subsection{Device-to-device Collaboration}
-
 %5: When relations among nodes can be established
 %Still regarding collaboration, we argue that, 
-Whenever two nodes of an application become visible to each other and are able to communicate, there is a potential for a collaborative relation between them to be established. 
+Whenever two nodes of an application become visible to each other and are able to communicate, there is a potential for a relation between them to be established. 
 %In this relation, each part plays a similar (symmetric) or different (asymmetric) roles. 
-This same premise holds true for multiple interconnected devices. 
+The same premise holds for multiple interconnected devices. 
 %6: The nature of the relation between nodes in different situations
-In one hand, the nature of the relation between nodes hosted by devices of different classes is mostly predefined (e.g., between a smartphone and a gadged, a tablet and a smart-tv). In the other hand, the nature of the relation between devices of the same class may depend on the dynamic context each device operates (e.g., a smartphone that, in a given moment and situation, acts as the gateway for other smatphones without Internet access). 
+In particular, the nature of the relation between nodes hosted by devices of different classes is generally predefined (e.g., between a smartphone and a gadged, a tablet and a smart-tv). Nonetheless, the nature of the relation between devices of the same class may depend on the dynamic context each device operates (e.g., a smartphone that, in a given moment and situation, acts as the gateway for other smatphones without Internet access). 
 
 
 \subsection{Motivating Scenarios}\label{sec:motivating}
 
-Among the characteristics of the applications target by this work, the following are considered as key features:
+Among the assumptions and characteristics of the scenario tackled by work, the following are considered as key features:
 
 \begin{enumerate}[label=C\arabic*]
 	
-	\item \textbf{Connectivity:} devices are expected to communicate with each other, while in the same area, through infrastructure Wi-Fi or D2D communication;
+	\item \textbf{Connectivity:} devices are expected to communicate with each other, while in the same area, through infrastructure Wi-Fi or D2D communication.
 	
-	\item \textbf{Volatility:} application nodes are expected to enter/leave a given zone/network without notice; also, the physical and computational environment in which application nodes operate is subject to changes that may affect capabilities required by the application;
+	\item \textbf{Volatility and Heterogeneity:} application nodes are expected to enter/leave a given zone/network without notice; also, the physical and computational environment in which application nodes operate is subject to changes that may affect capabilities required by the application.
 	
-	\item \textbf{Intensity:} application nodes may be required to perform resource-intensive tasks or to exchange large volumes of data, or a mix of both;
+	\item \textbf{Intensity:} application nodes may be required to perform resource-intensive tasks or to exchange large volumes of data, or a mix of both.
 	
-	\item \textbf{Delay-sensitive:} among the application features, some may be sensible to latency;
+	\item \textbf{Delay-sensitive:} among the application features, some may be sensible to latency.
 	
 	\item \textbf{Scale:} up to a large number of application nodes are expected to co-exist in a given zone/network and potentially interact.
 
 	
 \end{enumerate}
 
-
-Next, we present examples of applications with these characteristics and discuss some of the use cases that motivate our approach.
+Next, we present examples of applications with use cases that motivate our approach.
 
 %THE WOLRD CONTEXT (PHYSICAL + SOCIAL) --> THE NODE CONTEXT (ROLE) --> THE NODE BEHAVIOR
 \begin{figure*}[t!]
@@ -81,20 +76,30 @@ Next, we present examples of applications with these characteristics and discuss
 
 \subsubsection{Collaborative Music Streaming}
 
-nowadays, popular services allow users to listen to music streamed from the Internet to their mobile devices. It has also become popular the use of portable speakers equipped with Bluetooth, so that users can enjoy a more powerful audio than provided by their smartphones and tablets. This combination of pervasive devices is specially appealing for ad hoc social gatherings (\textbf{C1, C2}). However, both the streaming of music from the Internet and the communication through Bluetooth are expensive features in terms of battery, as large volumes of data must be transferred (\textbf{C3}) with minimum delay (\textbf{C4}). Therefore, it would be fair to let capable devices to share this responsibility without the manual intervention of its users. For this, a \textit{streaming-role} must be dynamically assigned to one device at a time with minimum or no disruption of the music execution. 
+nowadays, popular services allow users to listen to music streamed from the Internet to their mobile devices. It has also become popular the use of portable speakers equipped with Bluetooth, so that users can enjoy a more powerful audio than provided by their smartphones and tablets. This combination of pervasive devices is specially appealing for external gatherings in parks and other recreational areas. Nowadays, many of these spaces provide public Wi-Fi and/or good cellular network service coverage (\textbf{C1}). However, both the streaming of music from the Internet and the communication through Bluetooth are expensive features in terms of battery and networking, as large volumes of data must be transferred (\textbf{C3}) with minimum delay (\textbf{C4}). Hence, to mitigate the battery drain and, if no Wi-Fi is available, to alleviate the amount of data each device has to download from its data plan, as many as possible devices should  share this responsibility. In other words:
 
-As a challenge for the realization of this feature... Finally, it wouldn't be unrealistic to expect multiple capable devices in a larger social gathering  (\textbf{C5}).
+\begin{itemize}
+	
+	\item a \textit{streaming-role} must be dynamically assigned to one device at a time without interrupting the music play;
+	
+	\item assignment must happen without manual intervention from users;
+	
+	\item the time contribution time of each devices must be considered (fairness); and
+	
+	\item conditions such as the battery level, as well as the Internet and Bluetooth throughputs must be taken into account.
+	
+\end{itemize}
 
 
 
 
 \subsubsection{Mobile Crowd-sensing}
 
-mobile crowd-sensing (MCS) consists of a paradigm in which the sensors of user-companioned devices are employed in the measurement of urban and social phenomena~\cite{}. Existing MCS applications range from private and public urban transportation monitoring (e.g., Waze\footnote{waze website} and Moovit\footnote{moovit website}) to atmospheric pressure, noise and air pollution measurement (e.g., AirPatrol\footnote{airpatrol website}, PressureNet\footnote{pressurenet website}, and Ear-Phone~\footnote{}). In the first two cases, geolocation -- fetched from GPS sensors -- is the main type of data, while in the others geolocation is used to contextualize the data fetched from other sensors. In particular, AirPatrol requires an additional wearable sensor that monitors the quality of air and sends results through Bluetooth to a main device (e.g., smartphone) also carried by the user.
+mobile crowd-sensing (MCS) consists of a paradigm in which the sensors of user-companioned devices are employed in the measurement of urban and social phenomena~\cite{Guo:2015}. Existing MCS applications range from private and public urban transportation monitoring (e.g., Waze\footnote{https://www.waze.com} and Moovit\footnote{https://www.moovitapp.com}) to atmospheric pressure, noise and air pollution measurement (e.g., PressureNet\footnote{http://www.pressurenet.io}, AirPatrol~\footnote{http://www.crowdfunder.co.uk/crowdsource-air-pollution-in-london}). In transportation monitoring applications, geolocation -- fetched from GPS sensors -- is the main data to be collected, while in other cases, geolocation provides geographic contextualization of the data from other sensors. Finally, some MCS applications require additional wearable sensors (e.g., to monitor the quality of air in AirPatrol) that communicates its results through Bluetooth to a main device (e.g., smartphone).
 
-Many MCS applications target a well defined geographic region and period of time. Accordingly, multiple mobile devices running the application may be sharing the same Wi-Fi network or within range of D2D communication (\textbf{C1}) until they become disconnected (\textbf{C2}). Also, while in a campaign area, devices may suffer from fluctuations of the received Wi-Fi/Bluetooth/GPS signals, as well as have distinct levels of battery and computational resources available (\textbf{C2}).
+Many MCS applications target a well defined geographic region and period of time. Accordingly, multiple mobile devices running the application may be sharing the same Wi-Fi network or within range of D2D communication (\textbf{C1}). Also, while moving within a campaign area, devices may suffer from fluctuations of the received Wi-Fi/Bluetooth/GPS signals, as well as exhibit distinct levels of battery and sensors of different quality (\textbf{C2}).
 %Also, user-companioned devices hosting the application are expected to join/leave the campaign area (\textbf{C2}). 
-Whereas some campaigns allow data to be analyzed later, real-time crowdsensing require a minimum delay between the collection of data from devices sensors, their delivery to backend servers for further processing and publication (\textbf{C3}). Sensors like GPS impose a significant battery drain, and campaigns like traffic monitoring require a frequent activation of this sensor (\textbf{C4}). Finally, with the popularization of crowdsensing applications, a large number of participants may eventually co-exist in the same campaign area (\textbf{C5}). 
+Whereas some campaigns allow data to be analyzed later, real-time crowd-sensing require a minimum delay between the collection of data and their delivery to backend servers for further processing and publication (\textbf{C3}). Sensors like GPS impose a significant battery drain, and campaigns like transportation monitoring require a frequent activation of this sensor (\textbf{C4}). Finally, with the popularization of crowd-sensing applications, a large number of participants may eventually co-exist in the same campaign area (\textbf{C5}). 
 
 Like other mobile applications, the majority of nowadays MCS are designed following a client-server architecture in which application nodes collect data from their sensors independently from one another. 
 %At most, sensing activities in the client applications are coordinated by the backend server, incurring in additional processing by these servers and exchange of data through Internet. 
@@ -107,9 +112,9 @@ This common approach has the following drawbacks:
 	
 	\begin{enumerate}[label=-]
 		
-		\item Without coordination, application nodes cannot adapt to situations in which multiple devices can provide the same information, thus they tend to consume unnecessary resources as sensing tasks could be allocated to a subset of the available devices;
+		\item Without coordination, application nodes cannot adapt to situations in which multiple devices can provide the same information, thus they tend to consume unnecessary resources as sensing tasks could otherwise be allocated to a subset of the available devices.
 		
-		\item With coordination, nodes could perceive each other and agree on which nodes should perform which tasks, as well as to collectively adapt to changes in physical and social contexts (e.g., churn of devices, variations in the quality of sensors measurements, battery level, etc). 
+		\item With coordination, nodes could agree on which nodes should perform which tasks at each moment, taking both individual and social contexts into account (e.g., churn of devices, variations in the quality of sensors measurements, intermittent connection with servers, low battery level, etc). 
 		
 	\end{enumerate}
 	
@@ -117,9 +122,9 @@ This common approach has the following drawbacks:
 	
 	\begin{enumerate}[label=-]
 		
-		\item Without collaboration, each node sends its data to the backend server responsible for filtering and aggregating samples, which also increases the server and the network loads. Additionally, all nodes are assumed to have Internet access to communicate with the server and no collaborative routing of data is used;
+		\item Without collaboration, each node sends its data to the backend server responsible for filtering and aggregating samples, increasing the the server load and the Internet usage. Additionally, all nodes are assumed to have Internet access to communicate with the server and no collaborative of data is employed (e.g., \cite{Rajagopalan:2006});
 		
-		\item With collaboration, elected application nodes could aggregate data collected from different sensors and average those with higher accuracy. Accordingly, less data would to be transmitted to and processed by backend servers.
+		\item With collaboration, elected application nodes could aggregate data collected from different sensors (e.g., \cite{Wang:2015}) and average those with higher accuracy. Accordingly, less data would to be transmitted to and processed by backend servers. 
 		
 	\end{enumerate}
 \end{itemize}
