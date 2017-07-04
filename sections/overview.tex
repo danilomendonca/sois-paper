@@ -33,86 +33,95 @@ Whereas self-organization and bio-inspired approaches have been a recurrent appr
 
 %Thus, the challenge is twofold: to preserve the well known benefits of existing software engineering methodologies, and inherit/adapt the mechanisms from DAI that can cope with the characteristic of pervasive applications.
 
-\subsection{Motivating Scenarios}\label{sec:motivating}
-
-Among the assumptions and characteristics of the scenario tackled by work, the following are considered as key features:
-
-\begin{enumerate}[label=C\arabic*]
-	
-	\item \textbf{Connectivity:} devices are expected to communicate with each other, while in the same area, through infrastructure Wi-Fi or D2D communication.
-	
-	\item \textbf{Volatility and Heterogeneity:} application nodes are expected to enter/leave a given zone/network without notice; also, the physical and computational environment in which application nodes operate is subject to changes that may affect capabilities required by the application.
-	
-	\item \textbf{Intensity:} application nodes may be required to perform resource-intensive tasks or to exchange large volumes of data, or a mix of both.
-	
-	\item \textbf{Delay-sensitive:} among the application features, some may be sensible to latency.
-	
-	\item \textbf{Scale:} up to a large number of application nodes are expected to co-exist in a given zone/network and potentially interact.
-
-	
-\end{enumerate}
-
-Next, we present examples of applications with use cases that motivate our approach.
-
-%THE WOLRD CONTEXT (PHYSICAL + SOCIAL) --> THE NODE CONTEXT (ROLE) --> THE NODE BEHAVIOR
-\begin{figure*}[t!]
-	\centering
-	\includegraphics[width=0.95\linewidth]{figures/rationale}
-	\caption{Role-orientation rationale}
-	\label{fig:rationale}
-\end{figure*}
-
-\subsubsection{Collaborative Music Streaming}
-
-nowadays, popular services allow users to listen to music streamed from the Internet to their mobile devices. It has also become popular the use of portable speakers equipped with Bluetooth, so that users can enjoy a more powerful audio than provided by their smartphones and tablets. This combination of pervasive devices is specially appealing for external gatherings in parks and other recreational areas. Nowadays, many of these spaces provide public Wi-Fi and/or good cellular network service coverage (\textbf{C1}). However, both the streaming of music from the Internet and the communication through Bluetooth are expensive features in terms of battery and networking, as large volumes of data must be transferred (\textbf{C3}) with minimum delay (\textbf{C4}). Hence, to mitigate the battery drain and, if no Wi-Fi is available, to alleviate the amount of data each device has to download from its data plan, as many as possible devices should  share this responsibility. In other words:
-
-\begin{itemize}
-	
-	\item a \textit{streaming-role} must be dynamically assigned to one device at a time without interrupting the music play;
-	
-	\item assignment must happen without manual intervention from users;
-	
-	\item the time contribution time of each devices must be considered (fairness); and
-	
-	\item conditions such as the battery level, as well as the Internet and Bluetooth throughputs must be taken into account.
-	
-\end{itemize}
-
-
-
-
-\subsubsection{Mobile Crowd-sensing}
-
-mobile crowd-sensing (MCS) consists of a paradigm in which the sensors of user-companioned devices are employed in the measurement of urban and social phenomena~\cite{Guo:2015}. Existing MCS applications range from private and public urban transportation monitoring (e.g., Waze\footnote{https://www.waze.com} and Moovit\footnote{https://www.moovitapp.com}) to atmospheric pressure, noise and air pollution measurement (e.g., PressureNet\footnote{http://www.pressurenet.io}, AirPatrol~\footnote{http://www.crowdfunder.co.uk/crowdsource-air-pollution-in-london}). In transportation monitoring applications, geolocation -- fetched from GPS sensors -- is the main data to be collected, while in other cases, geolocation provides geographic contextualization of the data from other sensors. Finally, some MCS applications require additional wearable sensors (e.g., to monitor the quality of air in AirPatrol) that communicates its results through Bluetooth to a main device (e.g., smartphone).
-
-Many MCS applications target a well defined geographic region and period of time. Accordingly, multiple mobile devices running the application may be sharing the same Wi-Fi network or within range of D2D communication (\textbf{C1}). Also, while moving within a campaign area, devices may suffer from fluctuations of the received Wi-Fi/Bluetooth/GPS signals, as well as exhibit distinct levels of battery and sensors of different quality (\textbf{C2}).
-%Also, user-companioned devices hosting the application are expected to join/leave the campaign area (\textbf{C2}). 
-Whereas some campaigns allow data to be analyzed later, real-time crowd-sensing require a minimum delay between the collection of data and their delivery to backend servers for further processing and publication (\textbf{C3}). Sensors like GPS impose a significant battery drain, and campaigns like transportation monitoring require a frequent activation of this sensor (\textbf{C4}). Finally, with the popularization of crowd-sensing applications, a large number of participants may eventually co-exist in the same campaign area (\textbf{C5}). 
-
-Like other mobile applications, the majority of nowadays MCS are designed following a client-server architecture in which application nodes collect data from their sensors independently from one another. 
-%At most, sensing activities in the client applications are coordinated by the backend server, incurring in additional processing by these servers and exchange of data through Internet. 
-This common approach has the following drawbacks:
-
-
-\begin{itemize}
-	
-	\item \textbf{Coordination}
-	
-	\begin{enumerate}[label=-]
-		
-		\item Without coordination, application nodes cannot adapt to situations in which multiple devices can provide the same information, thus they tend to consume unnecessary resources as sensing tasks could otherwise be allocated to a subset of the available devices.
-		
-		\item With coordination, nodes could agree on which nodes should perform which tasks at each moment, taking both individual and social contexts into account (e.g., churn of devices, variations in the quality of sensors measurements, intermittent connection with servers, low battery level, etc). 
-		
-	\end{enumerate}
-	
-	\item \textbf{Collaboration}
-	
-	\begin{enumerate}[label=-]
-		
-		\item Without collaboration, each node sends its data to the backend server responsible for filtering and aggregating samples, increasing the the server load and the Internet usage. Additionally, all nodes are assumed to have Internet access to communicate with the server and no collaborative of data is employed (e.g., \cite{Rajagopalan:2006});
-		
-		\item With collaboration, elected application nodes could aggregate data collected from different sensors (e.g., \cite{Wang:2015}) and average those with higher accuracy. Accordingly, less data would to be transmitted to and processed by backend servers. 
-		
-	\end{enumerate}
-\end{itemize}
+%This subsection presents a set of situations in which opportunistic organizations are formed to enable the interaction among pervasive application nodes
+%In specific, the interactions should include: 
+%collaborative data fetching from remote servers
+%collaborative data posting to remote servers
+%coordenation of autonomous sensing activities
+%a possibility is to describe some apps used by a PhD student, such as: monitoring of public traffic (MCS); air-conditioning temperature consensus; collaborative music streaming;
+%\subsection{Motivating Scenario}\label{sec:motivating}
+%
+%\subsubsection{Mobile Crowd-sensing}
+%
+%to illustrate the need of opportunistic interactions in pervasive computing, we present a set of applications hosted by the mobile device of an hypothetical user. We start with an example of an opportunistic mobile crowd-sensing (MCS) application installed by the user in its smartphone for public transport monitoring.
+%
+%MCS consists of a paradigm in which the sensors of user-companioned devices are employed in the measurement of urban and social phenomena~\cite{Guo:2015}. Existing MCS applications range from private and public urban transportation monitoring (e.g., Waze\footnote{https://www.waze.com} and Moovit\footnote{https://www.moovitapp.com}) to atmospheric pressure, noise and air pollution measurement (e.g., PressureNet\footnote{http://www.pressurenet.io}, AirPatrol~\footnote{http://www.crowdfunder.co.uk/crowdsource-air-pollution-in-london}). In transportation monitoring applications, geolocation -- fetched from GPS sensors -- is the main data to be collected, while in other cases, geolocation provides geographic contextualization of the data from other sensors. Finally, some MCS applications require additional wearable sensors (e.g., to monitor the quality of air in AirPatrol) that communicates its results through Bluetooth to a main device (e.g., smartphone).
+%
+%Many MCS applications target a well defined geographic region and period of time. Accordingly, multiple mobile devices running the application may be sharing the same Wi-Fi network or within range of D2D communication (\textbf{C1}). Also, while moving within a campaign area, devices may suffer from fluctuations of the received Wi-Fi/Bluetooth/GPS signals, as well as exhibit distinct levels of battery and sensors of different quality (\textbf{C2}).
+%%Also, user-companioned devices hosting the application are expected to join/leave the campaign area (\textbf{C2}). 
+%Whereas some campaigns allow data to be analyzed later, real-time crowd-sensing require a minimum delay between the collection of data and their delivery to backend servers for further processing and publication (\textbf{C3}). Sensors like GPS impose a significant battery drain, and campaigns like transportation monitoring require a frequent activation of this sensor (\textbf{C4}). Finally, with the popularization of crowd-sensing applications, a large number of participants may eventually co-exist in the same campaign area (\textbf{C5}). 
+%
+%Like other mobile applications, the majority of nowadays MCS are designed following a client-server architecture in which application nodes collect data from their sensors independently from one another. 
+%%At most, sensing activities in the client applications are coordinated by the backend server, incurring in additional processing by these servers and exchange of data through Internet. 
+%This common approach has the following drawbacks:
+%
+%\begin{itemize}
+%	
+%	\item \textbf{Coordination}
+%	
+%	\begin{enumerate}[label=-]
+%		
+%		\item Without coordination, application nodes cannot adapt to situations in which multiple devices can provide the same information, thus they tend to consume unnecessary resources as sensing tasks could otherwise be allocated to a subset of the available devices.
+%		
+%		\item With coordination, nodes could agree on which nodes should perform which tasks at each moment, taking both individual and social contexts into account (e.g., churn of devices, variations in the quality of sensors measurements, intermittent connection with servers, low battery level, etc). 
+%		
+%	\end{enumerate}
+%	
+%	\item \textbf{Collaboration}
+%	
+%	\begin{enumerate}[label=-]
+%		
+%		\item Without collaboration, each node sends its data to the backend server responsible for filtering and aggregating samples, increasing the the server load and the Internet usage. Additionally, all nodes are assumed to have Internet access to communicate with the server and no collaborative of data is employed (e.g., \cite{Rajagopalan:2006});
+%		
+%		\item With collaboration, elected application nodes could aggregate data collected from different sensors (e.g., \cite{Wang:2015}) and average those with higher accuracy. Accordingly, less data would to be transmitted to and processed by backend servers. 
+%		
+%	\end{enumerate}
+%\end{itemize}
+%
+%%\subsubsection{Collaborative Music Streaming}
+%
+%%Next, we consider the situation in which the user arrives at the office he/she shares with co-workers. To avoid common disagreements on the temperature to be set in the air-conditioning system, co-workers make use of an application that collect their opinion and provides a target temperature consensus. To avoid the costs of a backend server infrastructure, the application has been designed to explore device-to-device interactions. To this end, devices must discover each other and recognize the physical location they are in before joining a consensus group representing the office.
+%%
+%%In such ad hoc scenario, a single device may become responsible for collecting votes and communicating with the air-conditioning control interface. However, there are no guarantees with respect to the presence of users in the room, which raises the question of how to assign this role as devices enter and leave the room. 
+%
+%\subsubsection{Local Group Messaging}
+%
+%the adoption of messaging applications has skyrocket in the last decade, achieving the marks of a billion users for the two most popular applications. One of the most appealing features of these apps are the groups in which a set of users can share messages and, more and more frequently, contents like photos, audio, and videos. In many cases, people working together make use of a group for co-workers. Also common, people sharing the same network infrastructure or within range of ad hoc networking. Today, these applications do not explore device-to-device message exchange, but always rely on backend servers to relay the messages, even when generated and consumed locally. 
+%
+%One way of exploring opportunistic interactions could be to assign, among the subset of group members within communication range, the role of a \textit{local-relay}. Such role would be responsible for receiving messages from the server and relaying them locally to other group members. The main benefit would be to reduce the client-server communication, as the content should be downloaded once and distributed locally. Also, devices without Internet connection could still communicate through ad hoc network.
+%
+%\subsubsection{Collaborative Music Streaming}
+%
+%last but not least, we present a situation in which our user has finished work and join his colleagues in the park nearby for a picknick. Nowadays, popular services allow users to listen to music streamed from the Internet to their mobile devices. It has also become popular the use of portable speakers equipped with Bluetooth, so that users can enjoy a more powerful audio than provided by their smartphones and tablets. This combination of pervasive devices is specially appealing for external gatherings in parks and other recreational areas. Nowadays, many of these spaces provide public Wi-Fi and/or good cellular network service coverage (\textbf{C1}). However, both the streaming of music from the Internet and the communication through Bluetooth are expensive features in terms of battery and networking, as large volumes of data must be transferred (\textbf{C3}) with minimum delay (\textbf{C4}). Hence, to mitigate the battery drain and, if no Wi-Fi is available, to alleviate the amount of data each device has to download from its data plan, as many as possible devices should share this responsibility. In other words:
+%
+%\begin{itemize}
+%	
+%	\item the playlist interface must by synchronized among smartphones for collaborative modifications;
+%	
+%	\item a \textit{streaming-role} must be dynamically assigned to one device at a time without interrupting the music play;
+%	
+%	\item conditions such as the battery level, as well as the Internet and Bluetooth throughputs must be taken into account; and
+%	
+%	\item as many capable devices as possible must play the streaming-role at different times.
+%	
+%\end{itemize}
+%
+%
+%Among the assumptions and characteristics of the scenario tackled by work, the following are considered as key features:
+%
+%\begin{enumerate}[label=C\arabic*]
+%	
+%	\item \textbf{Connectivity:} devices are expected to communicate with each other, while in the same area, through infrastructure Wi-Fi or D2D communication.
+%	
+%	\item \textbf{Volatility and Heterogeneity:} application nodes are expected to enter/leave a given zone/network without notice; also, the physical and computational environment in which application nodes operate is subject to changes that may affect capabilities required by the application.
+%	
+%	\item \textbf{Intensity:} application nodes may be required to perform resource-intensive tasks or to exchange large volumes of data, or a mix of both.
+%	
+%	\item \textbf{Delay-sensitive:} among the application features, some may be sensible to latency.
+%	
+%	\item \textbf{Scale:} up to a large number of application nodes are expected to co-exist in a given zone/network and potentially interact.
+%
+%	
+%\end{enumerate}
+%
+%Next, we present examples of applications with use cases that motivate our approach.
