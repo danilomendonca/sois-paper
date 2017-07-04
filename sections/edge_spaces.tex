@@ -5,6 +5,48 @@
 
 \subsection{Role-orientation}
 
+%1: functional plasticity of nowaday's devices
+With the technology advancements, a class of pervasive devices acquired the ability to perform general purpose computing, as well as to communicate by different means and perceive the physical world through multiple sensors. These enhancements entails a \textit{functional plasticity}, i.e., the ability of these devices to provide variations of their functionalities not only for different applications, but also in different contexts of the same application. 
+
+%2: from functional plasticity to a separation of functionalities
+In a client-server architecture, commonly used nowadays, the instances of a pervasive application depend on remote servers. The functionalities provided by each client are self-contained and do not address the needs of other clients. Hence, clients are symmetric with respect to each other; asymmetry is restricted to the relation between clients and servers. 
+In an different model, the functional plasticity of smartphones and other devices could be explored by letting application instances (hereafter referred to as an \textit{application node}) to assume distinct functionalities.
+
+%, i.e., to assume different responsibilities over the application organization.
+
+%In contrast with this rigid symmetry, 
+%with the rigid symmetry that characterizes the behavior performed by client nodes in a client-server architecture -- commonly used in today's applications -- 
+%or compared to the narrow set of functionalities provided by specialized and extremely resource-constrained devices, 
+
+%3: definition of a functional role
+%In Role Theory, a \textit{role} defines a context in which an individual is expected to exhibit some behavior or pattern of behavior~\cite{}. 
+In an organizational structure, a functional role defines the responsibility an individual over specific goals. 
+%4: why they are important for pervasive applications
+Considering the collection of nodes from a pervasive application as an organization, a role can be defined as a context in which one or more application nodes must provide/perform certain functionalities/behaviors. Different reasons may motivate a \textit{separation-of-responsibilities} among application nodes.
+%4.1a: the case of MCS; application nodes are employers of an organization, which must efficiently employ their resources
+For instance, with the purpose of increasing the \textit{efficiency} with which the organization achieve its goals. That is:
+\begin{itemize}
+	\item  specific roles can be played by a subset of the available nodes (e.g., only a subset of nodes in a given region must collect data about the noise pollution); or
+	
+	\item performance, quality and other attributes may depend on which nodes are assigned for a task (e.g., nodes with access to more powerful computational resources, sensors with higher accuracy, or stronger wireless signals).
+\end{itemize}
+
+%4.1b: why did I mention organization efficiency as a motivation
+%Today, MCS is the main class of application in which mobile devices are employed not to satisfy its owners needs, but the needs of external actors (e.g., a public institution responsible for monitoring the noise pollution in certain urban areas). Despite their uniqueness, the broad range of MCS applications justifies the inclusion of efficiency as a motivation. 
+
+%4.2: the case of collaboration among nodes
+In addition, separation-or-responsibilities becomes evident whenever the nodes of an application need to achieve their individual or common goals in a \textit{collaboratively} way:
+
+\begin{itemize}
+	
+	\item nodes have a resource or capability that others do not have (e.g., sensors, Internet connection, processing capabilities, memory, storage, battery level, etc); or
+	
+	\item functionality that benefits multiple nodes can be provided by one or a subset of them.
+	
+\end{itemize}
+
+%TODO merge below with above
+
 %1: The today's client-server model and the need for role-orientation
 In today's client-server model, the different functionalities are modeled and programmed as part of a monolithic application. For the applications whose nodes are expected to interact, collaborate and play others than just the role of a client from a backend server, the distinct functionalities of each role form a concern of their own, i.e., they must be designed and programmed accordingly. 
 
