@@ -134,7 +134,7 @@ The later case presents an inverse situation: the caller of the election is a no
 
 \item Assuming all eligible nodes adopt the same $\delta$, they are exempt of participating and the election happens between the challenger and the actual nodes;
 
-\item To reduce the chances of having a failed challenge (when the actual $FS$ of the elected node has increased since it was elected), elected nodes should update their peers whenever their $FS$ has changed by a degree of $\delta$, i.e., $FS_a \ge \delta * FS_e$ or $FS_a \le (1 - \delta) * FS_e$.
+\item To reduce the chances of having a failed challenge (when the actual $FS$ of the elected node has increased since it was elected), elected nodes should update their peers whenever their $FS$ has changed by a degree of $\delta$, i.e., $FS_a \ge \delta * FS_e$ or $FS_a \le (2 - \delta) * FS_e$.
 
 \end{enumerate}
 

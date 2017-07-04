@@ -1,0 +1,22 @@
+Introduction 
+
+* double check
+
+Background
+
+* double check
+
+Motivation
+
+* complement the first example with the use of a Raspberry PI 
+
+Evaluation
+
+* discuss the asymptotic communication overhead (is it too much?)
+* finish experiments and add results
+
+References
+
+* add some reference to edge computing (also as keyword)
+* add reference to PRIME (Ghezzi et al. 2015)
+* add the missing citations throughout the paper
