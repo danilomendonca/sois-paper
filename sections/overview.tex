@@ -2,15 +2,59 @@
 \section{Overview}\label{sec:overview}
 
 %This subsection contextualizes the reader w.r.t. existing fields in which OI take place and explains why they fail to address the specific requirements for engineering PA.
+%Do we need to discuss the past of LOI? Why? Here?
+%R: we cannot ignore MAS research as it tackles similar issues regarding coordination and collaboration among distributed entities (DAI). The section is correct as it brings info about state-of-art research and discuss why they are not enough for what we need.
 \subsection{Local and Opportunistic Interactions}
 
-Opportunistic interactions among devices through wireless networks have been addressed by different research areas. Distributed artificial intelligence has made substantial contributions by means of the agent abstraction and the decentralized mechanisms that govern their behavior and adaptation~\cite{}. Nonetheless, there are significant differences with respect to the specification, design and programming of multi-agents from how software engineers develop pervasive applications~\cite{}. To name just a few, much of nowadays applications are structured around the interaction with its users (e.g., Activities in Android) and follow a model-view-controller architectural pattern. Also, many applications interact only with or through cloud-based servers (vertical interaction). Collaboration among application peers (horizontal interactions) is not common, despite its potential to enable new features and to improve non-functional attributes of pervasive applications.
+Opportunistic interactions among devices through wireless networks have been addressed by different research areas. Distributed artificial intelligence has made substantial contributions by means of the agent abstraction and the decentralized mechanisms that govern their collective behavior and adaptation~\cite{}. Nonetheless, there are significant differences with respect to the specification, design and programming of multi-agent systems (MAS) from how software engineers develop pervasive applications~\cite{}. 
 
-There ha also been extensive work to enable opportunistic interactions in pervasive computing research community~\cite{}. In many cases, the proposed solutions are narrow with respect to the type of interaction they aim to achieve; in others, the proposed solutions... %TODO: this is a critical point. I have yet to talk about Weyns (SA) and Zambonelli (SO). But before them, there's a vast literature from PC community that cannot be ignored. Why their proposals are not good enough? Because they don't deal with evolution/adaptation?
+To name just a few differences, much of PA are structured around the interaction with its users (e.g., Activities in Android) and follow a model-view-controller architectural pattern. Many applications interact only with or through cloud-based servers (vertical interaction). Interactions among application peers (horizontal interactions) is not common, despite its potential to enable new features and to improve non-functional attributes of pervasive applications. Finally, %TODO add Weyns critizism to the double role of agents.. 
+Despite the potential of adopting MAS solutions for enabling opportunistic interactions in pervasive applications, these significant differences, both at the conceptual and the operational levels, must be taken into account.
+
+
+%Such differences must be taken into account when adapting solutions from MAS community.
+
+%must not disrupt, but complement well established software engineering principles and practices.
+
+%There ha also been extensive work to enable opportunistic interactions in pervasive computing research community~\cite{}. In many cases, the proposed solutions are narrow with respect to the type of interaction they aim to achieve; in others, the proposed solutions... %TODO: this is a critical point. I have yet to talk about Weyns (SA) and Zambonelli (SO). But before them, there's a vast literature from PC community that cannot be ignored. Why their proposals are not good enough? Because they don't deal with evolution/adaptation?
+
+
 
 %must not disrupt, but complement well established software engineering principles and practices. In this sense, a pure agent-oriented approach fail to meet such requirement.  
 
 %there is still a gap, both at the conceptual and concrete levels, of how software engineering community can make use of the relevant solutions from distributed artificial intelligence to the development of pervasive applications. % that exhibit similar requirements for decentralization, context-awareness, and adaptation. 
+
+%Precisely, what does SoR means? 
+\subsection{Separation of Responsibilities}
+
+
+
+%3: functional plasticity of nowaday's devices
+With the technology advancements, a class of pervasive devices acquired the ability to perform general purpose computing, as well as to communicate by different means and perceive the physical world through multiple sensors. The consequence of this change is twofold.
+
+First, the type of interaction among pervasive devices is less frequently defined by their model. Instead, it depends on dynamic factors like their current resource levels, mobility, user preferences, etc. 
+
+Second, a single application may contain software components with different responsibilities and purposes that are activated in specific contexts. For instance, one device may become the coordinator for a period of time, while coordinated devices may become responsible for monitoring the environment. 
+
+To address this new scenario, the original focus of pervasive computing research targeting compositions and interactions among devices with specific functionality (e.g., )~\cite{} must now consider the ambiguity in the runtime decision of which devices should become responsible for what. %while they engage in opportunistic interactions for various purposes. 
+Also, applying well known software engineering principles like separation of concerns and modularization to the distinct functionalities a device may become responsible should improve the quality of the pervasive application design and implementation. 
+
+%These enhancements entails a \textit{functional plasticity}, i.e., the ability of these devices to provide variations of their functionalities not only for different applications, but also in different contexts of the same application. 
+
+%%2: from functional plasticity to a separation of functionalities
+%In a client-server architecture, commonly used nowadays, the instances of a pervasive application depend on remote servers. The functionalities provided by each client are self-contained and do not address the needs of other clients. Hence, clients are symmetric with respect to each other; asymmetry is restricted to the relation between clients and servers. 
+%In an different model, the functional plasticity of smartphones and other devices could be explored by letting application instances (hereafter referred to as an \textit{application node}) to assume distinct functionalities.
+
+%, i.e., to assume different responsibilities over the application organization.
+
+%In contrast with this rigid symmetry, 
+%with the rigid symmetry that characterizes the behavior performed by client nodes in a client-server architecture -- commonly used in today's applications -- 
+%or compared to the narrow set of functionalities provided by specialized and extremely resource-constrained devices, 
+
+%In this work, we tackle this challenge with a context-aware assignment of responsibilities.
+
+
+
 
 %This subsection contextualizes the reader about role-orientation in the literature and the novelty of using the role abstraction to build collaborative PA
 \subsection{Role-orientation}
@@ -20,16 +64,17 @@ There ha also been extensive work to enable opportunistic interactions in pervas
 
 %What's the difference between tasks and roles?
 
+The concept of roles has been applied in very different areas of information systems, including object-oriented programming, distributed multi-agents, role-based access control, and others. Despite its widespread adoption, there is no common definition for the concept of roles, but actually distinct meanings depending on the context they are employed. Nonetheless, a role is generally associated with rights, responsibilities, and skills~\cite{}.
 
-The concept of roles has been applied in very different areas of information systems, including object-oriented programming, distributed multi-agents, role-based access control, and others~\cite{}. Despite its widespread adoption, there is no common definition for the concept of roles, but actually distinct meanings depending on the context they are employed. Nonetheless, a role is generally associated with rights, responsibilities, and skills.
-
-Regardless of the extensive number of proposals in which the role abstraction is an important aspect or even a key part of the solution, including organization-centered multi-agent systems~\cite{}, not much attention has been paid to the use of role abstraction in the context of pervasive computing, specially when considering the plethora of heterogeneous devices or situations of high volatility. This work aims to fulfill this gap. % by combining role and other organizational abstractions with the state of the art in discentralized self-adaptation and self-organization mechanisms.
+There is an extensive number of proposals in which the role abstraction is an important aspect or even a key part of the solution. However, not much attention has been paid to the use of role abstraction in the context of pervasive computing, specially when considering the plethora of heterogeneous devices or situations of high volatility. This work aims to fulfill this gap. % by combining role and other organizational abstractions with the state of the art in discentralized self-adaptation and self-organization mechanisms.
 
 %In specific, role-orientation could leverage the potential of context-dependent and opportunistic interactions among pervasive devices.
 
 \subsection{Self-organization and Self-adaptation}
 
-Whereas self-organization and bio-inspired approaches have been a recurrent approach for building decentralized, scalable, and adaptable multi-agent systems, self-adaptation is yet to show its feasibility when subject to volatility and large scale of adaptive entities (e.g., components, agents, etc) and no centralized control. To this end, the gap between bottom-up self-organization and top-down self-adaptation has been a focus of research~\cite{Kramer:, Zambonelli:, Weyns:}. Such a combination may deem beneficial in the context of pervasive computing: in one hand, the volatility and resource limitations characterizing pervasive devices could cope with the scalability achieved by decentralized self-organization mechanisms. In the other hand, a self-adaptation control loop could mitigate undesirable behaviors that may emerge from self-organization and to further improve the capabilities of the system to adapt to varying situations~\cite{Zambonelli:}. In this paper, we propose the combination of both strategies in the formation and adaptation of opportunistic organizations of pervasive entities.
+Whereas self-organization has been proposed and used for building decentralized, scalable, and adaptable multi-agent systems, self-adaptation is yet to show its feasibility when subject to volatility and large scale of adaptive entities (e.g., distributed components, agents, etc) and no centralized control. 
+
+The gap between bottom-up self-organization and top-down self-adaptation has been a focus of research~\cite{Kramer:, Zambonelli:, Weyns:}. Such a combination may deem beneficial in the context of pervasive computing: in one hand, the volatility and resource limitations characterizing pervasive devices could cope with the scalability achieved by decentralized self-organization mechanisms. In the other hand, a self-adaptation control loop could mitigate undesirable behaviors that may emerge from self-organization and to further improve the capabilities of the system to adapt to varying situations~\cite{Zambonelli:}. In this paper, we propose the combination of both strategies in the formation and adaptation of opportunistic organizations of pervasive entities.
 
 %Thus, the challenge is twofold: to preserve the well known benefits of existing software engineering methodologies, and inherit/adapt the mechanisms from DAI that can cope with the characteristic of pervasive applications.
 

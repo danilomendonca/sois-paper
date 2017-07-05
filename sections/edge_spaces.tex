@@ -8,32 +8,15 @@
 	\label{fig:rationale}
 \end{figure*}
 
-%This subsection presents the main difference between
-\subsection{Separation of Responsibilities}
-
-%1: functional plasticity of nowaday's devices
-%TODO: does it make sense to put in a single shot without examples?
-With the technology advancements, a class of pervasive devices acquired the ability to perform general purpose computing, as well as to communicate by different means and perceive the physical world through multiple sensors. The consequence of this change is twofold. 
-
-Firstly, a single application may be composed by software components with different responsibilities and purposes that are activated in specific contexts. Applying well known software engineering principles like separation of concerns and modularization may greatly improve the quality of the pervasive application design and implementation.
-
-Secondly, the relationship between pervasive devices is less frequently defined by their model; instead, it may depend on dynamic factors like their current level of resources. Accordingly, the original focus of pervasive computing research targeting compositions and interactions among devices with specific functionality~\cite{} must now consider the recurrent ambiguity in the decision of which devices should become responsible for which responsibilities while they engage in opportunistic interactions for various purposes. 
+%1) Do I need to talk about separation of responsibilities? 2) Why? 3) Is this the right place?
+%R: My feeling is that bringing info about SoR adds value to the novelty of this paper; however, it seems rather a motivation/introductory section.. 
+\subsection{Organization Model}
 
 %For instance, if one device should coordinate the activities of its peers, different criteria may be used in the negotiation/election of the group coordinator. 
 
-To help in the conceptualization and realization of such dynamic pervasive ecosystem, we propose the use of the role concept as the key abstraction in the specification, design, programming and runtime autonomous management of what we call \textit{opportunistic organizations}. At a conceptual level, roles are straightforward to grasp and broadly used in human organizations both formally and informally, explicitly and implicitly. From a software engineering perspective, roles can be used as a placeholder for the set of functionalities (responsibilities) that must be provided by a device and for the set of skills (capabilities) required to play them. Last but not least, roles can be used to model the interaction among pervasive devices by means of dependencies between homogeneous and heterogeneous roles.
+To help in the conceptualization and realization of dynamic pervasive ecosystems, we propose the use of the role concept as the key abstraction in the specification, design, programming and runtime autonomous management of what we call \textit{opportunistic organizations}. 
 
-%These enhancements entails a \textit{functional plasticity}, i.e., the ability of these devices to provide variations of their functionalities not only for different applications, but also in different contexts of the same application. 
-
-%%2: from functional plasticity to a separation of functionalities
-%In a client-server architecture, commonly used nowadays, the instances of a pervasive application depend on remote servers. The functionalities provided by each client are self-contained and do not address the needs of other clients. Hence, clients are symmetric with respect to each other; asymmetry is restricted to the relation between clients and servers. 
-%In an different model, the functional plasticity of smartphones and other devices could be explored by letting application instances (hereafter referred to as an \textit{application node}) to assume distinct functionalities.
-
-%, i.e., to assume different responsibilities over the application organization.
-
-%In contrast with this rigid symmetry, 
-%with the rigid symmetry that characterizes the behavior performed by client nodes in a client-server architecture -- commonly used in today's applications -- 
-%or compared to the narrow set of functionalities provided by specialized and extremely resource-constrained devices, 
+At a conceptual level, roles are straightforward to grasp and broadly used in human organizations both formally and informally, explicitly and implicitly. From a software engineering perspective, roles can be used as a placeholder for the set of functionalities (responsibilities) that must be provided by a device and for the set of skills (capabilities) required to play them. Last but not least, roles can be used to model the interaction among pervasive devices by means of dependencies between homogeneous and heterogeneous roles.
 
 %An organization can emerge from the assignment of roles with different 
 
@@ -64,49 +47,48 @@ To help in the conceptualization and realization of such dynamic pervasive ecosy
 %	
 %\end{itemize}
 
-\subsection{Organization Model}
 
 %0: define here from where we inherit our organizational model
-Rather than defining a new organization model, we inherit from the existing works in the literature. Precisely, we adopt the definitions of.... %TODO: bring the magic!!!
+Rather than defining a new organization model based on the role abstraction, we inherit from the existing works in the literature. Precisely, we adopt the definitions of.... %TODO: bring the magic!!!
 
 %TODO merge below with above
 
-%1: The today's client-server model and the need for role-orientation
-In today's client-server model, the different functionalities are modeled and programmed as part of a monolithic application. For the applications whose nodes are expected to interact, collaborate and play others than just the role of a client from a backend server, the distinct functionalities of each role form a concern of their own, i.e., they must be designed and programmed accordingly. 
-
-%2: What do we propose in terms of role-orientation
-In this work, we inherit the concept of a role, commonly used in human organizations, as part of a framework for the engineering of pervasive applications. By making the concept of a role a first-class abstraction, we provide the means to, since the early stages of its development, reason on the organizational aspects of the application, namely:
-
-\begin{itemize}
-	
-	\item what are the roles in the application-to-be;
-	
-	\item what functionalities must be provided by each role;
-	
-	\item what capabilities are required by these functionalities; and
-	
-	%(e.g., computational resources, specific hardware components, etc); 
-	
-	\item how existing roles relate to each other, including: 
-	
-	\begin{enumerate}[label=-]
-		
-		\item the data flow, e.g.:
-			\subitem coordinator $\leftarrow$ coordinated 
-			\subitem aggregator  $\rightarrow$ sensors 
-	
-		\item their control hierarchy, e.g.:%. E.g.: 
-			\subitem orchestration (hierarchical)
-			\subitem choreography (non-hierarchical)
-	
-		\item their symmetry, i.e.:
-			\subitem between same roles (symmetric) 
-			\subitem between different roles (asymmetric)
-		%. E.g.: symmetric relation between file-sharing peers, or asymmetric relations between server/client, supervisor/follower, coordinator/coordinated, provider/consumer, etc
-		
-	\end{enumerate}	
-	
-\end{itemize}
+%%1: The today's client-server model and the need for role-orientation
+%In today's client-server model, the different functionalities are modeled and programmed as part of a monolithic application. For the applications whose nodes are expected to interact, collaborate and play others than just the role of a client from a backend server, the distinct functionalities of each role form a concern of their own, i.e., they must be designed and programmed accordingly. 
+%
+%%2: What do we propose in terms of role-orientation
+%In this work, we inherit the concept of a role, commonly used in human organizations, as part of a framework for the engineering of pervasive applications. By making the concept of a role a first-class abstraction, we provide the means to, since the early stages of its development, reason on the organizational aspects of the application, namely:
+%
+%\begin{itemize}
+%	
+%	\item what are the roles in the application-to-be;
+%	
+%	\item what functionalities must be provided by each role;
+%	
+%	\item what capabilities are required by these functionalities; and
+%	
+%	%(e.g., computational resources, specific hardware components, etc); 
+%	
+%	\item how existing roles relate to each other, including: 
+%	
+%	\begin{enumerate}[label=-]
+%		
+%		\item the data flow, e.g.:
+%			\subitem coordinator $\leftarrow$ coordinated 
+%			\subitem aggregator  $\rightarrow$ sensors 
+%	
+%		\item their control hierarchy, e.g.:%. E.g.: 
+%			\subitem orchestration (hierarchical)
+%			\subitem choreography (non-hierarchical)
+%	
+%		\item their symmetry, i.e.:
+%			\subitem between same roles (symmetric) 
+%			\subitem between different roles (asymmetric)
+%		%. E.g.: symmetric relation between file-sharing peers, or asymmetric relations between server/client, supervisor/follower, coordinator/coordinated, provider/consumer, etc
+%		
+%	\end{enumerate}	
+%	
+%\end{itemize}
 
 Figure~\ref{fig:asymmetry} illustrates cases of both symmetrical and asymmetrical relations among functional roles. 
 
